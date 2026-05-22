@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, type ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, type ReactNode, useEffect, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
 import {
   ApiError,
   createTeacherProfile,
   fetchTeacherProfile,
+  uploadImage,
   updateTeacherAvailability,
   updateTeacherProfile,
   type TeacherProfilePayload,
@@ -47,6 +48,7 @@ function TeacherProfileForm({ accessToken }: TeacherProfileFormProps) {
   const [teachingMode, setTeachingMode] = useState<TeachingModeValue>("");
   const [bio, setBio] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
@@ -82,6 +84,31 @@ function TeacherProfileForm({ accessToken }: TeacherProfileFormProps) {
         setIsLoading(false);
       });
   }, [accessToken]);
+
+  async function handleProfileImageUpload(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files?.[0];
+
+    if (!selectedFile) {
+      return;
+    }
+
+    setIsUploadingImage(true);
+    setErrorMessage("");
+
+    try {
+      const result = await uploadImage(accessToken, selectedFile);
+      setProfileImage(result.url);
+      showToast("Profile image uploaded.", "success");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Failed to upload profile image";
+      setErrorMessage(message);
+      showToast(message, "error");
+    } finally {
+      setIsUploadingImage(false);
+      event.target.value = "";
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -229,6 +256,15 @@ function TeacherProfileForm({ accessToken }: TeacherProfileFormProps) {
                 <option value="BOTH">Both</option>
               </select>
             </Field>
+            <Field label="Profile Image">
+              <input
+                accept="image/*"
+                className={inputClassName}
+                disabled={isUploadingImage}
+                onChange={handleProfileImageUpload}
+                type="file"
+              />
+            </Field>
             <Field label="Profile Image URL">
               <input
                 className={inputClassName}
@@ -236,6 +272,19 @@ function TeacherProfileForm({ accessToken }: TeacherProfileFormProps) {
                 onChange={(e) => setProfileImage(e.target.value)}
               />
             </Field>
+            {profileImage ? (
+              <div className="md:col-span-2 text-sm text-brand-navy/75">
+                Uploaded URL:{" "}
+                <a
+                  className="text-brand-cyan underline"
+                  href={profileImage}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Open image
+                </a>
+              </div>
+            ) : null}
             <div className="md:col-span-2">
               <Field label="Bio">
                 <textarea
@@ -265,10 +314,16 @@ function TeacherProfileForm({ accessToken }: TeacherProfileFormProps) {
             <div className="md:col-span-2">
               <button
                 className="app-btn-primary disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isUploadingImage}
                 type="submit"
               >
-                {isSubmitting ? "Saving..." : profileExists ? "Update Profile" : "Create Profile"}
+                {isSubmitting
+                  ? "Saving..."
+                  : isUploadingImage
+                    ? "Uploading image..."
+                    : profileExists
+                      ? "Update Profile"
+                      : "Create Profile"}
               </button>
             </div>
           </form>

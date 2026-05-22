@@ -75,6 +75,13 @@ type ChangePasswordResponse = {
   message: string;
 };
 
+type UploadImageResponse = {
+  url: string;
+  filename: string;
+  mimetype: string;
+  size: number;
+};
+
 type ApiSuccessEnvelope<T> = {
   success: boolean;
   message?: string;
@@ -464,6 +471,50 @@ export function logout(token: string): Promise<LogoutResponse> {
       Authorization: `Bearer ${token}`,
     },
   });
+}
+
+export async function uploadImage(
+  token: string,
+  file: File,
+): Promise<UploadImageResponse> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`${API_URL}/uploads/image`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    let message = "Image upload failed";
+
+    try {
+      const errorPayload = (await response.json()) as unknown;
+      const extractedMessage = getErrorMessageFromPayload(errorPayload);
+      if (extractedMessage) {
+        message = extractedMessage;
+      }
+    } catch {
+      message = `${response.status} ${response.statusText}`;
+    }
+
+    throw new ApiError(message, response.status);
+  }
+
+  const payload = (await response.json()) as unknown;
+
+  if (isApiSuccessEnvelope(payload)) {
+    if (!payload.success) {
+      throw new ApiError(payload.message ?? "Image upload failed", response.status);
+    }
+
+    return payload.data as UploadImageResponse;
+  }
+
+  return payload as UploadImageResponse;
 }
 
 export function fetchTeacherProfile(token: string): Promise<TeacherProfile> {

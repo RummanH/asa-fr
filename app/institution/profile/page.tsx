@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, type ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, type ReactNode, useEffect, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
 import {
   ApiError,
   createInstitutionProfile,
   fetchInstitutionProfile,
+  uploadImage,
   updateInstitutionProfile,
   type InstitutionProfilePayload,
 } from "@/lib/api";
@@ -37,6 +38,7 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
   const [logo, setLogo] = useState("");
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
 
   useEffect(() => {
     fetchInstitutionProfile(accessToken)
@@ -60,6 +62,30 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
         setIsLoading(false);
       });
   }, [accessToken]);
+
+  async function handleLogoUpload(event: ChangeEvent<HTMLInputElement>) {
+    const selectedFile = event.target.files?.[0];
+
+    if (!selectedFile) {
+      return;
+    }
+
+    setIsUploadingLogo(true);
+    setErrorMessage("");
+
+    try {
+      const result = await uploadImage(accessToken, selectedFile);
+      setLogo(result.url);
+      showToast("Logo uploaded.", "success");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to upload logo";
+      setErrorMessage(message);
+      showToast(message, "error");
+    } finally {
+      setIsUploadingLogo(false);
+      event.target.value = "";
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -147,9 +173,26 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
                 onChange={(e) => setWebsite(e.target.value)}
               />
             </Field>
+            <Field label="Logo">
+              <input
+                accept="image/*"
+                className={inputClassName}
+                disabled={isUploadingLogo}
+                onChange={handleLogoUpload}
+                type="file"
+              />
+            </Field>
             <Field label="Logo URL">
               <input className={inputClassName} type="url" value={logo} onChange={(e) => setLogo(e.target.value)} />
             </Field>
+            {logo ? (
+              <div className="md:col-span-2 text-sm text-brand-navy/75">
+                Uploaded URL:{" "}
+                <a className="text-brand-cyan underline" href={logo} rel="noreferrer" target="_blank">
+                  Open image
+                </a>
+              </div>
+            ) : null}
             <div className="md:col-span-2">
               <Field label="Description">
                 <textarea
@@ -169,10 +212,16 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
             <div className="md:col-span-2">
               <button
                 className="app-btn-primary disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isUploadingLogo}
                 type="submit"
               >
-                {isSubmitting ? "Saving..." : profileExists ? "Update Profile" : "Create Profile"}
+                {isSubmitting
+                  ? "Saving..."
+                  : isUploadingLogo
+                    ? "Uploading logo..."
+                    : profileExists
+                      ? "Update Profile"
+                      : "Create Profile"}
               </button>
             </div>
           </form>
