@@ -15,8 +15,7 @@ function isLocalhostUrl(url: string): boolean {
 function resolveApiUrl(): string {
   const configuredUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
   const isProduction = process.env.NODE_ENV === "production";
-  const shouldIgnoreConfiguredLocalhost =
-    isProduction && configuredUrl ? isLocalhostUrl(configuredUrl) : false;
+  const shouldIgnoreConfiguredLocalhost = isProduction && configuredUrl ? isLocalhostUrl(configuredUrl) : false;
   const baseUrl =
     configuredUrl && configuredUrl.length > 0 && !shouldIgnoreConfiguredLocalhost
       ? configuredUrl
@@ -340,10 +339,7 @@ function isApiSuccessEnvelope(value: unknown): value is ApiSuccessEnvelope<unkno
   }
 
   const maybeEnvelope = value as Record<string, unknown>;
-  return (
-    typeof maybeEnvelope.success === "boolean" &&
-    Object.prototype.hasOwnProperty.call(maybeEnvelope, "data")
-  );
+  return typeof maybeEnvelope.success === "boolean" && Object.prototype.hasOwnProperty.call(maybeEnvelope, "data");
 }
 
 function getErrorMessageFromPayload(payload: unknown): string | null {
@@ -435,28 +431,21 @@ export function login(payload: LoginPayload): Promise<AuthResponse> {
   });
 }
 
-export function forgotPassword(
-  payload: ForgotPasswordPayload,
-): Promise<ForgotPasswordResponse> {
+export function forgotPassword(payload: ForgotPasswordPayload): Promise<ForgotPasswordResponse> {
   return apiRequest<ForgotPasswordResponse>("/auth/forgot-password", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 }
 
-export function resetPassword(
-  payload: ResetPasswordPayload,
-): Promise<ResetPasswordResponse> {
+export function resetPassword(payload: ResetPasswordPayload): Promise<ResetPasswordResponse> {
   return apiRequest<ResetPasswordResponse>("/auth/reset-password", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 }
 
-export function changePassword(
-  token: string,
-  payload: ChangePasswordPayload,
-): Promise<ChangePasswordResponse> {
+export function changePassword(token: string, payload: ChangePasswordPayload): Promise<ChangePasswordResponse> {
   return apiRequest<ChangePasswordResponse>("/auth/change-password", {
     method: "POST",
     headers: {
@@ -485,10 +474,7 @@ export function logout(token: string): Promise<LogoutResponse> {
   });
 }
 
-export async function uploadImage(
-  token: string,
-  file: File,
-): Promise<UploadImageResponse> {
+export async function uploadImage(token: string, file: File): Promise<UploadImageResponse> {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -539,10 +525,7 @@ export function fetchTeacherProfile(token: string): Promise<TeacherProfile> {
   });
 }
 
-export function createTeacherProfile(
-  token: string,
-  payload: TeacherProfilePayload,
-): Promise<TeacherProfile> {
+export function createTeacherProfile(token: string, payload: TeacherProfilePayload): Promise<TeacherProfile> {
   return apiRequest<TeacherProfile>("/teacher/profile", {
     method: "POST",
     headers: {
@@ -552,10 +535,7 @@ export function createTeacherProfile(
   });
 }
 
-export function updateTeacherProfile(
-  token: string,
-  payload: TeacherProfilePayload,
-): Promise<TeacherProfile> {
+export function updateTeacherProfile(token: string, payload: TeacherProfilePayload): Promise<TeacherProfile> {
   return apiRequest<TeacherProfile>("/teacher/profile", {
     method: "PATCH",
     headers: {
@@ -565,10 +545,7 @@ export function updateTeacherProfile(
   });
 }
 
-export function updateTeacherAvailability(
-  token: string,
-  isAvailable: boolean,
-): Promise<TeacherProfile> {
+export function updateTeacherAvailability(token: string, isAvailable: boolean): Promise<TeacherProfile> {
   return apiRequest<TeacherProfile>("/teacher/profile/availability", {
     method: "PATCH",
     headers: {
@@ -670,10 +647,7 @@ export function fetchInstitutionJobPosts(token: string, query?: JobPostsQuery): 
   });
 }
 
-export function fetchTeachers(
-  token: string,
-  query?: TeacherDirectoryQuery,
-): Promise<TeacherDirectoryItem[]> {
+export function fetchTeachers(token: string, query?: TeacherDirectoryQuery): Promise<TeacherDirectoryItem[]> {
   return apiRequest<TeacherDirectoryItem[]>(`/teachers${buildQueryString(query)}`, {
     method: "GET",
     headers: {
@@ -683,10 +657,7 @@ export function fetchTeachers(
   });
 }
 
-export function fetchAvailableTeachers(
-  token: string,
-  query?: TeacherDirectoryQuery,
-): Promise<TeacherDirectoryItem[]> {
+export function fetchAvailableTeachers(token: string, query?: TeacherDirectoryQuery): Promise<TeacherDirectoryItem[]> {
   return apiRequest<TeacherDirectoryItem[]>(`/teachers/available${buildQueryString(query)}`, {
     method: "GET",
     headers: {
@@ -696,10 +667,7 @@ export function fetchAvailableTeachers(
   });
 }
 
-export function fetchTeacherById(
-  token: string,
-  teacherId: string,
-): Promise<TeacherDirectoryItem> {
+export function fetchTeacherById(token: string, teacherId: string): Promise<TeacherDirectoryItem> {
   return apiRequest<TeacherDirectoryItem>(`/teachers/${teacherId}`, {
     method: "GET",
     headers: {
@@ -732,10 +700,7 @@ export function fetchConversations(token: string): Promise<ConversationSummary[]
   });
 }
 
-export function fetchConversationMessages(
-  token: string,
-  conversationId: string,
-): Promise<ConversationMessage[]> {
+export function fetchConversationMessages(token: string, conversationId: string): Promise<ConversationMessage[]> {
   return apiRequest<ConversationMessage[]>(`/conversations/${conversationId}/messages`, {
     method: "GET",
     headers: {
@@ -763,23 +728,16 @@ export function markConversationAsRead(
   token: string,
   conversationId: string,
 ): Promise<{ success: boolean; updatedCount: number }> {
-  return apiRequest<{ success: boolean; updatedCount: number }>(
-    `/conversations/${conversationId}/read`,
-    {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({}),
+  return apiRequest<{ success: boolean; updatedCount: number }>(`/conversations/${conversationId}/read`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+    body: JSON.stringify({}),
+  });
 }
 
-export function updateJobPost(
-  token: string,
-  jobPostId: string,
-  payload: JobPostPayload,
-): Promise<JobPost> {
+export function updateJobPost(token: string, jobPostId: string, payload: JobPostPayload): Promise<JobPost> {
   return apiRequest<JobPost>(`/job-posts/${jobPostId}`, {
     method: "PATCH",
     headers: {
@@ -799,10 +757,7 @@ export function closeJobPost(token: string, jobPostId: string): Promise<JobPost>
   });
 }
 
-export function deleteJobPost(
-  token: string,
-  jobPostId: string,
-): Promise<{ success: boolean; message: string }> {
+export function deleteJobPost(token: string, jobPostId: string): Promise<{ success: boolean; message: string }> {
   return apiRequest<{ success: boolean; message: string }>(`/job-posts/${jobPostId}`, {
     method: "DELETE",
     headers: {
