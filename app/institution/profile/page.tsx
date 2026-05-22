@@ -1,0 +1,201 @@
+"use client";
+
+import Link from "next/link";
+import { FormEvent, type ReactNode, useEffect, useState } from "react";
+import { RoleProtectedPage } from "@/components/auth/role-protected-page";
+import {
+  ApiError,
+  createInstitutionProfile,
+  fetchInstitutionProfile,
+  updateInstitutionProfile,
+  type InstitutionProfilePayload,
+} from "@/lib/api";
+import { useToast } from "@/components/ui/toast-provider";
+
+export default function InstitutionProfilePage() {
+  return (
+    <RoleProtectedPage role="INSTITUTION" loadingLabel="Loading institution profile...">
+      {({ accessToken }) => <InstitutionProfileForm accessToken={accessToken} />}
+    </RoleProtectedPage>
+  );
+}
+
+type InstitutionProfileFormProps = {
+  accessToken: string;
+};
+
+function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
+  const { showToast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileExists, setProfileExists] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [institutionName, setInstitutionName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [website, setWebsite] = useState("");
+  const [description, setDescription] = useState("");
+  const [logo, setLogo] = useState("");
+
+  useEffect(() => {
+    fetchInstitutionProfile(accessToken)
+      .then((profile) => {
+        setProfileExists(true);
+        setInstitutionName(profile.institutionName);
+        setPhone(profile.phone ?? "");
+        setAddress(profile.address ?? "");
+        setWebsite(profile.website ?? "");
+        setDescription(profile.description ?? "");
+        setLogo(profile.logo ?? "");
+      })
+      .catch((error: unknown) => {
+        if (error instanceof ApiError && error.status === 404) {
+          setProfileExists(false);
+          return;
+        }
+        setErrorMessage(error instanceof Error ? error.message : "Failed to load profile");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [accessToken]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const payload: InstitutionProfilePayload = {
+        institutionName: institutionName.trim(),
+        phone,
+        address,
+        website,
+        description,
+        logo,
+      };
+
+      if (profileExists) {
+        await updateInstitutionProfile(accessToken, payload);
+      } else {
+        await createInstitutionProfile(accessToken, payload);
+        setProfileExists(true);
+      }
+
+      showToast("Institution profile saved successfully.", "success");
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : "Failed to save profile", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
+        <div className="app-container max-w-4xl app-panel p-6 sm:p-8">
+          <p className="text-sm text-brand-navy/78">Loading profile...</p>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
+      <div className="app-container max-w-4xl space-y-5">
+        <section className="app-panel p-6 sm:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h1 className="text-2xl font-semibold text-brand-navy">Institution Profile</h1>
+            <Link
+              className="app-btn-secondary"
+              href="/institution/dashboard"
+            >
+              Back to Dashboard
+            </Link>
+          </div>
+          <p className="mt-2 text-sm text-brand-navy/65">
+            {profileExists ? "Update institution profile details." : "Create institution profile."}
+          </p>
+        </section>
+
+        <section className="app-panel p-6 sm:p-8">
+          <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit}>
+            <Field label="Institution Name">
+              <input
+                className={inputClassName}
+                value={institutionName}
+                minLength={2}
+                required
+                onChange={(e) => setInstitutionName(e.target.value)}
+              />
+            </Field>
+            <Field label="Phone">
+              <input className={inputClassName} value={phone} onChange={(e) => setPhone(e.target.value)} />
+            </Field>
+            <Field label="Address">
+              <input
+                className={inputClassName}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </Field>
+            <Field label="Website URL">
+              <input
+                className={inputClassName}
+                type="url"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </Field>
+            <Field label="Logo URL">
+              <input className={inputClassName} type="url" value={logo} onChange={(e) => setLogo(e.target.value)} />
+            </Field>
+            <div className="md:col-span-2">
+              <Field label="Description">
+                <textarea
+                  className={`app-textarea min-h-24`}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Field>
+            </div>
+
+            {errorMessage ? (
+              <p className="md:col-span-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {errorMessage}
+              </p>
+            ) : null}
+
+            <div className="md:col-span-2">
+              <button
+                className="app-btn-primary disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={isSubmitting}
+                type="submit"
+              >
+                {isSubmitting ? "Saving..." : profileExists ? "Update Profile" : "Create Profile"}
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+type FieldProps = {
+  label: string;
+  children: ReactNode;
+};
+
+function Field({ label, children }: FieldProps) {
+  return (
+    <label className="grid gap-1 text-sm text-brand-navy/90">
+      <span>{label}</span>
+      {children}
+    </label>
+  );
+}
+
+const inputClassName =
+  "app-input";
+
