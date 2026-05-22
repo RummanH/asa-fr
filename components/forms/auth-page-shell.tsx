@@ -251,7 +251,7 @@ export function AuthPageShell({ children }: AuthPageShellProps) {
       <div className="relative flex flex-col flex-1 px-4 pt-6 pb-10 md:px-6 md:pt-8">
         <FloatingNav />
 
-        {/* Children centered in remaining space */}
+        {/* Main auth content */}
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-5xl">{children}</div>
         </div>

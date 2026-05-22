@@ -144,17 +144,9 @@ function EditJobPostContent({ accessToken }: { accessToken: string }) {
 
   const statusConfig = {
     ACTIVE: { classes: "bg-emerald-50 text-emerald-600 border-emerald-100", dot: "bg-emerald-500", label: "Active" },
+    INACTIVE: { classes: "bg-amber-50 text-amber-600 border-amber-100", dot: "bg-amber-400", label: "Inactive" },
     CLOSED: { classes: "bg-[#eaf3f7] text-brand-navy/50 border-border", dot: "bg-brand-navy/25", label: "Closed" },
-    DRAFT: {
-      classes: "bg-amber-50 text-amber-600 border-amber-100",
-      dot: "bg-amber-400 animate-pulse",
-      label: "Draft",
-    },
-  }[jobPost.status] ?? {
-    classes: "bg-blue-50 text-blue-600 border-blue-100",
-    dot: "bg-blue-400",
-    label: jobPost.status,
-  };
+  }[jobPost.status];
 
   return (
     <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
