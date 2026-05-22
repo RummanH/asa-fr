@@ -1,34 +1,30 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 
 const faqItems = [
   {
     question: "Who can use this platform?",
-    answer:
-      "Teachers and educational institutions can register, create profiles, communicate, and manage hiring requests.",
+    answer: "Teachers and educational institutions can register, create profiles, communicate, and manage hiring requests.",
   },
   {
     question: "Can institutions post teacher requirements?",
-    answer:
-      "Yes, institutions can create job posts or requirements so teachers can explore available opportunities.",
+    answer: "Yes. Institutions can create job posts so teachers can review active opportunities and apply through the hiring flow.",
   },
   {
     question: "Can teachers chat with institutions?",
-    answer:
-      "Yes, teachers and institutions can communicate directly through the platform chat system.",
+    answer: "Yes. Direct chat is part of the workflow so both sides can clarify expectations before any request is accepted.",
   },
   {
     question: "How does hiring work?",
-    answer:
-      "After discussion, an institution can send a hiring request, and the teacher can accept or reject it.",
+    answer: "After discussion, an institution sends a hiring request. The teacher can accept, reject, or continue the conversation.",
   },
   {
-    question: "Is this platform for online and offline teaching?",
-    answer:
-      "Yes, the platform supports online, offline, full-time, and part-time teaching opportunities.",
+    question: "Does it support online and offline teaching?",
+    answer: "Yes. The platform supports online, offline, full-time, part-time, contract, and temporary teaching opportunities.",
   },
 ];
 
@@ -36,64 +32,58 @@ export function FAQSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="bg-white py-20 md:py-24 lg:py-28" id="faq">
+    <section className="landing-section bg-white" id="faq">
       <div className="brand-container">
-        <motion.div
-          className="mx-auto text-center"
-          initial="hidden"
-          variants={staggerContainer(prefersReducedMotion, 0.1)}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.span className="badge-soft" variants={fadeUp(prefersReducedMotion, 10)}>
-            Common Questions
-          </motion.span>
-          <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
-            Frequently Asked Questions
-          </motion.h2>
-          <motion.p className="paragraph-soft mt-4 text-base md:text-lg" variants={fadeUp(prefersReducedMotion, 12)}>
-            Key details about registration, recruitment, chat, and hiring requests.
-          </motion.p>
-          <motion.div className="mt-8 overflow-hidden rounded-[1.5rem] border border-[#d9e8f0]" variants={scaleIn(prefersReducedMotion)}>
-            <div className="relative h-44 w-full md:h-56">
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <motion.div
+            initial="hidden"
+            variants={staggerContainer(prefersReducedMotion, 0.1)}
+            viewport={{ once: true, amount: 0.2 }}
+            whileInView="visible"
+          >
+            <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
+              Common questions
+            </motion.p>
+            <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
+              Answers before you create an account.
+            </motion.h2>
+            <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
+              Key details about registration, job posts, direct chat, and the hiring request flow.
+            </motion.p>
+            <motion.div className="landing-image relative mt-8 h-64 shadow-[0_18px_48px_rgba(5,47,68,0.12)]" variants={scaleIn(prefersReducedMotion)}>
               <Image
-                alt="Frequently asked questions"
-                className="h-full w-full object-cover"
+                alt="Teacher hiring questions"
+                className="object-cover"
                 fill
-                sizes="(max-width: 768px) 100vw, 900px"
+                sizes="(max-width: 1024px) 100vw, 380px"
                 src="/landing-2/faq-cover.png"
               />
-            </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        <motion.div
-          className="mx-auto mt-11 max-w-4xl space-y-4"
-          initial="hidden"
-          variants={staggerContainer(prefersReducedMotion, 0.1)}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {faqItems.map((item, index) => (
-            <motion.article
-              className="brand-card brand-card-hover rounded-2xl border border-[#d9e8f0] p-5 sm:p-6"
-              key={item.question}
-              variants={scaleIn(prefersReducedMotion)}
-              whileHover={prefersReducedMotion ? undefined : { y: -4, scale: 1.005 }}
-              transition={{ duration: 0.22 }}
-            >
-              <div className="flex items-start gap-4">
-                <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e4f2f9] text-sm font-black text-brand-teal">
-                  {index + 1}
-                </span>
-                <div>
-                  <h3 className="text-lg font-bold tracking-[-0.02em] text-brand-navy">{item.question}</h3>
-                  <p className="paragraph-soft mt-2 text-sm leading-7 sm:text-base">{item.answer}</p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
+          <motion.div
+            className="space-y-3"
+            initial="hidden"
+            variants={staggerContainer(prefersReducedMotion, 0.08)}
+            viewport={{ once: true, amount: 0.2 }}
+            whileInView="visible"
+          >
+            {faqItems.map((item, index) => (
+              <motion.details
+                className="group landing-card overflow-hidden p-5 open:border-brand-sky"
+                key={item.question}
+                open={index === 0}
+                variants={fadeUp(prefersReducedMotion, 10)}
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-black text-brand-navy">
+                  {item.question}
+                  <ChevronDown className="shrink-0 text-brand-teal transition group-open:rotate-180" size={20} strokeWidth={2.4} />
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-brand-navy/68 md:text-base">{item.answer}</p>
+              </motion.details>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

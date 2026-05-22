@@ -1,79 +1,79 @@
-﻿"use client";
+"use client";
 
-import Image from "next/image";
+import { CalendarClock, MapPin, MessagesSquare } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { fadeUp, scaleIn, slideRight, staggerContainer } from "@/lib/animations";
+import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+
+const features = [
+  {
+    icon: MapPin,
+    title: "Search by fit",
+    description: "Filter teachers by subject, class level, location, availability, and online or offline teaching mode.",
+  },
+  {
+    icon: CalendarClock,
+    title: "Work around schedules",
+    description: "Teachers can find full-time, part-time, contract, and flexible institution requirements.",
+  },
+  {
+    icon: MessagesSquare,
+    title: "Discuss before hiring",
+    description: "Direct chat keeps expectations, salary range, and role details clear before a request is sent.",
+  },
+];
 
 export function LearningFlexibilitySection() {
   const prefersReducedMotion = useReducedMotion();
-  const features = [
-    "Institutions can find teachers by subject, location, availability, and teaching mode.",
-    "Teachers can explore verified institution requirements for online and offline roles.",
-    "Both sides can chat directly and manage hiring requests without leaving the platform.",
-  ];
 
   return (
-    <section className="bg-white py-20 md:py-24 lg:py-28">
+    <section className="landing-section bg-white">
       <div className="brand-container">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-          <motion.div
-            className="brand-card image-soft rounded-[2rem] p-5 shadow-[0_20px_55px_rgba(5,47,68,0.12)] sm:p-6"
-            initial="hidden"
-            variants={slideRight(prefersReducedMotion, 42)}
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="relative overflow-hidden rounded-[1.6rem] border border-[#d5e6ef]">
-              <Image
-                alt="Teacher and institution hiring flexibility"
-                className="h-[360px] w-full object-cover sm:h-[430px]"
-                height={1050}
-                src="/landing/flexibility-main.png"
-                width={1400}
-              />
-            </div>
-          </motion.div>
+        <motion.div
+          className="mx-auto max-w-3xl text-center"
+          initial="hidden"
+          variants={staggerContainer(prefersReducedMotion, 0.1)}
+          viewport={{ once: true, amount: 0.2 }}
+          whileInView="visible"
+        >
+          <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
+            Flexible recruitment
+          </motion.p>
+          <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
+            Teacher hiring that adapts to every classroom need.
+          </motion.h2>
+          <motion.p className="landing-kicker mx-auto mt-4 max-w-2xl" variants={fadeUp(prefersReducedMotion, 12)}>
+            The platform handles both sides of the marketplace: institutions get sharper search and teachers get better
+            visibility into real opportunities.
+          </motion.p>
+        </motion.div>
 
-          <motion.div
-            initial="hidden"
-            variants={staggerContainer(prefersReducedMotion, 0.1)}
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.span className="badge-soft" variants={fadeUp(prefersReducedMotion, 12)}>
-              Flexible Hiring
-            </motion.span>
-            <motion.h2 className="heading-lg mt-4 max-w-xl text-brand-navy" variants={fadeUp(prefersReducedMotion, 18)}>
-              Experience Teacher Hiring Flexibility At Its Best
-            </motion.h2>
-            <motion.p
-              className="paragraph-soft mt-5 text-base md:text-lg md:leading-7"
-              variants={fadeUp(prefersReducedMotion, 14)}
+        <motion.div
+          className="mt-11 grid gap-5 md:grid-cols-3"
+          initial="hidden"
+          variants={staggerContainer(prefersReducedMotion, 0.12)}
+          viewport={{ once: true, amount: 0.2 }}
+          whileInView="visible"
+        >
+          {features.map(({ icon: Icon, title, description }, index) => (
+            <motion.article
+              className={`landing-card-subtle p-6 ${index === 1 ? "bg-[linear-gradient(160deg,#075f75_0%,#0b8aa2_100%)] text-white" : ""}`}
+              key={title}
+              variants={scaleIn(prefersReducedMotion)}
+              whileHover={prefersReducedMotion ? undefined : { y: -5 }}
             >
-              Connect with qualified teachers and trusted institutions through a smooth and
-              flexible recruitment experience built for modern education teams.
-            </motion.p>
-
-            <motion.div className="divider-soft my-7" variants={fadeUp(prefersReducedMotion, 10)} />
-
-            <motion.div className="space-y-3" variants={staggerContainer(prefersReducedMotion, 0.1)}>
-              {features.map((feature, index) => (
-                <motion.article
-                  className="brand-card brand-card-hover rounded-2xl px-4 py-4"
-                  key={feature}
-                  variants={scaleIn(prefersReducedMotion)}
-                  whileHover={prefersReducedMotion ? undefined : { y: -5, scale: 1.01 }}
-                  transition={{ duration: 0.24 }}
-                >
-                  <p className="text-sm font-semibold text-brand-teal">0{index + 1}</p>
-                  <p className="mt-1 text-sm leading-7 text-brand-navy/85 sm:text-base">{feature}</p>
-                </motion.article>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
+              <div
+                className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${
+                  index === 1 ? "bg-white/15 text-brand-sky" : "bg-brand-light text-brand-teal"
+                }`}
+              >
+                <Icon size={21} strokeWidth={2.3} />
+              </div>
+              <h3 className={`mt-5 text-xl font-black ${index === 1 ? "text-white" : "text-brand-navy"}`}>{title}</h3>
+              <p className={`mt-3 text-sm leading-7 ${index === 1 ? "text-white/82" : "text-brand-navy/68"}`}>{description}</p>
+            </motion.article>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
 }
-

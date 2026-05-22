@@ -253,7 +253,7 @@ export function AuthPageShell({ children }: AuthPageShellProps) {
 
         {/* Main auth content */}
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-5xl">{children}</div>
+          <div className="flex w-full max-w-5xl justify-center">{children}</div>
         </div>
       </div>
     </main>

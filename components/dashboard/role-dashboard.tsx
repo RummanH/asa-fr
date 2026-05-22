@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import {
   ApiError,
   fetchInstitutionProfile,
@@ -45,7 +45,7 @@ type DashboardContentProps = {
 };
 
 const NavIcon = ({ path }: { path: string }) => {
-  const icons: Record<string, JSX.Element> = {
+  const icons: Record<string, ReactElement> = {
     profile: (
       <svg
         width="15"

@@ -1,88 +1,75 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
+import { CheckCircle2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 
 const benefits = [
-  {
-    title: "Verified Profiles",
-    description:
-      "Teachers and institutions can create professional profiles with clear hiring details.",
-    image: "/landing-2/benefit-1.png",
-  },
-  {
-    title: "Direct Communication",
-    description:
-      "Both sides can chat directly before sending or responding to hiring requests.",
-    image: "/landing-2/benefit-2.png",
-  },
-  {
-    title: "Faster Hiring",
-    description:
-      "Institutions can quickly find available teachers that match role requirements.",
-    image: "/landing-2/benefit-3.png",
-  },
-  {
-    title: "Flexible Opportunities",
-    description:
-      "Teachers can explore full-time, part-time, online, and offline opportunities.",
-    image: "/landing-2/benefit-4.png",
-  },
+  "Professional profiles for teachers and institutions",
+  "Direct messaging before any hiring decision",
+  "Status tracking for sent and received requests",
+  "Online, offline, part-time, full-time, and contract roles",
 ];
 
 export function PlatformBenefitsSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="section-soft py-20 md:py-24 lg:py-28">
+    <section className="landing-section section-soft">
       <div className="brand-container">
-        <motion.div
-          className="mx-auto text-center"
-          initial="hidden"
-          variants={staggerContainer(prefersReducedMotion, 0.1)}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.span className="badge-soft" variants={fadeUp(prefersReducedMotion, 10)}>
-            Why Choose Us
-          </motion.span>
-          <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
-            A Smarter Way To Connect Teachers And Institutions
-          </motion.h2>
-          <motion.p className="paragraph-soft mt-4 text-base md:text-lg" variants={fadeUp(prefersReducedMotion, 12)}>
-            Built for modern education recruitment, the platform simplifies teacher discovery,
-            communication, and hiring decisions.
-          </motion.p>
-        </motion.div>
+        <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+          <motion.div
+            className="grid grid-cols-2 gap-4"
+            initial="hidden"
+            variants={staggerContainer(prefersReducedMotion, 0.1)}
+            viewport={{ once: true, amount: 0.2 }}
+            whileInView="visible"
+          >
+            {["/landing-2/benefit-1.png", "/landing-2/benefit-2.png", "/landing-2/benefit-3.png", "/landing-2/benefit-4.png"].map((src, index) => (
+              <motion.div
+                className={`landing-image relative h-48 shadow-[0_16px_38px_rgba(5,47,68,0.12)] md:h-64 ${index % 2 === 1 ? "mt-8" : ""}`}
+                key={src}
+                variants={scaleIn(prefersReducedMotion)}
+              >
+                <Image
+                  alt={`Platform benefit ${index + 1}`}
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 280px"
+                  src={src}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
 
-        <motion.div
-          className="mt-11 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"
-          initial="hidden"
-          variants={staggerContainer(prefersReducedMotion, 0.12)}
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {benefits.map((benefit) => (
-            <motion.article
-              className="brand-card brand-card-hover flex h-full flex-col overflow-hidden rounded-[1.5rem] shadow-[0_14px_40px_rgba(4,48,70,0.11)]"
-              key={benefit.title}
-              variants={scaleIn(prefersReducedMotion)}
-              whileHover={prefersReducedMotion ? undefined : { y: -6, scale: 1.015 }}
-              transition={{ duration: 0.24 }}
-            >
-              <div className="relative h-44 w-full">
-                <Image alt={benefit.title} className="h-full w-full object-cover" fill src={benefit.image} />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold tracking-[-0.02em] text-brand-navy">
-                  {benefit.title}
-                </h3>
-                <p className="paragraph-soft mt-3 text-sm leading-7">{benefit.description}</p>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
+          <motion.div
+            initial="hidden"
+            variants={staggerContainer(prefersReducedMotion, 0.1)}
+            viewport={{ once: true, amount: 0.2 }}
+            whileInView="visible"
+          >
+            <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
+              Platform benefits
+            </motion.p>
+            <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
+              Everything needed to make hiring decisions with confidence.
+            </motion.h2>
+            <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
+              The product brings matching, communication, and request management into one quiet workflow designed for
+              repeated recruitment work.
+            </motion.p>
+
+            <motion.div className="mt-8 space-y-3" variants={staggerContainer(prefersReducedMotion, 0.08)}>
+              {benefits.map((benefit) => (
+                <motion.div className="flex items-start gap-3 rounded-2xl bg-white/80 p-4 shadow-[0_10px_30px_rgba(5,47,68,0.06)]" key={benefit} variants={fadeUp(prefersReducedMotion, 10)}>
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-brand-teal" size={20} strokeWidth={2.4} />
+                  <p className="text-sm font-semibold leading-6 text-brand-navy/78 md:text-base">{benefit}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

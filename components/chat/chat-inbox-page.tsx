@@ -234,7 +234,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
           {/* No search results */}
           {!isLoading && conversations.length > 0 && filtered.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-2 py-12 text-center">
-              <p className="text-sm font-semibold text-brand-navy/50">No results for "{search}"</p>
+              <p className="text-sm font-semibold text-brand-navy/50">No results for &quot;{search}&quot;</p>
               <button onClick={() => setSearch("")} className="text-xs text-brand-teal underline underline-offset-2">
                 Clear search
               </button>

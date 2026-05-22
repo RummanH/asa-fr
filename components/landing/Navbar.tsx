@@ -1,15 +1,16 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
 import { fadeUp } from "@/lib/animations";
-import { useState, useEffect } from "react";
 
 const navLinks = [
   { href: "#home", label: "Home" },
-  { href: "#stats", label: "Available Teachers" },
-  { href: "#opportunities", label: "Institution Posts" },
+  { href: "#opportunities", label: "Opportunities" },
+  { href: "#process", label: "How It Works" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -19,8 +20,8 @@ export function Navbar() {
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
-    const handler = (e: MediaQueryListEvent) => {
-      if (e.matches) setIsMenuOpen(false);
+    const handler = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsMenuOpen(false);
     };
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
@@ -29,65 +30,56 @@ export function Navbar() {
   return (
     <motion.header
       animate="visible"
-      className="brand-container relative z-30 pt-5 md:pt-8"
+      className="brand-container relative z-30 pt-5 md:pt-7"
       initial="hidden"
-      variants={fadeUp(prefersReducedMotion, 18)}
+      variants={fadeUp(prefersReducedMotion, 16)}
     >
-      <nav className="glass-card rounded-[1.35rem] border-white/20 bg-[#02283bc4] px-4 py-3 sm:px-6 md:px-9 md:py-4">
-        <div className="flex min-h-[52px] items-center justify-between gap-4 md:min-h-[56px]">
+      <nav className="rounded-2xl border border-white/20 bg-[#03334bcc] px-4 py-3 shadow-[0_18px_50px_rgba(0,24,38,0.26)] backdrop-blur-xl sm:px-5 lg:px-7">
+        <div className="flex min-h-12 items-center justify-between gap-4">
           <Link className="inline-flex items-center gap-3" href="/">
-            <span className="inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-white/16 md:h-11 md:w-11">
+            <span className="relative inline-flex h-10 w-10 overflow-hidden rounded-xl border border-white/15 bg-white/10">
               <Image
-                alt="Teacher Hiring Platform logo"
-                className="h-full w-full object-cover"
-                height={128}
+                alt="Teacher Hiring Platform"
+                className="object-cover"
+                fill
+                sizes="40px"
                 src="/landing/logo-mark.png"
-                width={128}
               />
             </span>
-            <span className="hidden text-sm font-semibold tracking-wide text-white/92 sm:inline-block md:text-base">
-              Teacher Hiring Platform
-            </span>
+            <span className="text-sm font-extrabold text-white sm:text-base">Teacher Hiring Platform</span>
           </Link>
 
           <ul className="hidden items-center gap-7 lg:flex">
             {navLinks.map((item) => (
-              <li key={item.label}>
-                <Link className="text-sm font-medium text-white/80 transition hover:text-white" href={item.href}>
+              <li key={item.href}>
+                <Link className="text-sm font-semibold text-white/76 transition hover:text-white" href={item.href}>
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
 
-          <div className="hidden items-center gap-2 sm:flex sm:gap-3">
-            <motion.div
-              whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.01 }}
-              whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
+          <div className="hidden items-center gap-3 sm:flex">
+            <Link
+              className="rounded-xl border border-white/15 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-white/10"
+              href="/login"
             >
-              <Link className="btn-secondary rounded-xl px-4 py-2 text-sm sm:px-5 sm:py-2.5" href="/login">
-                Login
-              </Link>
-            </motion.div>
-            <motion.div
-              whileHover={prefersReducedMotion ? undefined : { y: -2, scale: 1.01 }}
-              whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
-            >
-              <Link className="btn-primary rounded-xl px-4 py-2 text-sm sm:px-5 sm:py-2.5" href="/register">
-                Register
-              </Link>
-            </motion.div>
+              Login
+            </Link>
+            <Link className="btn-primary bg-white px-5 py-2.5 text-sm font-bold text-brand-navy hover:bg-brand-sky" href="/register">
+              Register <ArrowRight size={16} strokeWidth={2.4} />
+            </Link>
           </div>
 
           <button
             aria-controls="mobile-nav"
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/16 lg:hidden"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/15 lg:hidden"
+            onClick={() => setIsMenuOpen((current) => !current)}
             type="button"
           >
-            <span className="text-xl leading-none">{isMenuOpen ? "✕" : "☰"}</span>
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -98,12 +90,12 @@ export function Navbar() {
           id="mobile-nav"
         >
           <div className="overflow-hidden">
-            <div className="divider-soft my-3" />
-            <ul className="space-y-2">
+            <div className="my-3 h-px bg-white/12" />
+            <ul className="space-y-1">
               {navLinks.map((item) => (
-                <li key={item.label}>
+                <li key={item.href}>
                   <Link
-                    className="block rounded-lg px-3 py-2 text-sm font-medium text-white/88 transition hover:bg-white/12 hover:text-white"
+                    className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-white/86 transition hover:bg-white/10 hover:text-white"
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -113,22 +105,12 @@ export function Navbar() {
               ))}
             </ul>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:hidden">
-              <motion.div
-                whileHover={prefersReducedMotion ? undefined : { y: -2 }}
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
-              >
-                <Link className="btn-secondary block w-full rounded-xl px-4 py-2 text-center text-sm" href="/login">
-                  Login
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={prefersReducedMotion ? undefined : { y: -2 }}
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
-              >
-                <Link className="btn-primary block w-full rounded-xl px-4 py-2 text-center text-sm" href="/register">
-                  Register
-                </Link>
-              </motion.div>
+              <Link className="rounded-xl border border-white/15 px-4 py-2.5 text-center text-sm font-bold text-white" href="/login">
+                Login
+              </Link>
+              <Link className="rounded-xl bg-white px-4 py-2.5 text-center text-sm font-bold text-brand-navy" href="/register">
+                Register
+              </Link>
             </div>
           </div>
         </div>

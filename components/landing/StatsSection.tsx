@@ -1,70 +1,51 @@
-﻿"use client";
+"use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { fadeUp, staggerContainer } from "@/lib/animations";
 
 const stats = [
-  { value: "3K+", label: "Available Teachers" },
-  { value: "400+", label: "Institution Posts" },
-  { value: "50+", label: "Successful Connections" },
+  { value: "3K+", label: "Teacher profiles" },
+  { value: "400+", label: "Institution posts" },
+  { value: "50+", label: "Successful hires" },
 ];
 
 export function StatsSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="relative -mt-10 pb-16 md:-mt-16 md:pb-24" id="stats">
+    <section className="relative z-20 -mt-20 pb-16 md:-mt-24 md:pb-20" id="stats">
       <div className="brand-container">
         <motion.div
-          className="section-blue brand-card rounded-[2.3rem] px-6 py-10 shadow-[0_20px_55px_rgba(3,54,81,0.16)] sm:px-8 md:rounded-[2.8rem] md:px-11 md:py-14"
+          className="rounded-[2rem] bg-brand-sky px-6 py-9 shadow-[0_22px_60px_rgba(4,49,72,0.2)] md:px-10 md:py-12 lg:px-14"
           initial="hidden"
-          variants={fadeUp(prefersReducedMotion, 24)}
-          whileInView="visible"
+          variants={fadeUp(prefersReducedMotion, 22)}
           viewport={{ once: true, amount: 0.2 }}
+          whileInView="visible"
         >
-          <div className="grid gap-9 lg:grid-cols-[1fr_1.08fr] lg:items-center lg:gap-11">
-            <motion.div
-              variants={staggerContainer(prefersReducedMotion, 0.1)}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <motion.p
-                className="text-sm font-semibold uppercase tracking-[0.16em] text-brand-navy/70"
-                variants={fadeUp(prefersReducedMotion, 14)}
-              >
-                Platform Snapshot
-              </motion.p>
-              <motion.h2 className="heading-lg mt-3 max-w-lg text-brand-navy" variants={fadeUp(prefersReducedMotion, 20)}>
-                Trusted by institutions and teachers for faster recruitment.
-              </motion.h2>
-              <motion.p
-                className="paragraph-soft mt-4 max-w-md text-brand-navy/80 md:text-base md:leading-7"
-                variants={fadeUp(prefersReducedMotion, 16)}
-              >
-                From job posts to direct chat and hiring requests, the platform keeps the full
-                teacher hiring workflow in one place.
-              </motion.p>
-            </motion.div>
+          <div className="grid gap-9 lg:grid-cols-[1fr_1.25fr] lg:items-center">
+            <div>
+              <p className="landing-eyebrow text-brand-navy/72">Trusted marketplace</p>
+              <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight text-brand-navy md:text-4xl">
+                Built for faster, clearer education recruitment.
+              </h2>
+              <p className="mt-4 max-w-lg text-sm leading-7 text-brand-navy/74 md:text-base">
+                Institutions and teachers get a single place to publish needs, compare matches, chat, and confirm
+                hiring requests.
+              </p>
+            </div>
 
             <motion.div
-              className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4"
+              className="grid gap-6 sm:grid-cols-3"
               initial="hidden"
-              variants={staggerContainer(prefersReducedMotion, 0.12)}
-              whileInView="visible"
+              variants={staggerContainer(prefersReducedMotion, 0.1)}
               viewport={{ once: true, amount: 0.2 }}
+              whileInView="visible"
             >
               {stats.map((item) => (
-                <motion.article
-                  className="brand-card brand-card-hover rounded-[1.6rem] p-5 text-center shadow-[0_14px_38px_rgba(5,52,78,0.14)] md:p-6"
-                  key={item.label}
-                  variants={scaleIn(prefersReducedMotion)}
-                  whileHover={prefersReducedMotion ? undefined : { y: -6, scale: 1.02 }}
-                  transition={{ duration: 0.24 }}
-                >
+                <motion.div className="border-l border-brand-navy/20 pl-5" key={item.label} variants={fadeUp(prefersReducedMotion, 16)}>
                   <p className="stat-number">{item.value}</p>
-                  <p className="mt-2 text-sm font-semibold text-brand-navy/75">{item.label}</p>
-                </motion.article>
+                  <p className="mt-2 text-sm font-bold leading-5 text-brand-navy/72">{item.label}</p>
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -73,7 +54,3 @@ export function StatsSection() {
     </section>
   );
 }
-
-
-
-
