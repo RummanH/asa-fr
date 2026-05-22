@@ -9,16 +9,31 @@ const features = [
     icon: MapPin,
     title: "Search by fit",
     description: "Filter teachers by subject, class level, location, availability, and online or offline teaching mode.",
+    details: [
+      "Subject and class-level based filtering",
+      "Location and teaching mode matching",
+      "Availability-aware teacher discovery",
+    ],
   },
   {
     icon: CalendarClock,
     title: "Work around schedules",
     description: "Teachers can find full-time, part-time, contract, and flexible institution requirements.",
+    details: [
+      "Full-time institution roles",
+      "Part-time and contract opportunities",
+      "Flexible hiring requirements by schedule",
+    ],
   },
   {
     icon: MessagesSquare,
     title: "Discuss before hiring",
     description: "Direct chat keeps expectations, salary range, and role details clear before a request is sent.",
+    details: [
+      "Role details confirmed in chat",
+      "Salary and time expectations aligned",
+      "Level 3 check: hiring request sent only after discussion",
+    ],
   },
 ];
 
@@ -26,11 +41,11 @@ export function LearningFlexibilitySection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="landing-section bg-white">
+    <section className="landing-section section-soft border-y border-[#dbeaf1]" id="flexible-recruitment">
       <div className="brand-container">
         <motion.div
           className="mx-auto max-w-3xl text-center"
-          initial="hidden"
+          initial={prefersReducedMotion ? "visible" : "hidden"}
           variants={staggerContainer(prefersReducedMotion, 0.1)}
           viewport={{ once: true, amount: 0.2 }}
           whileInView="visible"
@@ -49,12 +64,12 @@ export function LearningFlexibilitySection() {
 
         <motion.div
           className="mt-11 grid gap-5 md:grid-cols-3"
-          initial="hidden"
+          initial={prefersReducedMotion ? "visible" : "hidden"}
           variants={staggerContainer(prefersReducedMotion, 0.12)}
           viewport={{ once: true, amount: 0.2 }}
           whileInView="visible"
         >
-          {features.map(({ icon: Icon, title, description }, index) => (
+          {features.map(({ icon: Icon, title, description, details }, index) => (
             <motion.article
               className={`landing-card-subtle p-6 ${index === 1 ? "border-2 border-brand-teal/35 bg-[#f0f9fd]" : ""}`}
               key={title}
@@ -70,6 +85,16 @@ export function LearningFlexibilitySection() {
               </div>
               <h3 className="mt-5 text-xl font-black text-brand-navy">{title}</h3>
               <p className="mt-3 text-sm leading-7 text-brand-navy/78">{description}</p>
+              <details className="mt-4 rounded-xl border border-brand-teal/20 bg-white/75 p-3">
+                <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-[0.06em] text-brand-teal">
+                  Expand details
+                </summary>
+                <ul className="mt-3 space-y-1.5 text-sm leading-6 text-brand-navy/78">
+                  {details.map((line) => (
+                    <li key={line}>• {line}</li>
+                  ))}
+                </ul>
+              </details>
             </motion.article>
           ))}
         </motion.div>

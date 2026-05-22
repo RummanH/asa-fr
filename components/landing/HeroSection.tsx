@@ -38,8 +38,11 @@ export function HeroSection() {
           initial="hidden"
           variants={staggerContainer(prefersReducedMotion, 0.12)}
         >
-          <motion.span className="badge-soft bg-white/15 text-white" variants={fadeUp(prefersReducedMotion, 14)}>
-            <ShieldCheck size={16} strokeWidth={2.4} /> Modern education hiring
+          <motion.span
+            className="inline-flex items-center gap-2 rounded-full border-2 border-brand-gold/70 bg-brand-gold px-4 py-2 text-sm font-extrabold uppercase tracking-[0.08em] text-brand-navy shadow-[0_10px_26px_rgba(245,200,75,0.4)]"
+            variants={fadeUp(prefersReducedMotion, 14)}
+          >
+            <ShieldCheck size={16} strokeWidth={2.6} /> Modern education hiring
           </motion.span>
 
           <motion.h1 className="heading-xl mt-6 max-w-[11ch] text-white" variants={fadeUp(prefersReducedMotion, 22)}>
