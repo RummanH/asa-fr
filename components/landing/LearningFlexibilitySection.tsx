@@ -56,20 +56,20 @@ export function LearningFlexibilitySection() {
         >
           {features.map(({ icon: Icon, title, description }, index) => (
             <motion.article
-              className={`landing-card-subtle p-6 ${index === 1 ? "bg-[linear-gradient(160deg,#075f75_0%,#0b8aa2_100%)] text-white" : ""}`}
+              className={`landing-card-subtle p-6 ${index === 1 ? "border-2 border-brand-teal/35 bg-[#f0f9fd]" : ""}`}
               key={title}
               variants={scaleIn(prefersReducedMotion)}
               whileHover={prefersReducedMotion ? undefined : { y: -5 }}
             >
               <div
                 className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${
-                  index === 1 ? "bg-white/15 text-brand-sky" : "bg-brand-light text-brand-teal"
+                  index === 1 ? "bg-brand-light text-brand-teal" : "bg-brand-light text-brand-teal"
                 }`}
               >
                 <Icon size={21} strokeWidth={2.3} />
               </div>
-              <h3 className={`mt-5 text-xl font-black ${index === 1 ? "text-white" : "text-brand-navy"}`}>{title}</h3>
-              <p className={`mt-3 text-sm leading-7 ${index === 1 ? "text-white/82" : "text-brand-navy/68"}`}>{description}</p>
+              <h3 className="mt-5 text-xl font-black text-brand-navy">{title}</h3>
+              <p className="mt-3 text-sm leading-7 text-brand-navy/78">{description}</p>
             </motion.article>
           ))}
         </motion.div>
