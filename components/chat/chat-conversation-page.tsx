@@ -121,7 +121,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
   if (!conversationId) {
     return (
       <main className="app-shell px-4 py-8">
-        <div className="app-container max-w-2xl">
+        <div className="app-container">
           <div className="app-panel p-8 text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50">
               <svg
@@ -175,7 +175,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
 
   return (
     <main className="app-shell px-3 py-5 sm:px-6 sm:py-8">
-      <div className="app-container max-w-3xl flex flex-col gap-0" style={{ height: "calc(100vh - 4rem)" }}>
+      <div className="app-container flex flex-col gap-0" style={{ height: "calc(100vh - 4rem)" }}>
         {/* Header */}
         <div
           className="flex items-center justify-between gap-3 rounded-t-2xl border border-b-0 border-border bg-white px-5 py-4"

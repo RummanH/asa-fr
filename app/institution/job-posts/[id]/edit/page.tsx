@@ -65,7 +65,7 @@ function EditJobPostContent({ accessToken }: { accessToken: string }) {
   if (isLoading) {
     return (
       <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
-        <div className="app-container max-w-3xl">
+        <div className="app-container">
           <div className="app-panel flex flex-col items-center justify-center gap-3 py-20">
             <svg
               className="animate-spin text-brand-teal"
@@ -89,7 +89,7 @@ function EditJobPostContent({ accessToken }: { accessToken: string }) {
   if (!jobPostId || !jobPost) {
     return (
       <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
-        <div className="app-container max-w-3xl">
+        <div className="app-container">
           <div className="app-panel overflow-hidden">
             <div className="h-0.5 w-full bg-red-400" />
             <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
@@ -158,7 +158,7 @@ function EditJobPostContent({ accessToken }: { accessToken: string }) {
 
   return (
     <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
-      <div className="app-container max-w-3xl space-y-4">
+      <div className="app-container space-y-4">
         {/* Header */}
         <div className="app-panel overflow-hidden">
           <div

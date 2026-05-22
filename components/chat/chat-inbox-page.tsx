@@ -97,7 +97,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
 
   return (
     <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
-      <div className="app-container max-w-2xl">
+      <div className="app-container">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">

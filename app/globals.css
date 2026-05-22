@@ -345,7 +345,9 @@ body {
   padding: 0.68rem 0.85rem;
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .app-input:focus {
@@ -362,7 +364,9 @@ body {
   padding: 0.7rem 0.85rem;
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .app-textarea:focus {
@@ -380,7 +384,10 @@ body {
   padding: 0.58rem 1rem;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
   box-shadow: 0 10px 24px rgba(5, 47, 68, 0.2);
 }
 
@@ -400,7 +407,10 @@ body {
   padding: 0.58rem 1rem;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
 .app-btn-secondary:hover {
@@ -420,7 +430,9 @@ body {
   padding: 0.58rem 1rem;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: background 180ms ease, transform 180ms ease;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
 }
 
 .app-btn-danger:hover {

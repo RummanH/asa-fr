@@ -222,7 +222,7 @@ function DashboardContent({ title, role, user, accessToken, logoutAction, isLogg
 
   return (
     <main className="app-shell min-h-screen px-4 py-8 sm:px-6 sm:py-10">
-      <div className="app-container max-w-3xl space-y-5">
+      <div className="app-container space-y-5">
         {/* Header card */}
         <div className="app-panel overflow-hidden">
           {/* Top accent bar */}

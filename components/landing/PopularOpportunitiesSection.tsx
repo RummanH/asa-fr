@@ -39,7 +39,7 @@ export function PopularOpportunitiesSection() {
     <section className="section-soft py-20 md:py-24 lg:py-28" id="opportunities">
       <div className="brand-container">
         <motion.div
-          className="mx-auto max-w-3xl text-center"
+          className="mx-auto text-center"
           initial="hidden"
           variants={staggerContainer(prefersReducedMotion, 0.1)}
           whileInView="visible"

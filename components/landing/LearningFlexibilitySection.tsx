@@ -47,7 +47,7 @@ export function LearningFlexibilitySection() {
               Experience Teacher Hiring Flexibility At Its Best
             </motion.h2>
             <motion.p
-              className="paragraph-soft mt-5 max-w-2xl text-base md:text-lg md:leading-7"
+              className="paragraph-soft mt-5 text-base md:text-lg md:leading-7"
               variants={fadeUp(prefersReducedMotion, 14)}
             >
               Connect with qualified teachers and trusted institutions through a smooth and
