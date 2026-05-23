@@ -3,14 +3,20 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { AuthPageShell } from "@/components/forms/auth-page-shell";
+import AuthPageShell from "@/components/forms/auth-page-shell";
+import { AuthLayout } from "@/components/forms/auth-layout";
 import { resetPassword } from "@/lib/api";
 import { useToast } from "@/components/ui/toast-provider";
 
 export default function ResetPasswordPage() {
   return (
     <AuthPageShell>
-      <ResetPasswordForm />
+      <AuthLayout
+        title="Reset Password"
+        subtitle="Enter your reset token and choose a new password"
+      >
+        <ResetPasswordForm />
+      </AuthLayout>
     </AuthPageShell>
   );
 }

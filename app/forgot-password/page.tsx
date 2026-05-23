@@ -2,14 +2,20 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { AuthPageShell } from "@/components/forms/auth-page-shell";
+import AuthPageShell from "@/components/forms/auth-page-shell";
+import { AuthLayout } from "@/components/forms/auth-layout";
 import { forgotPassword } from "@/lib/api";
 import { useToast } from "@/components/ui/toast-provider";
 
 export default function ForgotPasswordPage() {
   return (
     <AuthPageShell>
-      <ForgotPasswordForm />
+      <AuthLayout
+        title="Forgot Password"
+        subtitle="Enter your account email to receive password reset instructions"
+      >
+        <ForgotPasswordForm />
+      </AuthLayout>
     </AuthPageShell>
   );
 }
