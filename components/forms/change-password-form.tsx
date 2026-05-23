@@ -2,10 +2,14 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { motion } from "motion/react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
+import { ModernForm, FormField, ModernInput } from "@/components/forms/modern-form";
 import { changePassword } from "@/lib/api";
 import type { UserRole } from "@/lib/auth";
 import { useToast } from "@/components/ui/toast-provider";
+import { PageLayout } from "@/components/layouts/page-layout";
 
 type ChangePasswordFormProps = { role: UserRole };
 
@@ -243,239 +247,289 @@ function PasswordField({
 /* ── main content ── */
 type ChangePasswordFormContentProps = { accessToken: string; dashboardPath: string };
 
-function ChangePasswordFormContent({ accessToken, dashboardPath }: ChangePasswordFormContentProps) {
+function ChangePasswordFormContent({
+  accessToken,
+  dashboardPath,
+}: ChangePasswordFormContentProps) {
   const { showToast } = useToast();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const passwordMatch = newPassword === confirmNewPassword && !!newPassword;
+  const passwordStrength = calculatePasswordStrength(newPassword);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (newPassword !== confirmNewPassword) {
-      showToast("New password and confirmation do not match", "error");
+
+    // Validate
+    const newErrors: Record<string, string> = {};
+    if (!currentPassword) newErrors.currentPassword = "Current password is required";
+    if (!newPassword) newErrors.newPassword = "New password is required";
+    if (newPassword.length < 8) newErrors.newPassword = "Password must be at least 8 characters";
+    if (newPassword === currentPassword) newErrors.newPassword = "New password must be different from current password";
+    if (!confirmNewPassword) newErrors.confirmPassword = "Please confirm your new password";
+    if (newPassword !== confirmNewPassword) newErrors.confirmPassword = "Passwords do not match";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
+
+    setErrors({});
     setIsSubmitting(true);
+
     try {
-      const response = await changePassword(accessToken, { currentPassword, newPassword });
+      const response = await changePassword(accessToken, {
+        currentPassword,
+        newPassword,
+      });
       showToast(response.message, "success");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
     } catch (error) {
-      showToast(error instanceof Error ? error.message : "Failed to change password", "error");
+      const message = error instanceof Error ? error.message : "Failed to change password";
+      showToast(message, "error");
+      setErrors({ submit: message });
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <>
-      <style>{`
-        @keyframes cpf-spin { to { transform: rotate(360deg); } }
-        @keyframes cpf-fade-up {
-          from { opacity: 0; transform: translateY(10px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .cpf-root { animation: cpf-fade-up 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-        .cpf-back { transition: background 150ms, color 150ms, transform 150ms; }
-        .cpf-back:hover { background: rgba(5,47,68,0.06) !important; transform: translateX(-2px); }
-        .cpf-submit { transition: transform 160ms, box-shadow 160ms; }
-        .cpf-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 20px 44px rgba(5,47,68,0.28) !important; }
-        .cpf-submit:active:not(:disabled) { transform: none; }
-      `}</style>
+    <PageLayout
+      title="Change Password"
+      subtitle="Update your password to keep your account secure"
+      maxWidth="md"
+    >
+      <div className="grid gap-8">
+        {/* Back button */}
+        <Link
+          href={dashboardPath}
+          className="inline-flex items-center gap-2 text-sm font-medium text-brand-navy/70 hover:text-brand-navy transition-colors w-fit"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </Link>
 
-      <main
-        className="cpf-root app-shell"
-        style={{ display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "2.5rem 1rem" }}
-      >
-        <div style={{ width: "100%", maxWidth: 480, display: "flex", flexDirection: "column", gap: 0 }}>
-          {/* Card */}
-          <div
-            style={{
-              background: "white",
-              borderRadius: 24,
-              border: "1px solid rgba(212,230,239,0.8)",
-              boxShadow: "0 20px 60px rgba(5,47,68,0.1), 0 1px 0 rgba(255,255,255,0.9) inset",
-              overflow: "hidden",
-            }}
-          >
-            {/* Header band */}
-            <div
-              style={{
-                background: "linear-gradient(135deg, #052f44 0%, #065770 55%, #076b82 100%)",
-                padding: "22px 28px 20px",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <svg
-                style={{ position: "absolute", bottom: -24, right: -12, opacity: 0.1, pointerEvents: "none" }}
-                width="150"
-                height="100"
-                viewBox="0 0 150 100"
-                fill="none"
-              >
-                <circle cx="130" cy="100" r="90" stroke="white" strokeWidth="1" />
-                <circle cx="130" cy="100" r="55" stroke="white" strokeWidth="0.7" />
-              </svg>
-
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 12,
-                      flexShrink: 0,
-                      background: "rgba(169,211,239,0.15)",
-                      border: "1px solid rgba(169,211,239,0.25)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <IconShield />
-                  </div>
-                  <div>
-                    <h1 style={{ fontSize: 18, fontWeight: 900, color: "white", letterSpacing: "-0.035em", margin: 0 }}>
-                      Change Password
-                    </h1>
-                    <p style={{ fontSize: 12, color: "rgba(169,211,239,0.75)", margin: "2px 0 0" }}>
-                      Update your account password securely
-                    </p>
-                  </div>
-                </div>
-
-                {/* Back button */}
-                <Link
-                  href={dashboardPath}
-                  className="cpf-back"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    fontSize: 12,
-                    fontWeight: 700,
-                    color: "rgba(169,211,239,0.85)",
-                    background: "rgba(255,255,255,0.08)",
-                    border: "1px solid rgba(255,255,255,0.14)",
-                    borderRadius: 9,
-                    padding: "6px 12px",
-                    textDecoration: "none",
-                    flexShrink: 0,
-                  }}
-                >
-                  <IconArrowLeft /> Dashboard
-                </Link>
+        {/* Main form card */}
+        <motion.div
+          className="bg-white rounded-2xl border border-slate-200/60 shadow-sm p-8 space-y-6"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Security info box */}
+          <div className="bg-brand-light/60 rounded-xl p-4 border border-brand-sky/30">
+            <div className="flex gap-3">
+              <Lock className="w-5 h-5 text-brand-teal flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium text-brand-navy">
+                  Keep Your Account Secure
+                </p>
+                <p className="text-xs text-brand-navy/60 mt-1">
+                  Use a strong password with at least 8 characters, including letters, numbers, and symbols.
+                </p>
               </div>
             </div>
+          </div>
 
-            {/* Security notice */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                background: "rgba(169,211,239,0.1)",
-                borderBottom: "1px solid rgba(212,230,239,0.6)",
-                padding: "10px 28px",
-              }}
+          {/* Error summary */}
+          {errors.submit && (
+            <motion.div
+              className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden>
-                <circle cx="6.5" cy="6.5" r="5.5" stroke="#075f75" strokeWidth="1.2" />
-                <path d="M6.5 5.5v4M6.5 4h.01" stroke="#075f75" strokeWidth="1.2" strokeLinecap="round" />
-              </svg>
-              <p style={{ fontSize: 11, color: "#075f75", fontWeight: 600, margin: 0 }}>
-                Your password must be at least 8 characters. Use a mix of letters, numbers, and symbols for best
-                security.
-              </p>
-            </div>
+              {errors.submit}
+            </motion.div>
+          )}
 
-            {/* Form body */}
-            <div style={{ padding: "26px 28px 30px" }}>
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <PasswordField
-                  id="currentPassword"
-                  label="Current Password"
+          <ModernForm onSubmit={handleSubmit} isSubmitting={isSubmitting} submitButtonText="Change Password">
+            {/* Current Password */}
+            <FormField
+              label="Current Password"
+              error={errors.currentPassword}
+              required
+            >
+              <div className="relative">
+                <ModernInput
+                  type={showCurrentPassword ? "text" : "password"}
                   value={currentPassword}
-                  onChange={setCurrentPassword}
-                  minLength={8}
-                />
-
-                {/* Divider */}
-                <div
-                  style={{
-                    height: 1,
-                    background: "linear-gradient(90deg, transparent, #d4e6ef 40%, #d4e6ef 60%, transparent)",
+                  onChange={(e) => {
+                    setCurrentPassword(e.target.value);
+                    if (errors.currentPassword) {
+                      const newErrors = { ...errors };
+                      delete newErrors.currentPassword;
+                      setErrors(newErrors);
+                    }
                   }}
+                  placeholder="••••••••"
+                  icon={<Lock className="w-4 h-4" />}
                 />
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <PasswordField
-                    id="newPassword"
-                    label="New Password"
-                    value={newPassword}
-                    onChange={setNewPassword}
-                    minLength={8}
-                  />
-                  <StrengthMeter password={newPassword} />
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                  <PasswordField
-                    id="confirmNewPassword"
-                    label="Confirm New Password"
-                    value={confirmNewPassword}
-                    onChange={setConfirmNewPassword}
-                    minLength={8}
-                  />
-                  <MatchIndicator newPw={newPassword} confirm={confirmNewPassword} />
-                </div>
-
                 <button
-                  className="cpf-submit"
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
-                    width: "100%",
-                    height: "2.85rem",
-                    borderRadius: 12,
-                    border: "none",
-                    cursor: isSubmitting ? "not-allowed" : "pointer",
-                    background: isSubmitting
-                      ? "#7a9fb0"
-                      : "linear-gradient(135deg, #052f44 0%, #065770 60%, #076b82 100%)",
-                    color: "white",
-                    fontSize: 14,
-                    fontWeight: 800,
-                    letterSpacing: "-0.01em",
-                    boxShadow: "0 12px 32px rgba(5,47,68,0.22)",
-                    opacity: isSubmitting ? 0.8 : 1,
-                    fontFamily: "inherit",
-                    marginTop: 4,
-                  }}
+                  type="button"
+                  onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-navy/60 hover:text-brand-navy transition-colors"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <IconSpinner /> Saving…
-                    </>
+                  {showCurrentPassword ? (
+                    <EyeOff className="w-4 h-4" />
                   ) : (
-                    <>
-                      Update Password <IconArrow />
-                    </>
+                    <Eye className="w-4 h-4" />
                   )}
                 </button>
-              </form>
-            </div>
+              </div>
+            </FormField>
+
+            {/* New Password */}
+            <FormField
+              label="New Password"
+              error={errors.newPassword}
+              required
+            >
+              <div className="relative">
+                <ModernInput
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                    if (errors.newPassword) {
+                      const newErrors = { ...errors };
+                      delete newErrors.newPassword;
+                      setErrors(newErrors);
+                    }
+                  }}
+                  placeholder="••••••••"
+                  icon={<Lock className="w-4 h-4" />}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-navy/60 hover:text-brand-navy transition-colors"
+                >
+                  {showNewPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+
+              {/* Password strength indicator */}
+              {newPassword && (
+                <motion.div
+                  className="mt-2 space-y-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <div
+                        key={i}
+                        className={`flex-1 h-1 rounded-full transition-colors ${
+                          i <= passwordStrength
+                            ? passwordStrength >= 4
+                              ? "bg-green-500"
+                              : passwordStrength >= 3
+                                ? "bg-amber-500"
+                                : "bg-red-500"
+                            : "bg-slate-200"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-xs font-medium text-brand-navy/60">
+                    Strength: {["Very Weak", "Weak", "Fair", "Good", "Strong"][Math.min(passwordStrength - 1, 4)]}
+                  </p>
+                </motion.div>
+              )}
+            </FormField>
+
+            {/* Confirm New Password */}
+            <FormField
+              label="Confirm New Password"
+              error={errors.confirmPassword}
+              required
+            >
+              <div className="relative">
+                <ModernInput
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmNewPassword}
+                  onChange={(e) => {
+                    setConfirmNewPassword(e.target.value);
+                    if (errors.confirmPassword) {
+                      const newErrors = { ...errors };
+                      delete newErrors.confirmPassword;
+                      setErrors(newErrors);
+                    }
+                  }}
+                  placeholder="••••••••"
+                  icon={<Lock className="w-4 h-4" />}
+                  variant={passwordMatch ? "default" : confirmNewPassword ? "default" : "default"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-navy/60 hover:text-brand-navy transition-colors"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+
+              {confirmNewPassword && (
+                <motion.p
+                  className={`text-xs font-medium mt-2 ${
+                    passwordMatch ? "text-green-600" : "text-red-600"
+                  }`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  {passwordMatch ? "✓ Passwords match" : "✗ Passwords do not match"}
+                </motion.p>
+              )}
+            </FormField>
+          </ModernForm>
+
+          {/* Additional info */}
+          <div className="pt-4 border-t border-slate-100 space-y-3">
+            <p className="text-xs text-brand-navy/60 font-medium">Password requirements:</p>
+            <ul className="text-xs text-brand-navy/60 space-y-1">
+              <li className="flex items-center gap-2">
+                <span className={newPassword.length >= 8 ? "text-green-600" : "text-slate-400"}>✓</span>
+                At least 8 characters
+              </li>
+              <li className="flex items-center gap-2">
+                <span className={/[A-Z]/.test(newPassword) ? "text-green-600" : "text-slate-400"}>✓</span>
+                One uppercase letter
+              </li>
+              <li className="flex items-center gap-2">
+                <span className={/[0-9]/.test(newPassword) ? "text-green-600" : "text-slate-400"}>✓</span>
+                One number
+              </li>
+            </ul>
           </div>
-        </div>
-      </main>
-    </>
+        </motion.div>
+      </div>
+    </PageLayout>
   );
+}
+
+function calculatePasswordStrength(password: string): number {
+  let strength = 0;
+  if (password.length >= 8) strength++;
+  if (password.length >= 12) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+  return Math.min(strength, 5);
 }
