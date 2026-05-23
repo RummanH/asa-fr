@@ -387,7 +387,6 @@ function FilterTab({
         gap: 6,
         padding: "6px 14px",
         borderRadius: 10,
-        border: "none",
         background: active ? "linear-gradient(135deg,#052f44,#075f75)" : "white",
         color: active ? "white" : "#5d7280",
         fontSize: 12,

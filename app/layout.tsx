@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import "./globals.css";
 
@@ -45,12 +44,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`h-full antialiased ${GeistSans.variable}`}>
+    <html lang="en" className="h-full antialiased">
       <body
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-background text-foreground"
         style={{
-          fontFamily: "var(--font-geist-sans), system-ui, -apple-system, sans-serif",
+          fontFamily: "system-ui, -apple-system, sans-serif",
           WebkitTapHighlightColor: "transparent",
           overscrollBehavior: "none",
         }}
