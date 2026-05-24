@@ -9,8 +9,8 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          navy: "#07111f",
-          ink: "#132238",
+          navy: "#102033",
+          ink: "#07111f",
           teal: "#0b8f88",
           sky: "#b9e7fb",
           light: "#f5fbfd",

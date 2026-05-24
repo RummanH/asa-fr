@@ -54,8 +54,8 @@ export function PopularOpportunitiesSection() {
             <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
               Popular opportunities
             </motion.p>
-            <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
-              Role categories built for quick scanning.
+            <motion.h2 className="heading-lg mt-4 max-w-xl text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
+              Find the right teaching opportunity faster.
             </motion.h2>
           </div>
           <motion.p className="landing-kicker max-w-2xl lg:ml-auto" variants={fadeUp(prefersReducedMotion, 12)}>

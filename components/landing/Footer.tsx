@@ -89,8 +89,12 @@ export function Footer() {
               <li className="flex items-center gap-2">
                 <Mail size={16} /> support@example.com
               </li>
-              <li className="flex items-center gap-2">
-                <MapPin size={16} /> Dhaka, Bangladesh
+              <li className="flex items-start gap-2">
+                <MapPin className="mt-0.5 shrink-0" size={16} />
+                <address className="not-italic">
+                  <span className="block text-xs font-black uppercase tracking-[0.06em] text-white/42">Address</span>
+                  <span className="mt-1 block leading-6">Dhaka, Bangladesh</span>
+                </address>
               </li>
             </ul>
           </motion.div>

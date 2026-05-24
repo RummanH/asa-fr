@@ -77,7 +77,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-brand-light">
+    <main className="min-h-screen bg-brand-light">
       <HeroSection />
       <StatsSection />
       <LearningFlexibilitySection />

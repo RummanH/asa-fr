@@ -44,10 +44,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="min-h-full overflow-y-auto antialiased">
+    <html lang="en" className="min-h-full antialiased">
       <body
         suppressHydrationWarning
-        className="min-h-screen overflow-x-hidden bg-background text-foreground"
+        className="min-h-screen bg-background text-foreground"
         style={{
           fontFamily: "system-ui, -apple-system, sans-serif",
           WebkitTapHighlightColor: "transparent",

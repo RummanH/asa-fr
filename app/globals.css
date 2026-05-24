@@ -59,8 +59,8 @@
   --radius: 0.75rem;
 
   /* Modern brand colors */
-  --brand-navy: #07111f;
-  --brand-ink: #132238;
+  --brand-navy: #102033;
+  --brand-ink: #07111f;
   --brand-teal: #0b8f88;
   --brand-sky: #b9e7fb;
   --brand-light: #f5fbfd;
@@ -72,19 +72,19 @@
 
   /* Shadcn / Tailwind design tokens */
   --background: #ffffff;
-  --foreground: #07111f;
+  --foreground: #102033;
 
   --card: #ffffff;
-  --card-foreground: #07111f;
+  --card-foreground: #102033;
 
   --popover: #ffffff;
-  --popover-foreground: #07111f;
+  --popover-foreground: #102033;
 
   --primary: #0d7d8f;
   --primary-foreground: #ffffff;
 
   --secondary: #a9d3ef;
-  --secondary-foreground: #07111f;
+  --secondary-foreground: #102033;
 
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
@@ -135,7 +135,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: auto;
 }
 
@@ -143,8 +143,7 @@ body {
   @apply bg-background text-foreground;
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-x: clip;
 }
 
 /* Modern animations */
@@ -529,7 +528,7 @@ body {
 }
 
 .landing-kicker {
-  color: rgba(7, 17, 31, 0.68);
+  color: rgba(16, 32, 51, 0.62);
   font-size: 0.95rem;
   line-height: 1.75;
 }
@@ -564,7 +563,7 @@ body {
 
 .landing-section-title {
   color: var(--brand-navy);
-  max-width: 11ch;
+  max-width: 12ch;
 }
 
 .landing-action-row {
