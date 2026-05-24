@@ -2,15 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, BookOpenCheck, LogIn, Menu, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { fadeUp } from "@/lib/animations";
 
 const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#opportunities", label: "Opportunities" },
-  { href: "#process", label: "How It Works" },
+  { href: "#flexible-recruitment", label: "Platform" },
+  { href: "#opportunities", label: "Roles" },
+  { href: "#process", label: "Process" },
+  { href: "#contact", label: "Contact" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -30,14 +31,14 @@ export function Navbar() {
   return (
     <motion.header
       animate="visible"
-      className="brand-container relative z-30 pt-5 md:pt-7"
+      className="brand-container relative z-30 pt-4 md:pt-6"
       initial="hidden"
       variants={fadeUp(prefersReducedMotion, 16)}
     >
-      <nav className="rounded-2xl border border-white/20 bg-[#03334bcc] px-4 py-3 shadow-[0_18px_50px_rgba(0,24,38,0.26)] backdrop-blur-xl sm:px-5 lg:px-7">
-        <div className="flex min-h-12 items-center justify-between gap-4">
-          <Link className="inline-flex items-center gap-3" href="/">
-            <span className="relative inline-flex h-10 w-10 overflow-hidden rounded-xl border border-white/15 bg-white/10">
+      <nav className="border border-white/55 bg-white/88 px-3 py-3 text-brand-navy shadow-[0_24px_70px_rgba(7,17,31,0.18)] backdrop-blur-xl sm:px-4 lg:px-5">
+        <div className="flex min-h-12 items-center justify-between gap-3">
+          <Link className="inline-flex min-w-0 items-center gap-3" href="/">
+            <span className="relative inline-flex h-10 w-10 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
               <Image
                 alt="Teacher Hiring Platform"
                 className="object-cover"
@@ -46,27 +47,33 @@ export function Navbar() {
                 src="/landing/logo-mark.png"
               />
             </span>
-            <span className="text-sm font-extrabold text-white sm:text-base">Teacher Hiring Platform</span>
+            <span className="truncate text-sm font-black text-brand-navy sm:text-base">
+              Teacher Hiring Platform
+            </span>
           </Link>
 
-          <ul className="hidden items-center gap-7 lg:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {navLinks.map((item) => (
               <li key={item.href}>
-                <Link className="text-sm font-semibold text-white/76 transition hover:text-white" href={item.href}>
+                <Link
+                  className="inline-flex items-center px-4 py-2 text-sm font-bold text-brand-navy/64 transition hover:bg-brand-mist hover:text-brand-navy"
+                  href={item.href}
+                >
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
 
-          <div className="hidden items-center gap-3 sm:flex">
+          <div className="hidden items-center gap-2 sm:flex">
             <Link
-              className="rounded-xl border border-white/15 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-white/10"
+              className="inline-flex items-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-sm font-extrabold text-brand-navy transition hover:bg-brand-mist"
               href="/login"
             >
+              <LogIn size={16} strokeWidth={2.4} />
               Login
             </Link>
-            <Link className="btn-primary bg-white px-5 py-2.5 text-sm font-bold text-brand-navy hover:bg-brand-sky" href="/register">
+            <Link className="btn-primary px-4 py-2.5 text-sm font-extrabold" href="/register">
               Register <ArrowRight size={16} strokeWidth={2.4} />
             </Link>
           </div>
@@ -75,7 +82,7 @@ export function Navbar() {
             aria-controls="mobile-nav"
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/15 lg:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-brand-navy/12 bg-white text-brand-navy transition hover:bg-brand-mist lg:hidden"
             onClick={() => setIsMenuOpen((current) => !current)}
             type="button"
           >
@@ -90,12 +97,12 @@ export function Navbar() {
           id="mobile-nav"
         >
           <div className="overflow-hidden">
-            <div className="my-3 h-px bg-white/12" />
-            <ul className="space-y-1">
+            <div className="my-3 h-px bg-brand-navy/10" />
+            <ul className="grid gap-1">
               {navLinks.map((item) => (
                 <li key={item.href}>
                   <Link
-                    className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-white/86 transition hover:bg-white/10 hover:text-white"
+                    className="block px-3 py-2.5 text-sm font-bold text-brand-navy/76 transition hover:bg-brand-mist hover:text-brand-navy"
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -105,11 +112,17 @@ export function Navbar() {
               ))}
             </ul>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:hidden">
-              <Link className="rounded-xl border border-white/15 px-4 py-2.5 text-center text-sm font-bold text-white" href="/login">
-                Login
+              <Link
+                className="inline-flex items-center justify-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-center text-sm font-extrabold text-brand-navy"
+                href="/login"
+              >
+                <LogIn size={15} /> Login
               </Link>
-              <Link className="rounded-xl bg-white px-4 py-2.5 text-center text-sm font-bold text-brand-navy" href="/register">
-                Register
+              <Link
+                className="inline-flex items-center justify-center gap-2 bg-brand-navy px-4 py-2.5 text-center text-sm font-extrabold text-white"
+                href="/register"
+              >
+                <BookOpenCheck size={15} /> Register
               </Link>
             </div>
           </div>

@@ -1,39 +1,30 @@
 "use client";
 
-import { CalendarClock, MapPin, MessagesSquare } from "lucide-react";
+import { CalendarClock, CheckCircle2, MapPin, MessagesSquare } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 
 const features = [
   {
     icon: MapPin,
-    title: "Search by fit",
-    description: "Filter teachers by subject, class level, location, availability, and online or offline teaching mode.",
-    details: [
-      "Subject and class-level based filtering",
-      "Location and teaching mode matching",
-      "Availability-aware teacher discovery",
-    ],
+    title: "Precision matching",
+    description: "Search by subject, class level, location, availability, salary expectation, and teaching mode.",
+    details: ["Subject and level filters", "Location-aware discovery", "Online and offline modes"],
+    tone: "bg-brand-teal text-white",
   },
   {
     icon: CalendarClock,
-    title: "Work around schedules",
-    description: "Teachers can find full-time, part-time, contract, and flexible institution requirements.",
-    details: [
-      "Full-time institution roles",
-      "Part-time and contract opportunities",
-      "Flexible hiring requirements by schedule",
-    ],
+    title: "Flexible opportunities",
+    description: "Support full-time, part-time, contract, temporary, coaching, and online tutoring roles.",
+    details: ["Schedule-fit roles", "Institution posts", "Teacher-side browsing"],
+    tone: "bg-brand-coral text-white",
   },
   {
     icon: MessagesSquare,
-    title: "Discuss before hiring",
-    description: "Direct chat keeps expectations, salary range, and role details clear before a request is sent.",
-    details: [
-      "Role details confirmed in chat",
-      "Salary and time expectations aligned",
-      "Level 3 check: hiring request sent only after discussion",
-    ],
+    title: "Conversation first",
+    description: "Use direct chat to confirm expectations before either side commits to a hiring request.",
+    details: ["Shared context", "Clear salary discussion", "Request status tracking"],
+    tone: "bg-brand-gold text-brand-navy",
   },
 ];
 
@@ -44,21 +35,23 @@ export function LearningFlexibilitySection() {
     <section className="landing-section section-soft border-y border-[#dbeaf1]" id="flexible-recruitment">
       <div className="brand-container">
         <motion.div
-          className="mx-auto max-w-3xl text-center"
+          className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end"
           initial={prefersReducedMotion ? "visible" : "hidden"}
           variants={staggerContainer(prefersReducedMotion, 0.1)}
           viewport={{ once: true, amount: 0.2 }}
           whileInView="visible"
         >
-          <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
-            Flexible recruitment
-          </motion.p>
-          <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
-            Teacher hiring that adapts to every classroom need.
-          </motion.h2>
-          <motion.p className="landing-kicker mx-auto mt-4 max-w-2xl" variants={fadeUp(prefersReducedMotion, 12)}>
-            The platform handles both sides of the marketplace: institutions get sharper search and teachers get better
-            visibility into real opportunities.
+          <div>
+            <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
+              Flexible recruitment
+            </motion.p>
+            <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
+              Hiring that adapts to every classroom need.
+            </motion.h2>
+          </div>
+          <motion.p className="landing-kicker max-w-2xl lg:ml-auto" variants={fadeUp(prefersReducedMotion, 12)}>
+            Institutions get sharper discovery and teachers get better visibility into real roles, without forcing a
+            slow recruitment workflow onto either side.
           </motion.p>
         </motion.div>
 
@@ -69,32 +62,26 @@ export function LearningFlexibilitySection() {
           viewport={{ once: true, amount: 0.2 }}
           whileInView="visible"
         >
-          {features.map(({ icon: Icon, title, description, details }, index) => (
+          {features.map(({ icon: Icon, title, description, details, tone }) => (
             <motion.article
-              className={`landing-card-subtle p-6 ${index === 1 ? "border-2 border-brand-teal/35 bg-[#f0f9fd]" : ""}`}
+              className="landing-card-subtle h-full p-5"
               key={title}
               variants={scaleIn(prefersReducedMotion)}
               whileHover={prefersReducedMotion ? undefined : { y: -5 }}
             >
-              <div
-                className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${
-                  index === 1 ? "bg-brand-light text-brand-teal" : "bg-brand-light text-brand-teal"
-                }`}
-              >
-                <Icon size={21} strokeWidth={2.3} />
+              <div className={`inline-flex h-11 w-11 items-center justify-center ${tone}`}>
+                <Icon size={21} strokeWidth={2.4} />
               </div>
               <h3 className="mt-5 text-xl font-black text-brand-navy">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-brand-navy/78">{description}</p>
-              <details className="mt-4 rounded-xl border border-brand-teal/20 bg-white/75 p-3">
-                <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-[0.06em] text-brand-teal">
-                  Expand details
-                </summary>
-                <ul className="mt-3 space-y-1.5 text-sm leading-6 text-brand-navy/78">
-                  {details.map((line) => (
-                    <li key={line}>• {line}</li>
-                  ))}
-                </ul>
-              </details>
+              <p className="mt-3 text-sm leading-7 text-brand-navy/70">{description}</p>
+              <div className="mt-5 space-y-2 border-t border-brand-navy/10 pt-4">
+                {details.map((line) => (
+                  <div className="flex items-center gap-2 text-sm font-bold text-brand-navy/72" key={line}>
+                    <CheckCircle2 className="shrink-0 text-brand-emerald" size={16} strokeWidth={2.4} />
+                    <span>{line}</span>
+                  </div>
+                ))}
+              </div>
             </motion.article>
           ))}
         </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 
@@ -16,7 +16,7 @@ const faqItems = [
   },
   {
     question: "Can teachers chat with institutions?",
-    answer: "Yes. Direct chat is part of the workflow so both sides can clarify expectations before any request is accepted.",
+    answer: "Yes. Direct chat is part of the workflow so both sides can clarify expectations before a request is accepted.",
   },
   {
     question: "How does hiring work?",
@@ -34,7 +34,7 @@ export function FAQSection() {
   return (
     <section className="landing-section bg-white" id="faq">
       <div className="brand-container">
-        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <motion.div
             initial="hidden"
             variants={staggerContainer(prefersReducedMotion, 0.1)}
@@ -44,13 +44,13 @@ export function FAQSection() {
             <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
               Common questions
             </motion.p>
-            <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
-              Answers before you create an account.
+            <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
+              Answers before account creation.
             </motion.h2>
             <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
               Key details about registration, job posts, direct chat, and the hiring request flow.
             </motion.p>
-            <motion.div className="landing-image relative mt-8 h-64 shadow-[0_18px_48px_rgba(5,47,68,0.12)]" variants={scaleIn(prefersReducedMotion)}>
+            <motion.div className="landing-image relative mt-8 h-64 shadow-[0_18px_48px_rgba(7,17,31,0.1)]" variants={scaleIn(prefersReducedMotion)}>
               <Image
                 alt="Teacher hiring questions"
                 className="object-cover"
@@ -76,10 +76,13 @@ export function FAQSection() {
                 variants={fadeUp(prefersReducedMotion, 10)}
               >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-black text-brand-navy">
-                  {item.question}
+                  <span className="flex min-w-0 items-center gap-3">
+                    <HelpCircle className="shrink-0 text-brand-teal" size={19} strokeWidth={2.4} />
+                    <span>{item.question}</span>
+                  </span>
                   <ChevronDown className="shrink-0 text-brand-teal transition group-open:rotate-180" size={20} strokeWidth={2.4} />
                 </summary>
-                <p className="mt-3 text-sm leading-7 text-brand-navy/68 md:text-base">{item.answer}</p>
+                <p className="mt-3 pl-8 text-sm leading-7 text-brand-navy/68 md:text-base">{item.answer}</p>
               </motion.details>
             ))}
           </motion.div>

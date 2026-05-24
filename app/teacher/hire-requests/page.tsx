@@ -216,7 +216,7 @@ function RequestCard({
               <Icon d={I.message} size={13} />
             </span>
             <p style={{ fontSize: 12, color: "#2d4f60", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
-              "{request.message}"
+              &ldquo;{request.message}&rdquo;
             </p>
           </div>
         )}

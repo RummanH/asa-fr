@@ -5,9 +5,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: {
     default: "Teacher Hiring Platform",
-    template: "%s · Teacher Hiring Platform",
+    template: "%s - Teacher Hiring Platform",
   },
-  description: "The modern marketplace connecting great teachers with great institutions.",
+  description: "A premium education hiring marketplace for teachers and institutions.",
   applicationName: "Teacher Hiring Platform",
   keywords: ["teacher", "hiring", "institution", "jobs", "education", "marketplace"],
   authors: [{ name: "Teacher Hiring Platform" }],
@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     title: "Teacher Hiring Platform",
-    description: "The modern marketplace connecting great teachers with great institutions.",
+    description: "A premium education hiring marketplace for teachers and institutions.",
     siteName: "Teacher Hiring Platform",
   },
   twitter: {
     card: "summary_large_image",
     title: "Teacher Hiring Platform",
-    description: "The modern marketplace connecting great teachers with great institutions.",
+    description: "A premium education hiring marketplace for teachers and institutions.",
   },
   icons: {
     icon: "/favicon.ico",
@@ -37,21 +37,20 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#052f44",
+  themeColor: "#07111f",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="min-h-full overflow-y-auto antialiased">
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-background text-foreground"
+        className="min-h-screen overflow-x-hidden bg-background text-foreground"
         style={{
           fontFamily: "system-ui, -apple-system, sans-serif",
           WebkitTapHighlightColor: "transparent",
-          overscrollBehavior: "none",
         }}
       >
         <ToastProvider>{children}</ToastProvider>

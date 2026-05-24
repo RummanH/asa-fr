@@ -1,28 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { Quote } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 
 const testimonials = [
   {
     id: "testimonial-1",
-    quote: "Posting teacher requirements and starting a direct chat from the same place saves our admin team real time.",
+    quote: "Posting requirements, reviewing profiles, and starting a direct chat from one place gives our admin team a cleaner hiring rhythm.",
     name: "Admin Representative",
     role: "School Institution",
     image: "/landing/testimonial-1.png",
   },
   {
     id: "testimonial-2",
-    quote: "I can show my subjects, browse institution posts, and respond to hiring requests without scattered messages.",
+    quote: "My subjects, schedule, salary expectation, and teaching mode are visible before the conversation starts, so the matches feel more relevant.",
     name: "Professional Teacher",
     role: "Subject Specialist",
     image: "/landing/testimonial-2.png",
   },
   {
     id: "testimonial-3",
-    quote: "The workflow is simple enough for repeated hiring, but structured enough to keep every request clear.",
+    quote: "The request flow is simple enough for everyday hiring, but structured enough that every decision has context.",
     name: "Education Coordinator",
     role: "Training Center",
     image: "/landing/testimonial-3.png",
@@ -33,21 +33,27 @@ export function TestimonialsSection() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="landing-section section-soft">
+    <section className="landing-section bg-white">
       <div className="brand-container">
         <motion.div
-          className="mx-auto max-w-3xl text-center"
+          className="grid gap-7 lg:grid-cols-[0.82fr_1.18fr] lg:items-end"
           initial="hidden"
           variants={staggerContainer(prefersReducedMotion, 0.1)}
           viewport={{ once: true, amount: 0.2 }}
           whileInView="visible"
         >
-          <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
-            Trusted feedback
+          <div>
+            <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
+              Trusted feedback
+            </motion.p>
+            <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
+              Clearer hiring for education teams.
+            </motion.h2>
+          </div>
+          <motion.p className="landing-kicker max-w-2xl lg:ml-auto" variants={fadeUp(prefersReducedMotion, 12)}>
+            The product story is simple: less fragmented communication, better profile context, and fewer uncertain
+            hiring steps.
           </motion.p>
-          <motion.h2 className="heading-lg mt-4 text-brand-navy" variants={fadeUp(prefersReducedMotion, 16)}>
-            Clearer hiring for real education teams.
-          </motion.h2>
         </motion.div>
 
         <motion.div
@@ -64,10 +70,17 @@ export function TestimonialsSection() {
               variants={scaleIn(prefersReducedMotion)}
               whileHover={prefersReducedMotion ? undefined : { y: -6 }}
             >
-              <Quote className="text-brand-sky" size={30} strokeWidth={2.1} />
+              <div className="flex items-center justify-between gap-4">
+                <Quote className="text-brand-sky" size={30} strokeWidth={2.1} />
+                <div className="flex text-brand-gold">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Star key={index} size={14} fill="currentColor" strokeWidth={0} />
+                  ))}
+                </div>
+              </div>
               <p className="mt-5 flex-1 text-base leading-8 text-brand-navy/76">&ldquo;{item.quote}&rdquo;</p>
               <div className="mt-7 flex items-center gap-3 border-t border-border pt-5">
-                <div className="relative h-12 w-12 overflow-hidden rounded-full border border-border bg-brand-light">
+                <div className="relative h-12 w-12 overflow-hidden border border-border bg-brand-light">
                   <Image alt={item.name} className="object-cover" fill sizes="48px" src={item.image} />
                 </div>
                 <div>

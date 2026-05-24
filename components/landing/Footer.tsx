@@ -2,14 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
+import { ArrowRight, Mail, MapPin } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 
 const footerLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Opportunities", href: "#opportunities" },
-  { label: "How It Works", href: "#process" },
+  { label: "Platform", href: "#flexible-recruitment" },
+  { label: "Roles", href: "#opportunities" },
+  { label: "Process", href: "#process" },
+  { label: "Contact", href: "#contact" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -32,7 +33,7 @@ export function Footer() {
     >
       <div className="brand-container">
         <motion.div
-          className="grid gap-9 md:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_0.8fr_0.9fr]"
+          className="grid gap-9 md:grid-cols-2 lg:grid-cols-[1.35fr_0.75fr_0.85fr_0.95fr]"
           initial="hidden"
           variants={staggerContainer(prefersReducedMotion, 0.1)}
           viewport={{ once: true, amount: 0.2 }}
@@ -40,22 +41,28 @@ export function Footer() {
         >
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
             <Link className="inline-flex items-center gap-3" href="/">
-              <span className="relative inline-flex h-11 w-11 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+              <span className="relative inline-flex h-11 w-11 overflow-hidden border border-white/10 bg-white/10">
                 <Image alt="Teacher Hiring Platform" className="object-cover" fill sizes="44px" src="/landing/logo-mark.png" />
               </span>
               <span className="text-xl font-black text-white">Teacher Hiring Platform</span>
             </Link>
-            <p className="mt-4 max-w-md text-sm leading-7 text-white/72">
+            <p className="mt-4 max-w-md text-sm leading-7 text-white/68">
               A focused marketplace for qualified teachers and trusted educational institutions.
             </p>
+            <Link
+              className="mt-6 inline-flex items-center gap-2 border border-white/14 bg-white/8 px-4 py-2.5 text-sm font-black text-white transition hover:bg-white/14"
+              href="/register"
+            >
+              Create account <ArrowRight size={16} strokeWidth={2.4} />
+            </Link>
           </motion.div>
 
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
-            <h4 className="text-sm font-extrabold uppercase tracking-[0.12em] text-brand-sky">Explore</h4>
+            <h4 className="text-sm font-black uppercase tracking-[0.08em] text-brand-sky">Explore</h4>
             <ul className="mt-4 space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.href}>
-                  <Link className="text-sm font-semibold text-white/72 transition hover:text-white" href={link.href}>
+                  <Link className="text-sm font-semibold text-white/68 transition hover:text-white" href={link.href}>
                     {link.label}
                   </Link>
                 </li>
@@ -64,11 +71,11 @@ export function Footer() {
           </motion.div>
 
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
-            <h4 className="text-sm font-extrabold uppercase tracking-[0.12em] text-brand-sky">Accounts</h4>
+            <h4 className="text-sm font-black uppercase tracking-[0.08em] text-brand-sky">Accounts</h4>
             <ul className="mt-4 space-y-3">
               {accountLinks.map((link) => (
                 <li key={link.href}>
-                  <Link className="text-sm font-semibold text-white/72 transition hover:text-white" href={link.href}>
+                  <Link className="text-sm font-semibold text-white/68 transition hover:text-white" href={link.href}>
                     {link.label}
                   </Link>
                 </li>
@@ -77,8 +84,8 @@ export function Footer() {
           </motion.div>
 
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
-            <h4 className="text-sm font-extrabold uppercase tracking-[0.12em] text-brand-sky">Contact</h4>
-            <ul className="mt-4 space-y-3 text-sm font-semibold text-white/72">
+            <h4 className="text-sm font-black uppercase tracking-[0.08em] text-brand-sky">Contact</h4>
+            <ul className="mt-4 space-y-3 text-sm font-semibold text-white/68">
               <li className="flex items-center gap-2">
                 <Mail size={16} /> support@example.com
               </li>
@@ -90,7 +97,7 @@ export function Footer() {
         </motion.div>
 
         <div className="mt-10 h-px bg-white/10" />
-        <p className="mt-6 text-center text-xs font-semibold text-white/58 sm:text-sm">
+        <p className="mt-6 text-center text-xs font-semibold text-white/52 sm:text-sm">
           &copy; 2026 Teacher Hiring Platform. All rights reserved.
         </p>
       </div>
