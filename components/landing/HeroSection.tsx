@@ -15,17 +15,13 @@ import { motion, useReducedMotion } from "motion/react";
 import { Navbar } from "@/components/landing/Navbar";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
-const proofPoints = [
-  { icon: GraduationCap, metric: "3K+", label: "teacher profiles" },
-  { icon: Building2, metric: "400+", label: "institution posts" },
-  { icon: MessageCircle, metric: "Direct", label: "chat before requests" },
-];
-
-const trustSignals = ["Verified education profiles", "Role-ready search", "Teacher and institution paths"];
+const proofIcons = [GraduationCap, Building2, MessageCircle];
 
 export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section
@@ -57,19 +53,18 @@ export function HeroSection() {
             className="landing-radius inline-flex items-center gap-2 border border-white/20 bg-white/92 px-3 py-2 text-xs font-black uppercase tracking-[0.08em] text-brand-navy shadow-[0_18px_48px_rgba(7,17,31,0.22)] sm:text-sm"
             variants={fadeUp(prefersReducedMotion, 14)}
           >
-            <Sparkles size={16} strokeWidth={2.4} /> Education hiring, redesigned
+            <Sparkles size={16} strokeWidth={2.4} /> {copy.hero.badge}
           </motion.span>
 
           <motion.h1 className="heading-xl mt-6 max-w-[12ch] text-white" variants={fadeUp(prefersReducedMotion, 22)}>
-            Teacher Hiring Platform
+            {copy.hero.title}
           </motion.h1>
 
           <motion.p
             className="mt-6 max-w-2xl text-base leading-8 text-white/84 md:text-lg"
             variants={fadeUp(prefersReducedMotion, 18)}
           >
-            A premium marketplace where institutions discover qualified teachers, teachers find better opportunities,
-            and both sides move from profile to chat to hiring request with less friction.
+            {copy.hero.description}
           </motion.p>
 
           <motion.div className="landing-action-row mt-9" variants={fadeUp(prefersReducedMotion, 16)}>
@@ -77,10 +72,10 @@ export function HeroSection() {
               className="btn-primary bg-white px-6 py-3 text-sm font-black text-brand-navy hover:bg-brand-sky md:text-base"
               href="/register/institution"
             >
-              Hire Teachers <ArrowRight size={18} strokeWidth={2.4} />
+              {copy.hero.primary} <ArrowRight size={18} strokeWidth={2.4} />
             </Link>
             <Link className="btn-secondary px-6 py-3 text-sm font-black md:text-base" href="/register/teacher">
-              Join As Teacher
+              {copy.hero.secondary}
             </Link>
           </motion.div>
 
@@ -88,7 +83,7 @@ export function HeroSection() {
             className="mt-8 flex flex-wrap gap-2"
             variants={staggerContainer(prefersReducedMotion, 0.06)}
           >
-            {trustSignals.map((signal) => (
+            {copy.hero.trustSignals.map((signal) => (
               <motion.div
                 className="landing-radius inline-flex items-center gap-2 border border-white/14 bg-white/10 px-3 py-2 text-sm font-bold text-white/82 backdrop-blur-md"
                 key={signal}
@@ -104,7 +99,9 @@ export function HeroSection() {
             className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3"
             variants={staggerContainer(prefersReducedMotion, 0.08)}
           >
-            {proofPoints.map(({ icon: Icon, metric, label }, index) => (
+            {copy.hero.proofPoints.map(({ metric, label }, index) => {
+              const Icon = proofIcons[index] ?? GraduationCap;
+              return (
               <motion.div
                 className="landing-radius border border-white/14 bg-white/10 p-4 backdrop-blur-md"
                 key={label}
@@ -121,7 +118,8 @@ export function HeroSection() {
                 <p className="mt-4 text-2xl font-black leading-none text-white">{metric}</p>
                 <p className="mt-2 text-sm font-semibold leading-5 text-white/72">{label}</p>
               </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         </motion.div>
       </div>

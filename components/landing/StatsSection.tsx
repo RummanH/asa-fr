@@ -3,16 +3,18 @@
 import { Building2, Clock3, GraduationCap, MessagesSquare } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp } from "@/lib/animations";
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
-const stats = [
-  { icon: GraduationCap, value: "3K+", label: "active teacher profiles", tone: "text-brand-teal" },
-  { icon: Building2, value: "400+", label: "institution requirements", tone: "text-brand-coral" },
-  { icon: MessagesSquare, value: "Direct", label: "chat before decisions", tone: "text-brand-gold" },
-  { icon: Clock3, value: "Fast", label: "shorter hiring workflow", tone: "text-brand-emerald" },
+const statMeta = [
+  { icon: GraduationCap, tone: "text-brand-teal" },
+  { icon: Building2, tone: "text-brand-coral" },
+  { icon: MessagesSquare, tone: "text-brand-gold" },
+  { icon: Clock3, tone: "text-brand-emerald" },
 ];
 
 export function StatsSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section className="relative z-20 -mt-14 bg-brand-light pb-14 md:-mt-16 md:pb-20" id="stats">
@@ -25,17 +27,20 @@ export function StatsSection() {
           whileInView="visible"
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {stats.map(({ icon: Icon, value, label, tone }) => (
-              <motion.div
-                className="landing-radius border border-brand-navy/8 bg-white p-5"
-                key={label}
-                variants={fadeUp(prefersReducedMotion, 10)}
-              >
-                <Icon className={tone} size={22} strokeWidth={2.4} />
-                <p className="mt-5 text-3xl font-black leading-none text-brand-navy">{value}</p>
-                <p className="mt-2 text-sm font-bold leading-5 text-brand-navy/60">{label}</p>
-              </motion.div>
-            ))}
+            {copy.stats.map(({ value, label }, index) => {
+              const { icon: Icon, tone } = statMeta[index] ?? statMeta[0];
+              return (
+                <motion.div
+                  className="landing-radius border border-brand-navy/8 bg-white p-5"
+                  key={label}
+                  variants={fadeUp(prefersReducedMotion, 10)}
+                >
+                  <Icon className={tone} size={22} strokeWidth={2.4} />
+                  <p className="mt-5 text-3xl font-black leading-none text-brand-navy">{value}</p>
+                  <p className="mt-2 text-sm font-bold leading-5 text-brand-navy/60">{label}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>

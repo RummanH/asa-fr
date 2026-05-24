@@ -6,28 +6,24 @@ import { ArrowRight, Building2, GraduationCap } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
 const audiences = [
   {
     icon: GraduationCap,
-    title: "For Teachers",
-    description: "Show subjects, availability, expected salary, teaching mode, and experience in a profile built for discovery.",
     href: "/register/teacher",
-    cta: "Join as teacher",
     tone: "bg-brand-teal text-white",
   },
   {
     icon: Building2,
-    title: "For Institutions",
-    description: "Post requirements, review teacher profiles, start conversations, and send hiring requests from one place.",
     href: "/register/institution",
-    cta: "Hire teachers",
     tone: "bg-brand-coral text-white",
   },
 ];
 
 export function TeacherInstitutionSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section className="landing-section section-soft">
@@ -40,32 +36,34 @@ export function TeacherInstitutionSection() {
             whileInView="visible"
           >
             <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
-              Built for both sides
+              {copy.audiences.eyebrow}
             </motion.p>
             <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
-              Two clear paths, one hiring system.
+              {copy.audiences.title}
             </motion.h2>
             <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
-              Teachers need visibility and institutions need speed. The page makes both journeys obvious from the
-              first interaction.
+              {copy.audiences.description}
             </motion.p>
 
             <motion.div className="mt-8 grid gap-4 sm:grid-cols-2" variants={staggerContainer(prefersReducedMotion, 0.1)}>
-              {audiences.map(({ icon: Icon, title, description, href, cta, tone }) => (
-                <motion.article className="landing-card-subtle p-5" key={title} variants={scaleIn(prefersReducedMotion)}>
-                  <div className={`landing-radius inline-flex h-11 w-11 items-center justify-center ${tone}`}>
-                    <Icon size={23} strokeWidth={2.4} />
-                  </div>
-                  <h3 className="mt-4 text-xl font-black text-brand-navy">{title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-brand-navy/68">{description}</p>
-                  <Link
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-black text-brand-teal transition hover:text-brand-coral"
-                    href={href}
-                  >
-                    {cta} <ArrowRight size={16} strokeWidth={2.4} />
-                  </Link>
-                </motion.article>
-              ))}
+              {copy.audiences.items.map(({ title, description, cta }, index) => {
+                const { icon: Icon, href, tone } = audiences[index] ?? audiences[0];
+                return (
+                  <motion.article className="landing-card-subtle p-5" key={title} variants={scaleIn(prefersReducedMotion)}>
+                    <div className={`landing-radius inline-flex h-11 w-11 items-center justify-center ${tone}`}>
+                      <Icon size={23} strokeWidth={2.4} />
+                    </div>
+                    <h3 className="mt-4 text-xl font-black text-brand-navy">{title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-brand-navy/68">{description}</p>
+                    <Link
+                      className="mt-5 inline-flex items-center gap-2 text-sm font-black text-brand-teal transition hover:text-brand-coral"
+                      href={href}
+                    >
+                      {cta} <ArrowRight size={16} strokeWidth={2.4} />
+                    </Link>
+                  </motion.article>
+                );
+              })}
             </motion.div>
           </motion.div>
 
@@ -93,13 +91,13 @@ export function TeacherInstitutionSection() {
                 className="landing-radius border border-brand-navy/10 bg-brand-navy p-5 text-white shadow-[0_18px_44px_rgba(7,17,31,0.18)]"
                 variants={fadeUp(prefersReducedMotion, 10)}
               >
-                <p className="text-sm font-black text-brand-sky">Direct matching</p>
+                <p className="text-sm font-black text-brand-sky">{copy.audiences.directMatching}</p>
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-xl font-black sm:text-2xl">
-                  <span>Profile</span>
+                  <span>{copy.audiences.flow[0]}</span>
                   <ArrowRight className="text-brand-sky" size={20} />
-                  <span>Chat</span>
+                  <span>{copy.audiences.flow[1]}</span>
                   <ArrowRight className="text-brand-sky" size={20} />
-                  <span>Request</span>
+                  <span>{copy.audiences.flow[2]}</span>
                 </div>
               </motion.div>
             </motion.div>

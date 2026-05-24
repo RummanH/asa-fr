@@ -5,33 +5,26 @@ import { Quote, Star } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
 const testimonials = [
   {
     id: "testimonial-1",
-    quote: "Posting requirements, reviewing profiles, and starting a direct chat from one place gives our admin team a cleaner hiring rhythm.",
-    name: "Admin Representative",
-    role: "School Institution",
     image: redesignImages.testimonialOne,
   },
   {
     id: "testimonial-2",
-    quote: "My subjects, schedule, salary expectation, and teaching mode are visible before the conversation starts, so the matches feel more relevant.",
-    name: "Professional Teacher",
-    role: "Subject Specialist",
     image: redesignImages.testimonialTwo,
   },
   {
     id: "testimonial-3",
-    quote: "The request flow is simple enough for everyday hiring, but structured enough that every decision has context.",
-    name: "Education Coordinator",
-    role: "Training Center",
     image: redesignImages.testimonialThree,
   },
 ];
 
 export function TestimonialsSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section className="landing-section bg-white">
@@ -45,15 +38,14 @@ export function TestimonialsSection() {
         >
           <div>
             <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
-              Trusted feedback
+              {copy.testimonials.eyebrow}
             </motion.p>
             <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
-              Clearer hiring for education teams.
+              {copy.testimonials.title}
             </motion.h2>
           </div>
           <motion.p className="landing-kicker max-w-2xl lg:ml-auto" variants={fadeUp(prefersReducedMotion, 12)}>
-            The product story is simple: less fragmented communication, better profile context, and fewer uncertain
-            hiring steps.
+            {copy.testimonials.description}
           </motion.p>
         </motion.div>
 
@@ -64,10 +56,12 @@ export function TestimonialsSection() {
           viewport={{ once: true, amount: 0.2 }}
           whileInView="visible"
         >
-          {testimonials.map((item) => (
+          {copy.testimonials.items.map((item, index) => {
+            const meta = testimonials[index] ?? testimonials[0];
+            return (
             <motion.article
               className="landing-card flex h-full flex-col p-6"
-              key={item.id}
+              key={item.name}
               variants={scaleIn(prefersReducedMotion)}
               whileHover={prefersReducedMotion ? undefined : { y: -6 }}
             >
@@ -82,7 +76,7 @@ export function TestimonialsSection() {
               <p className="mt-5 flex-1 text-base leading-8 text-brand-navy/76">&ldquo;{item.quote}&rdquo;</p>
               <div className="mt-7 flex items-center gap-3 border-t border-border pt-5">
                 <div className="landing-radius relative h-12 w-12 overflow-hidden border border-border bg-brand-light">
-                  <Image alt={item.name} className="object-cover" fill sizes="48px" src={item.image} />
+                  <Image alt={item.name} className="object-cover" fill sizes="48px" src={meta.image} />
                 </div>
                 <div>
                   <p className="text-sm font-black text-brand-navy">{item.name}</p>
@@ -90,7 +84,8 @@ export function TestimonialsSection() {
                 </div>
               </div>
             </motion.article>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>

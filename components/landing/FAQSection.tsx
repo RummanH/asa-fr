@@ -5,32 +5,11 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
-
-const faqItems = [
-  {
-    question: "Who can use this platform?",
-    answer: "Teachers and educational institutions can register, create profiles, communicate, and manage hiring requests.",
-  },
-  {
-    question: "Can institutions post teacher requirements?",
-    answer: "Yes. Institutions can create job posts so teachers can review active opportunities and apply through the hiring flow.",
-  },
-  {
-    question: "Can teachers chat with institutions?",
-    answer: "Yes. Direct chat is part of the workflow so both sides can clarify expectations before a request is accepted.",
-  },
-  {
-    question: "How does hiring work?",
-    answer: "After discussion, an institution sends a hiring request. The teacher can accept, reject, or continue the conversation.",
-  },
-  {
-    question: "Does it support online and offline teaching?",
-    answer: "Yes. The platform supports online, offline, full-time, part-time, contract, and temporary teaching opportunities.",
-  },
-];
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
 export function FAQSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section className="landing-section bg-white" id="faq">
@@ -43,13 +22,13 @@ export function FAQSection() {
             whileInView="visible"
           >
             <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
-              Common questions
+              {copy.faq.eyebrow}
             </motion.p>
             <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
-              Answers before account creation.
+              {copy.faq.title}
             </motion.h2>
             <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
-              Key details about registration, job posts, direct chat, and the hiring request flow.
+              {copy.faq.description}
             </motion.p>
             <motion.div className="landing-image relative mt-8 h-64 shadow-[0_18px_48px_rgba(7,17,31,0.1)]" variants={scaleIn(prefersReducedMotion)}>
               <Image
@@ -69,7 +48,7 @@ export function FAQSection() {
             viewport={{ once: true, amount: 0.2 }}
             whileInView="visible"
           >
-            {faqItems.map((item, index) => (
+            {copy.faq.items.map((item, index) => (
               <motion.details
                 className="group landing-card overflow-hidden p-5 open:border-brand-sky"
                 key={item.question}

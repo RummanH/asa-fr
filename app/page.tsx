@@ -9,6 +9,7 @@ import { Footer } from "@/components/landing/Footer";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
 import { LearningFlexibilitySection } from "@/components/landing/LearningFlexibilitySection";
+import { LandingLanguageProvider } from "@/components/landing/landing-language";
 import { PlatformBenefitsSection } from "@/components/landing/PlatformBenefitsSection";
 import { PopularOpportunitiesSection } from "@/components/landing/PopularOpportunitiesSection";
 import { StatsSection } from "@/components/landing/StatsSection";
@@ -78,18 +79,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-brand-light">
-      <HeroSection />
-      <StatsSection />
-      <LearningFlexibilitySection />
-      <PopularOpportunitiesSection />
-      <HowItWorksSection />
-      <PlatformBenefitsSection />
-      <TeacherInstitutionSection />
-      <TestimonialsSection />
-      <CTASection />
-      <ContactSection />
-      <FAQSection />
-      <Footer />
+      <LandingLanguageProvider>
+        <HeroSection />
+        <StatsSection />
+        <LearningFlexibilitySection />
+        <PopularOpportunitiesSection />
+        <HowItWorksSection />
+        <PlatformBenefitsSection />
+        <TeacherInstitutionSection />
+        <TestimonialsSection />
+        <CTASection />
+        <ContactSection />
+        <FAQSection />
+        <Footer />
+      </LandingLanguageProvider>
     </main>
   );
 }

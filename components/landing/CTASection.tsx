@@ -6,9 +6,11 @@ import { ArrowRight, Building2, GraduationCap } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
 export function CTASection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section className="relative overflow-hidden bg-brand-navy py-16 text-white md:py-24">
@@ -30,13 +32,13 @@ export function CTASection() {
         >
           <div>
             <motion.p className="text-sm font-black uppercase tracking-[0.08em] text-brand-sky" variants={fadeUp(prefersReducedMotion, 10)}>
-              Start today
+              {copy.cta.eyebrow}
             </motion.p>
             <motion.h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl" variants={fadeUp(prefersReducedMotion, 16)}>
-              Bring your next teacher hiring decision into one clear workflow.
+              {copy.cta.title}
             </motion.h2>
             <motion.p className="mt-5 max-w-2xl text-base leading-8 text-white/78 md:text-lg" variants={fadeUp(prefersReducedMotion, 12)}>
-              Join as an institution to publish requirements, or create a teacher profile and start discovering roles.
+              {copy.cta.description}
             </motion.p>
           </div>
 
@@ -46,12 +48,12 @@ export function CTASection() {
               href="/register/institution"
             >
               <Building2 size={18} strokeWidth={2.4} />
-              Hire teachers
+              {copy.cta.primary}
               <ArrowRight size={18} strokeWidth={2.4} />
             </Link>
             <Link className="btn-secondary px-6 py-3 text-sm font-black md:text-base" href="/register/teacher">
               <GraduationCap size={18} strokeWidth={2.4} />
-              Join as teacher
+              {copy.cta.secondary}
             </Link>
           </motion.div>
         </motion.div>

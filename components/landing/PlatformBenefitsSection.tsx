@@ -5,29 +5,9 @@ import { CheckCircle2, ClipboardCheck, MessageSquareText, ShieldCheck, SlidersHo
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
-const benefits = [
-  {
-    icon: ShieldCheck,
-    title: "Professional profiles",
-    text: "Teachers and institutions present the exact details hiring teams need to evaluate fit.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "Direct messaging",
-    text: "Conversations stay connected to the profile and role context before any request is sent.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Request tracking",
-    text: "Sent, received, accepted, and rejected requests are easy to follow from dashboards.",
-  },
-  {
-    icon: SlidersHorizontal,
-    title: "Role flexibility",
-    text: "Online, offline, full-time, part-time, contract, and temporary hiring all fit the same flow.",
-  },
-];
+const benefitIcons = [ShieldCheck, MessageSquareText, ClipboardCheck, SlidersHorizontal];
 
 const benefitImages = [
   redesignImages.benefitOne,
@@ -38,6 +18,7 @@ const benefitImages = [
 
 export function PlatformBenefitsSection() {
   const prefersReducedMotion = useReducedMotion();
+  const { copy } = useLandingLanguage();
 
   return (
     <section className="landing-section bg-white">
@@ -76,33 +57,35 @@ export function PlatformBenefitsSection() {
             whileInView="visible"
           >
             <motion.p className="landing-eyebrow" variants={fadeUp(prefersReducedMotion, 10)}>
-              Platform benefits
+              {copy.benefits.eyebrow}
             </motion.p>
             <motion.h2 className="heading-lg landing-section-title mt-4" variants={fadeUp(prefersReducedMotion, 16)}>
-              Everything needed to decide with confidence.
+              {copy.benefits.title}
             </motion.h2>
             <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
-              Matching, communication, and request management sit in one composed workflow built for repeated hiring
-              work.
+              {copy.benefits.description}
             </motion.p>
 
             <motion.div className="mt-8 grid gap-3" variants={staggerContainer(prefersReducedMotion, 0.08)}>
-              {benefits.map(({ icon: Icon, title, text }) => (
-                <motion.div
-                  className="landing-radius grid grid-cols-[auto_1fr] gap-3 border border-brand-navy/8 bg-brand-light p-4"
-                  key={title}
-                  variants={fadeUp(prefersReducedMotion, 10)}
-                >
-                  <Icon className="mt-1 text-brand-teal" size={21} strokeWidth={2.4} />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-base font-black text-brand-navy">{title}</h3>
-                      <CheckCircle2 className="text-brand-emerald" size={16} strokeWidth={2.4} />
+              {copy.benefits.items.map(({ title, text }, index) => {
+                const Icon = benefitIcons[index] ?? ShieldCheck;
+                return (
+                  <motion.div
+                    className="landing-radius grid grid-cols-[auto_1fr] gap-3 border border-brand-navy/8 bg-brand-light p-4"
+                    key={title}
+                    variants={fadeUp(prefersReducedMotion, 10)}
+                  >
+                    <Icon className="mt-1 text-brand-teal" size={21} strokeWidth={2.4} />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-base font-black text-brand-navy">{title}</h3>
+                        <CheckCircle2 className="text-brand-emerald" size={16} strokeWidth={2.4} />
+                      </div>
+                      <p className="mt-1 text-sm leading-6 text-brand-navy/66">{text}</p>
                     </div>
-                    <p className="mt-1 text-sm leading-6 text-brand-navy/66">{text}</p>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </div>

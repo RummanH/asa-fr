@@ -1,5 +1,5 @@
 export const redesignImages = {
-  heroMain: "/hero.png",
+  heroMain: "/Hero.png",
   flexibilityMain: "/redesign/ChatGPT Image May 24, 2026, 03_20_56 PM (2).png",
   opportunitySchool: "/redesign/ChatGPT Image May 24, 2026, 03_20_56 PM (3).png",
   opportunityOnline: "/redesign/ChatGPT Image May 24, 2026, 03_20_57 PM (4).png",

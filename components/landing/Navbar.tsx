@@ -7,18 +7,20 @@ import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { fadeUp } from "@/lib/animations";
 import { redesignImages } from "@/components/landing/redesign-images";
-
-const navLinks = [
-  { href: "#flexible-recruitment", label: "Platform" },
-  { href: "#opportunities", label: "Roles" },
-  { href: "#process", label: "Process" },
-  { href: "#contact", label: "Contact" },
-  { href: "#faq", label: "FAQ" },
-];
+import { useLandingLanguage } from "@/components/landing/landing-language";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const { language, setLanguage, copy } = useLandingLanguage();
+
+  const navLinks = [
+    { href: "#flexible-recruitment", label: copy.nav.platform },
+    { href: "#opportunities", label: copy.nav.roles },
+    { href: "#process", label: copy.nav.process },
+    { href: "#contact", label: copy.nav.contact },
+    { href: "#faq", label: copy.nav.faq },
+  ];
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -67,15 +69,35 @@ export function Navbar() {
           </ul>
 
           <div className="hidden items-center gap-2 sm:flex">
+            <div className="landing-radius grid grid-cols-2 border border-brand-navy/12 bg-white p-1">
+              <button
+                className={`landing-radius px-2.5 py-1.5 text-xs font-black transition ${
+                  language === "en" ? "bg-brand-navy text-white" : "text-brand-navy/60 hover:text-brand-navy"
+                }`}
+                onClick={() => setLanguage("en")}
+                type="button"
+              >
+                EN
+              </button>
+              <button
+                className={`landing-radius px-2.5 py-1.5 text-xs font-black transition ${
+                  language === "bn" ? "bg-brand-navy text-white" : "text-brand-navy/60 hover:text-brand-navy"
+                }`}
+                onClick={() => setLanguage("bn")}
+                type="button"
+              >
+                বাংলা
+              </button>
+            </div>
             <Link
               className="landing-radius inline-flex items-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-sm font-extrabold text-brand-navy transition hover:bg-brand-mist"
               href="/login"
             >
               <LogIn size={16} strokeWidth={2.4} />
-              Login
+              {copy.nav.login}
             </Link>
             <Link className="btn-primary px-4 py-2.5 text-sm font-extrabold" href="/register">
-              Register <ArrowRight size={16} strokeWidth={2.4} />
+              {copy.nav.register} <ArrowRight size={16} strokeWidth={2.4} />
             </Link>
           </div>
 
@@ -99,6 +121,26 @@ export function Navbar() {
         >
           <div className="overflow-hidden">
             <div className="my-3 h-px bg-brand-navy/10" />
+            <div className="landing-radius mb-3 grid grid-cols-2 border border-brand-navy/12 bg-white p-1">
+              <button
+                className={`landing-radius px-3 py-2 text-sm font-black ${
+                  language === "en" ? "bg-brand-navy text-white" : "text-brand-navy/62"
+                }`}
+                onClick={() => setLanguage("en")}
+                type="button"
+              >
+                English
+              </button>
+              <button
+                className={`landing-radius px-3 py-2 text-sm font-black ${
+                  language === "bn" ? "bg-brand-navy text-white" : "text-brand-navy/62"
+                }`}
+                onClick={() => setLanguage("bn")}
+                type="button"
+              >
+                বাংলা
+              </button>
+            </div>
             <ul className="grid gap-1">
               {navLinks.map((item) => (
                 <li key={item.href}>
@@ -117,13 +159,13 @@ export function Navbar() {
                 className="landing-radius inline-flex items-center justify-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-center text-sm font-extrabold text-brand-navy"
                 href="/login"
               >
-                <LogIn size={15} /> Login
+                <LogIn size={15} /> {copy.nav.login}
               </Link>
               <Link
                 className="landing-radius inline-flex items-center justify-center gap-2 bg-brand-navy px-4 py-2.5 text-center text-sm font-extrabold text-white"
                 href="/register"
               >
-                <BookOpenCheck size={15} /> Register
+                <BookOpenCheck size={15} /> {copy.nav.register}
               </Link>
             </div>
           </div>
