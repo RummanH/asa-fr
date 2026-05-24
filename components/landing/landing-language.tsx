@@ -18,6 +18,11 @@ function getStoredLandingLanguage(): LandingLanguage {
 function setStoredLandingLanguage(language: LandingLanguage) {
   window.localStorage.setItem(LANDING_LANGUAGE_STORAGE_KEY, language);
   window.dispatchEvent(new Event(LANDING_LANGUAGE_CHANGE_EVENT));
+
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set("lang", language);
+  nextUrl.searchParams.set("refresh", String(Date.now()));
+  window.location.replace(nextUrl.toString());
 }
 
 function subscribeToLandingLanguage(callback: () => void) {
