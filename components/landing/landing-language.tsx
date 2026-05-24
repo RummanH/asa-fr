@@ -1,7 +1,34 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { landingCopy, type LandingLanguage } from "@/components/landing/landing-copy";
+
+const LANDING_LANGUAGE_STORAGE_KEY = "asa-fr-landing-language";
+const LANDING_LANGUAGE_CHANGE_EVENT = "asa-fr-landing-language-change";
+
+function getStoredLandingLanguage(): LandingLanguage {
+  if (typeof window === "undefined") {
+    return "bn";
+  }
+
+  const storedLanguage = window.localStorage.getItem(LANDING_LANGUAGE_STORAGE_KEY);
+  return storedLanguage === "en" || storedLanguage === "bn" ? storedLanguage : "bn";
+}
+
+function setStoredLandingLanguage(language: LandingLanguage) {
+  window.localStorage.setItem(LANDING_LANGUAGE_STORAGE_KEY, language);
+  window.dispatchEvent(new Event(LANDING_LANGUAGE_CHANGE_EVENT));
+}
+
+function subscribeToLandingLanguage(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(LANDING_LANGUAGE_CHANGE_EVENT, callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(LANDING_LANGUAGE_CHANGE_EVENT, callback);
+  };
+}
 
 type LandingLanguageContextValue = {
   language: LandingLanguage;
@@ -12,12 +39,16 @@ type LandingLanguageContextValue = {
 const LandingLanguageContext = createContext<LandingLanguageContextValue | null>(null);
 
 export function LandingLanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<LandingLanguage>("bn");
+  const language = useSyncExternalStore<LandingLanguage>(
+    subscribeToLandingLanguage,
+    getStoredLandingLanguage,
+    () => "bn",
+  );
 
   const value = useMemo<LandingLanguageContextValue>(
     () => ({
       language,
-      setLanguage,
+      setLanguage: setStoredLandingLanguage,
       copy: landingCopy[language],
     }),
     [language],
