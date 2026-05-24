@@ -258,13 +258,13 @@ export const landingCopy = {
   },
   bn: {
     nav: {
-      platform: "প্ল্যাটফর্ম",
-      roles: "সুযোগসমূহ",
-      process: "কীভাবে কাজ করে",
+      platform: "হোম",
+      roles: "নিয়োগ",
+      process: "ধাপ",
       contact: "যোগাযোগ",
-      faq: "সাধারণ প্রশ্ন",
+      faq: "প্রশ্ন",
       login: "লগইন",
-      register: "রেজিস্টার",
+      register: "নিবন্ধন",
     },
     hero: {
       badge: "মাদ্রাসা শিক্ষক নিয়োগের আধুনিক সমাধান",
