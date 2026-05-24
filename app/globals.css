@@ -608,6 +608,46 @@ body {
   }
 }
 
+@keyframes gallery-scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.gallery-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.gallery-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  will-change: transform;
+  animation: gallery-scroll-left 34s linear infinite;
+}
+
+.gallery-track-reverse {
+  animation-direction: reverse;
+  animation-duration: 40s;
+}
+
+.gallery-track:hover,
+.gallery-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-track,
+  .gallery-track-reverse {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .brand-container {
     width: min(100% - 3rem, 1180px);

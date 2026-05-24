@@ -180,6 +180,20 @@ export const landingCopy = {
         },
       ],
     },
+    gallery: {
+      eyebrow: "Visual gallery",
+      title: "A smooth look at the hiring flow.",
+      description:
+        "Automatic sliding views of the real product screens, showing profiles, reviews, messaging, and request handling in one continuous strip.",
+      items: [
+        "Teacher profile dashboard",
+        "Institution review panel",
+        "Direct messaging",
+        "Hiring confirmation",
+        "Create teacher profile",
+        "Discover matching roles",
+      ],
+    },
     cta: {
       eyebrow: "Start today",
       title: "Bring your next teacher hiring decision into one clear workflow.",
@@ -438,6 +452,20 @@ export const landingCopy = {
           name: "শিক্ষা সমন্বয়কারী",
           role: "মাদ্রাসা ব্যবস্থাপনা",
         },
+      ],
+    },
+    gallery: {
+      eyebrow: "দৃশ্যমান গ্যালারি",
+      title: "নিয়োগ প্রক্রিয়ার একটি মসৃণ ঝলক।",
+      description:
+        "আসল প্রোডাক্ট স্ক্রিনগুলোকে স্বয়ংক্রিয়ভাবে স্লাইড হতে দেখা যায়, যেখানে প্রোফাইল, রিভিউ, বার্তা এবং অনুরোধ ব্যবস্থাপনা একসাথে দেখানো হয়েছে।",
+      items: [
+        "শিক্ষক প্রোফাইল ড্যাশবোর্ড",
+        "প্রতিষ্ঠানের রিভিউ প্যানেল",
+        "সরাসরি বার্তা",
+        "নিয়োগ নিশ্চিতকরণ",
+        "শিক্ষক প্রোফাইল তৈরি",
+        "ম্যাচিং সুযোগ খুঁজুন",
       ],
     },
     cta: {

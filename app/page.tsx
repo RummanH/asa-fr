@@ -11,6 +11,7 @@ import { HeroSection } from "@/components/landing/HeroSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
 import { LearningFlexibilitySection } from "@/components/landing/LearningFlexibilitySection";
 import { LandingLanguageProvider } from "@/components/landing/landing-language";
+import { GallerySection } from "@/components/landing/GallerySection";
 import { PlatformBenefitsSection } from "@/components/landing/PlatformBenefitsSection";
 import { PopularOpportunitiesSection } from "@/components/landing/PopularOpportunitiesSection";
 import { StatsSection } from "@/components/landing/StatsSection";
@@ -90,6 +91,7 @@ export default function Home() {
         <PlatformBenefitsSection />
         <TeacherInstitutionSection />
         <TestimonialsSection />
+        <GallerySection />
         <CTASection />
         <ContactSection />
         <FAQSection />
