@@ -85,12 +85,12 @@ export function HowItWorksSection() {
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-4">
-                    <p className="text-4xl font-black leading-none text-brand-sky">{step.number}</p>
+                    <p className="text-3xl font-black leading-none text-brand-sky md:text-4xl">{step.number}</p>
                     <span className="landing-radius border border-brand-navy/10 bg-brand-cream px-3 py-1.5 text-xs font-black uppercase tracking-[0.06em] text-brand-navy/70">
                       {stepCopy.note}
                     </span>
                   </div>
-                  <h3 className="mt-4 text-2xl font-black text-brand-navy">{stepCopy.title}</h3>
+                  <h3 className="mt-4 text-xl font-black text-brand-navy md:text-2xl">{stepCopy.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-brand-navy/68 md:text-base">{stepCopy.description}</p>
                 </div>
               </motion.article>

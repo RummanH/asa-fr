@@ -47,7 +47,7 @@ export function Footer() {
               <span className="landing-radius relative inline-flex h-11 w-11 overflow-hidden border border-white/10 bg-white/10">
                 <Image alt="Teacher Hiring Platform" className="object-cover" fill sizes="44px" src={redesignImages.logoMark} />
               </span>
-              <span className="text-xl font-black text-white">Teacher Hiring Platform</span>
+              <span className="text-lg font-black text-white md:text-xl">Teacher Hiring Platform</span>
             </Link>
             <p className="mt-4 max-w-md text-sm leading-7 text-white/68">
               {copy.footer.description}

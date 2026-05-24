@@ -66,7 +66,7 @@ export function LearningFlexibilitySection() {
                 <div className={`landing-radius inline-flex h-11 w-11 items-center justify-center ${tone}`}>
                   <Icon size={21} strokeWidth={2.4} />
                 </div>
-                <h3 className="mt-5 text-xl font-black text-brand-navy">{title}</h3>
+                <h3 className="mt-5 text-lg font-black text-brand-navy md:text-xl">{title}</h3>
                 <p className="mt-3 text-sm leading-7 text-brand-navy/70">{description}</p>
                 <div className="mt-5 space-y-2 border-t border-brand-navy/10 pt-4">
                   {details.map((line) => (

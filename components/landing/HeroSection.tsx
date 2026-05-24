@@ -61,7 +61,7 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="mt-6 max-w-2xl text-base leading-8 text-white/84 md:text-lg"
+            className="mt-6 max-w-2xl text-sm leading-7 text-white/84 md:text-base"
             variants={fadeUp(prefersReducedMotion, 18)}
           >
             {copy.hero.description}
@@ -115,7 +115,7 @@ export function HeroSection() {
                   />
                   <ShieldCheck className="text-white/44" size={17} strokeWidth={2.2} />
                 </div>
-                <p className="mt-4 text-2xl font-black leading-none text-white">{metric}</p>
+                <p className="mt-4 text-xl font-black leading-none text-white md:text-2xl">{metric}</p>
                 <p className="mt-2 text-sm font-semibold leading-5 text-white/72">{label}</p>
               </motion.div>
               );

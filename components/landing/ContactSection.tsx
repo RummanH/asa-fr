@@ -104,7 +104,7 @@ export function ContactSection() {
                 <MessageSquareText size={21} strokeWidth={2.4} />
               </span>
               <div>
-                <h3 className="text-xl font-black text-brand-navy">{copy.contact.formTitle}</h3>
+                <h3 className="text-lg font-black text-brand-navy md:text-xl">{copy.contact.formTitle}</h3>
                 <p className="mt-1 text-sm font-semibold text-brand-navy/56">{copy.contact.formHint}</p>
               </div>
             </div>

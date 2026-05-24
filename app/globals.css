@@ -472,14 +472,14 @@ body {
 }
 
 .heading-xl {
-  font-size: 3.2rem;
+  font-size: 2.75rem;
   line-height: 1.05;
   letter-spacing: 0;
   font-weight: 900;
 }
 
 .heading-lg {
-  font-size: 2.1rem;
+  font-size: 1.85rem;
   line-height: 1.12;
   letter-spacing: 0;
   font-weight: 900;
@@ -516,12 +516,12 @@ body {
 }
 
 .landing-section {
-  padding-block: 5.25rem;
+  padding-block: 4.75rem;
 }
 
 .landing-eyebrow {
   color: var(--brand-teal);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -529,7 +529,7 @@ body {
 
 .landing-kicker {
   color: rgba(16, 32, 51, 0.62);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.75;
 }
 
@@ -588,15 +588,15 @@ body {
   }
 
   .heading-xl {
-    font-size: 4.5rem;
+    font-size: 3.85rem;
   }
 
   .heading-lg {
-    font-size: 3rem;
+    font-size: 2.55rem;
   }
 
   .landing-section {
-    padding-block: 6.5rem;
+    padding-block: 5.75rem;
   }
 
   .stat-number {
@@ -606,11 +606,11 @@ body {
 
 @media (min-width: 1180px) {
   .heading-xl {
-    font-size: 5.35rem;
+    font-size: 4.65rem;
   }
 
   .heading-lg {
-    font-size: 3.35rem;
+    font-size: 2.9rem;
   }
 }
 

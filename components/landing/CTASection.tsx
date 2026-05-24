@@ -34,24 +34,24 @@ export function CTASection() {
             <motion.p className="text-sm font-black uppercase tracking-[0.08em] text-brand-sky" variants={fadeUp(prefersReducedMotion, 10)}>
               {copy.cta.eyebrow}
             </motion.p>
-            <motion.h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight text-white md:text-5xl" variants={fadeUp(prefersReducedMotion, 16)}>
+            <motion.h2 className="mt-4 max-w-3xl text-2xl font-black leading-tight text-white md:text-4xl" variants={fadeUp(prefersReducedMotion, 16)}>
               {copy.cta.title}
             </motion.h2>
-            <motion.p className="mt-5 max-w-2xl text-base leading-8 text-white/78 md:text-lg" variants={fadeUp(prefersReducedMotion, 12)}>
+            <motion.p className="mt-5 max-w-2xl text-sm leading-7 text-white/78 md:text-base" variants={fadeUp(prefersReducedMotion, 12)}>
               {copy.cta.description}
             </motion.p>
           </div>
 
           <motion.div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1" variants={fadeUp(prefersReducedMotion, 10)}>
             <Link
-              className="btn-primary bg-white px-6 py-3 text-sm font-black text-brand-navy hover:bg-brand-sky md:text-base"
+              className="btn-primary bg-white px-6 py-3 text-sm font-black text-brand-navy"
               href="/register/institution"
             >
               <Building2 size={18} strokeWidth={2.4} />
               {copy.cta.primary}
               <ArrowRight size={18} strokeWidth={2.4} />
             </Link>
-            <Link className="btn-secondary px-6 py-3 text-sm font-black md:text-base" href="/register/teacher">
+            <Link className="btn-secondary px-6 py-3 text-sm font-black" href="/register/teacher">
               <GraduationCap size={18} strokeWidth={2.4} />
               {copy.cta.secondary}
             </Link>

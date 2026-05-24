@@ -53,7 +53,7 @@ export function TeacherInstitutionSection() {
                     <div className={`landing-radius inline-flex h-11 w-11 items-center justify-center ${tone}`}>
                       <Icon size={23} strokeWidth={2.4} />
                     </div>
-                    <h3 className="mt-4 text-xl font-black text-brand-navy">{title}</h3>
+                    <h3 className="mt-4 text-lg font-black text-brand-navy md:text-xl">{title}</h3>
                     <p className="mt-3 text-sm leading-7 text-brand-navy/68">{description}</p>
                     <Link
                       className="mt-5 inline-flex items-center gap-2 text-sm font-black text-brand-teal transition hover:text-brand-coral"
@@ -92,7 +92,7 @@ export function TeacherInstitutionSection() {
                 variants={fadeUp(prefersReducedMotion, 10)}
               >
                 <p className="text-sm font-black text-brand-sky">{copy.audiences.directMatching}</p>
-                <div className="mt-3 flex flex-wrap items-center gap-2 text-xl font-black sm:text-2xl">
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-lg font-black sm:text-xl">
                   <span>{copy.audiences.flow[0]}</span>
                   <ArrowRight className="text-brand-sky" size={20} />
                   <span>{copy.audiences.flow[1]}</span>
