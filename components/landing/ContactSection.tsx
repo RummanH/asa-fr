@@ -80,7 +80,7 @@ export function ContactSection() {
                     rel={href.startsWith("http") ? "noreferrer" : undefined}
                     target={href.startsWith("http") ? "_blank" : undefined}
                   >
-                    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center bg-brand-navy text-white transition group-hover:bg-brand-teal">
+                    <span className="landing-radius inline-flex h-10 w-10 shrink-0 items-center justify-center bg-brand-navy text-white transition group-hover:bg-brand-teal">
                       <Icon size={19} strokeWidth={2.4} />
                     </span>
                     <span>
@@ -99,7 +99,7 @@ export function ContactSection() {
             variants={scaleIn(prefersReducedMotion)}
           >
             <div className="flex items-center gap-3 border-b border-brand-navy/10 pb-5">
-              <span className="inline-flex h-11 w-11 items-center justify-center bg-brand-coral text-white">
+              <span className="landing-radius inline-flex h-11 w-11 items-center justify-center bg-brand-coral text-white">
                 <MessageSquareText size={21} strokeWidth={2.4} />
               </span>
               <div>
@@ -112,7 +112,7 @@ export function ContactSection() {
               <label className="grid gap-2 text-sm font-black text-brand-navy">
                 Name
                 <input
-                  className="h-12 border border-brand-navy/12 bg-brand-light px-4 text-sm font-semibold text-brand-navy outline-none transition focus:border-brand-teal focus:bg-white focus:ring-4 focus:ring-brand-teal/10"
+                  className="landing-radius h-12 border border-brand-navy/12 bg-brand-light px-4 text-sm font-semibold text-brand-navy outline-none transition focus:border-brand-teal focus:bg-white focus:ring-4 focus:ring-brand-teal/10"
                   name="name"
                   placeholder="Your name"
                   type="text"
@@ -121,7 +121,7 @@ export function ContactSection() {
               <label className="grid gap-2 text-sm font-black text-brand-navy">
                 Email
                 <input
-                  className="h-12 border border-brand-navy/12 bg-brand-light px-4 text-sm font-semibold text-brand-navy outline-none transition focus:border-brand-teal focus:bg-white focus:ring-4 focus:ring-brand-teal/10"
+                  className="landing-radius h-12 border border-brand-navy/12 bg-brand-light px-4 text-sm font-semibold text-brand-navy outline-none transition focus:border-brand-teal focus:bg-white focus:ring-4 focus:ring-brand-teal/10"
                   name="email"
                   placeholder="you@example.com"
                   type="email"
@@ -132,7 +132,7 @@ export function ContactSection() {
             <label className="mt-4 grid gap-2 text-sm font-black text-brand-navy">
               Message
               <textarea
-                className="min-h-36 resize-y border border-brand-navy/12 bg-brand-light px-4 py-3 text-sm font-semibold leading-6 text-brand-navy outline-none transition focus:border-brand-teal focus:bg-white focus:ring-4 focus:ring-brand-teal/10"
+                className="landing-radius min-h-36 resize-y border border-brand-navy/12 bg-brand-light px-4 py-3 text-sm font-semibold leading-6 text-brand-navy outline-none transition focus:border-brand-teal focus:bg-white focus:ring-4 focus:ring-brand-teal/10"
                 name="message"
                 placeholder="Tell us what you need help with"
                 required

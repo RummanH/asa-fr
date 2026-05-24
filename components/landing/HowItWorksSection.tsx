@@ -53,7 +53,7 @@ export function HowItWorksSection() {
               The experience removes guesswork from education hiring, then keeps both sides moving through a visible
               request workflow.
             </motion.p>
-            <motion.div className="mt-7 border border-brand-navy/10 bg-white p-5" variants={fadeUp(prefersReducedMotion, 12)}>
+            <motion.div className="landing-radius mt-7 border border-brand-navy/10 bg-white p-5" variants={fadeUp(prefersReducedMotion, 12)}>
               <div className="flex items-center gap-3 text-sm font-black text-brand-navy">
                 <CheckCircle2 className="text-brand-emerald" size={20} strokeWidth={2.4} />
                 Profile
@@ -91,7 +91,7 @@ export function HowItWorksSection() {
                 <div className="p-6">
                   <div className="flex items-center justify-between gap-4">
                     <p className="text-4xl font-black leading-none text-brand-sky">{step.number}</p>
-                    <span className="border border-brand-navy/10 bg-brand-cream px-3 py-1.5 text-xs font-black uppercase tracking-[0.06em] text-brand-navy/70">
+                    <span className="landing-radius border border-brand-navy/10 bg-brand-cream px-3 py-1.5 text-xs font-black uppercase tracking-[0.06em] text-brand-navy/70">
                       {step.note}
                     </span>
                   </div>

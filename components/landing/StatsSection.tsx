@@ -18,7 +18,7 @@ export function StatsSection() {
     <section className="relative z-20 -mt-14 bg-brand-light pb-14 md:-mt-16 md:pb-20" id="stats">
       <div className="brand-container">
         <motion.div
-          className="border border-white/80 bg-white/92 p-4 shadow-[0_24px_70px_rgba(7,17,31,0.1)] backdrop-blur md:p-5"
+          className="landing-radius border border-white/80 bg-white/92 p-4 shadow-[0_24px_70px_rgba(7,17,31,0.1)] backdrop-blur md:p-5"
           initial="hidden"
           variants={fadeUp(prefersReducedMotion, 22)}
           viewport={{ once: true, amount: 0.2 }}
@@ -27,7 +27,7 @@ export function StatsSection() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {stats.map(({ icon: Icon, value, label, tone }) => (
               <motion.div
-                className="border border-brand-navy/8 bg-white p-5"
+                className="landing-radius border border-brand-navy/8 bg-white p-5"
                 key={label}
                 variants={fadeUp(prefersReducedMotion, 10)}
               >

@@ -52,7 +52,7 @@ export function TeacherInstitutionSection() {
             <motion.div className="mt-8 grid gap-4 sm:grid-cols-2" variants={staggerContainer(prefersReducedMotion, 0.1)}>
               {audiences.map(({ icon: Icon, title, description, href, cta, tone }) => (
                 <motion.article className="landing-card-subtle p-5" key={title} variants={scaleIn(prefersReducedMotion)}>
-                  <div className={`inline-flex h-11 w-11 items-center justify-center ${tone}`}>
+                  <div className={`landing-radius inline-flex h-11 w-11 items-center justify-center ${tone}`}>
                     <Icon size={23} strokeWidth={2.4} />
                   </div>
                   <h3 className="mt-4 text-xl font-black text-brand-navy">{title}</h3>
@@ -89,7 +89,7 @@ export function TeacherInstitutionSection() {
                 <Image alt="Institution profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 380px" src="/landing/institution-card.png" />
               </motion.div>
               <motion.div
-                className="border border-brand-navy/10 bg-brand-navy p-5 text-white shadow-[0_18px_44px_rgba(7,17,31,0.18)]"
+                className="landing-radius border border-brand-navy/10 bg-brand-navy p-5 text-white shadow-[0_18px_44px_rgba(7,17,31,0.18)]"
                 variants={fadeUp(prefersReducedMotion, 10)}
               >
                 <p className="text-sm font-black text-brand-sky">Direct matching</p>

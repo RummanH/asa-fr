@@ -53,7 +53,7 @@ export function HeroSection() {
           variants={staggerContainer(prefersReducedMotion, 0.12)}
         >
           <motion.span
-            className="inline-flex items-center gap-2 border border-white/20 bg-white/92 px-3 py-2 text-xs font-black uppercase tracking-[0.08em] text-brand-navy shadow-[0_18px_48px_rgba(7,17,31,0.22)] sm:text-sm"
+            className="landing-radius inline-flex items-center gap-2 border border-white/20 bg-white/92 px-3 py-2 text-xs font-black uppercase tracking-[0.08em] text-brand-navy shadow-[0_18px_48px_rgba(7,17,31,0.22)] sm:text-sm"
             variants={fadeUp(prefersReducedMotion, 14)}
           >
             <Sparkles size={16} strokeWidth={2.4} /> Education hiring, redesigned
@@ -89,7 +89,7 @@ export function HeroSection() {
           >
             {trustSignals.map((signal) => (
               <motion.div
-                className="inline-flex items-center gap-2 border border-white/14 bg-white/10 px-3 py-2 text-sm font-bold text-white/82 backdrop-blur-md"
+                className="landing-radius inline-flex items-center gap-2 border border-white/14 bg-white/10 px-3 py-2 text-sm font-bold text-white/82 backdrop-blur-md"
                 key={signal}
                 variants={fadeUp(prefersReducedMotion, 10)}
               >
@@ -105,7 +105,7 @@ export function HeroSection() {
           >
             {proofPoints.map(({ icon: Icon, metric, label }, index) => (
               <motion.div
-                className="border border-white/14 bg-white/10 p-4 backdrop-blur-md"
+                className="landing-radius border border-white/14 bg-white/10 p-4 backdrop-blur-md"
                 key={label}
                 variants={fadeUp(prefersReducedMotion, 12)}
               >

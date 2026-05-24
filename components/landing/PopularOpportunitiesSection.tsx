@@ -87,7 +87,7 @@ export function PopularOpportunitiesSection() {
                   src={item.image}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/42 to-transparent" />
-                <span className={`absolute left-4 top-4 px-3 py-1.5 text-xs font-black uppercase tracking-[0.06em] ${item.accent}`}>
+                <span className={`landing-radius absolute left-4 top-4 px-3 py-1.5 text-xs font-black uppercase tracking-[0.06em] ${item.accent}`}>
                   {item.meta}
                 </span>
               </div>

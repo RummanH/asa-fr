@@ -41,7 +41,7 @@ export function Footer() {
         >
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
             <Link className="inline-flex items-center gap-3" href="/">
-              <span className="relative inline-flex h-11 w-11 overflow-hidden border border-white/10 bg-white/10">
+              <span className="landing-radius relative inline-flex h-11 w-11 overflow-hidden border border-white/10 bg-white/10">
                 <Image alt="Teacher Hiring Platform" className="object-cover" fill sizes="44px" src="/landing/logo-mark.png" />
               </span>
               <span className="text-xl font-black text-white">Teacher Hiring Platform</span>
@@ -50,7 +50,7 @@ export function Footer() {
               A focused marketplace for qualified teachers and trusted educational institutions.
             </p>
             <Link
-              className="mt-6 inline-flex items-center gap-2 border border-white/14 bg-white/8 px-4 py-2.5 text-sm font-black text-white transition hover:bg-white/14"
+              className="landing-radius mt-6 inline-flex items-center gap-2 border border-white/14 bg-white/8 px-4 py-2.5 text-sm font-black text-white transition hover:bg-white/14"
               href="/register"
             >
               Create account <ArrowRight size={16} strokeWidth={2.4} />

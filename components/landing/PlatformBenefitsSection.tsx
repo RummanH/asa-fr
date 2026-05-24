@@ -88,7 +88,7 @@ export function PlatformBenefitsSection() {
             <motion.div className="mt-8 grid gap-3" variants={staggerContainer(prefersReducedMotion, 0.08)}>
               {benefits.map(({ icon: Icon, title, text }) => (
                 <motion.div
-                  className="grid grid-cols-[auto_1fr] gap-3 border border-brand-navy/8 bg-brand-light p-4"
+                  className="landing-radius grid grid-cols-[auto_1fr] gap-3 border border-brand-navy/8 bg-brand-light p-4"
                   key={title}
                   variants={fadeUp(prefersReducedMotion, 10)}
                 >

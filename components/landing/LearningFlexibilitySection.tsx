@@ -69,7 +69,7 @@ export function LearningFlexibilitySection() {
               variants={scaleIn(prefersReducedMotion)}
               whileHover={prefersReducedMotion ? undefined : { y: -5 }}
             >
-              <div className={`inline-flex h-11 w-11 items-center justify-center ${tone}`}>
+              <div className={`landing-radius inline-flex h-11 w-11 items-center justify-center ${tone}`}>
                 <Icon size={21} strokeWidth={2.4} />
               </div>
               <h3 className="mt-5 text-xl font-black text-brand-navy">{title}</h3>

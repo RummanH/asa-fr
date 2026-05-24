@@ -80,7 +80,7 @@ export function TestimonialsSection() {
               </div>
               <p className="mt-5 flex-1 text-base leading-8 text-brand-navy/76">&ldquo;{item.quote}&rdquo;</p>
               <div className="mt-7 flex items-center gap-3 border-t border-border pt-5">
-                <div className="relative h-12 w-12 overflow-hidden border border-border bg-brand-light">
+                <div className="landing-radius relative h-12 w-12 overflow-hidden border border-border bg-brand-light">
                   <Image alt={item.name} className="object-cover" fill sizes="48px" src={item.image} />
                 </div>
                 <div>

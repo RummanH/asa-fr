@@ -35,10 +35,10 @@ export function Navbar() {
       initial="hidden"
       variants={fadeUp(prefersReducedMotion, 16)}
     >
-      <nav className="border border-white/55 bg-white/88 px-3 py-3 text-brand-navy shadow-[0_24px_70px_rgba(7,17,31,0.18)] backdrop-blur-xl sm:px-4 lg:px-5">
+      <nav className="landing-radius border border-white/55 bg-white/88 px-3 py-3 text-brand-navy shadow-[0_24px_70px_rgba(7,17,31,0.18)] backdrop-blur-xl sm:px-4 lg:px-5">
         <div className="flex min-h-12 items-center justify-between gap-3">
           <Link className="inline-flex min-w-0 items-center gap-3" href="/">
-            <span className="relative inline-flex h-10 w-10 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
+            <span className="landing-radius relative inline-flex h-10 w-10 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
               <Image
                 alt="Teacher Hiring Platform"
                 className="object-cover"
@@ -56,7 +56,7 @@ export function Navbar() {
             {navLinks.map((item) => (
               <li key={item.href}>
                 <Link
-                  className="inline-flex items-center px-4 py-2 text-sm font-bold text-brand-navy/64 transition hover:bg-brand-mist hover:text-brand-navy"
+                  className="landing-radius inline-flex items-center px-4 py-2 text-sm font-bold text-brand-navy/64 transition hover:bg-brand-mist hover:text-brand-navy"
                   href={item.href}
                 >
                   {item.label}
@@ -67,7 +67,7 @@ export function Navbar() {
 
           <div className="hidden items-center gap-2 sm:flex">
             <Link
-              className="inline-flex items-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-sm font-extrabold text-brand-navy transition hover:bg-brand-mist"
+              className="landing-radius inline-flex items-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-sm font-extrabold text-brand-navy transition hover:bg-brand-mist"
               href="/login"
             >
               <LogIn size={16} strokeWidth={2.4} />
@@ -82,7 +82,7 @@ export function Navbar() {
             aria-controls="mobile-nav"
             aria-expanded={isMenuOpen}
             aria-label="Toggle navigation menu"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-brand-navy/12 bg-white text-brand-navy transition hover:bg-brand-mist lg:hidden"
+            className="landing-radius inline-flex h-10 w-10 shrink-0 items-center justify-center border border-brand-navy/12 bg-white text-brand-navy transition hover:bg-brand-mist lg:hidden"
             onClick={() => setIsMenuOpen((current) => !current)}
             type="button"
           >
@@ -102,7 +102,7 @@ export function Navbar() {
               {navLinks.map((item) => (
                 <li key={item.href}>
                   <Link
-                    className="block px-3 py-2.5 text-sm font-bold text-brand-navy/76 transition hover:bg-brand-mist hover:text-brand-navy"
+                    className="landing-radius block px-3 py-2.5 text-sm font-bold text-brand-navy/76 transition hover:bg-brand-mist hover:text-brand-navy"
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -113,13 +113,13 @@ export function Navbar() {
             </ul>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:hidden">
               <Link
-                className="inline-flex items-center justify-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-center text-sm font-extrabold text-brand-navy"
+                className="landing-radius inline-flex items-center justify-center gap-2 border border-brand-navy/12 px-4 py-2.5 text-center text-sm font-extrabold text-brand-navy"
                 href="/login"
               >
                 <LogIn size={15} /> Login
               </Link>
               <Link
-                className="inline-flex items-center justify-center gap-2 bg-brand-navy px-4 py-2.5 text-center text-sm font-extrabold text-white"
+                className="landing-radius inline-flex items-center justify-center gap-2 bg-brand-navy px-4 py-2.5 text-center text-sm font-extrabold text-white"
                 href="/register"
               >
                 <BookOpenCheck size={15} /> Register
