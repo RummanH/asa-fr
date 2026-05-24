@@ -72,6 +72,7 @@ export function HeroSection() {
               className="btn-primary bg-white px-6 py-3 text-sm font-black text-brand-navy hover:bg-brand-sky md:text-base"
               href="/register/institution"
             >
+              <Building2 size={18} strokeWidth={2.4} />
               {copy.hero.primary} <ArrowRight size={18} strokeWidth={2.4} />
             </Link>
             <Link className="btn-primary teacher-focus-cta px-6 py-3 text-sm font-black md:text-base" href="/register/teacher">
