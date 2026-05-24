@@ -89,25 +89,25 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
   };
 
   const avatarGradients = [
-    "linear-gradient(135deg, #052f44, #075f75)",
-    "linear-gradient(135deg, #075f75, #a9d3ef)",
-    "linear-gradient(135deg, #03485e, #0d8fa8)",
-    "linear-gradient(135deg, #04354d, #06697e)",
+    "linear-gradient(135deg, #0d7d8f, #06b6d4)",
+    "linear-gradient(135deg, #06b6d4, #a9d3ef)",
+    "linear-gradient(135deg, #0d7d8f, #0f172a)",
+    "linear-gradient(135deg, #06b6d4, #10b981)",
   ];
 
   return (
-    <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
-      <div className="app-container">
-        {/* Header */}
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
+    <main className="w-full h-full flex flex-col bg-background">
+      {/* Header */}
+      <div className="flex-shrink-0 border-b border-border bg-card px-4 sm:px-6 py-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <Link
               href={dashboardPath}
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-white text-brand-navy/50 transition hover:bg-brand-light hover:text-brand-navy"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground hover:bg-muted transition-colors flex-shrink-0"
             >
               <svg
-                width="14"
-                height="14"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -118,131 +118,149 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </Link>
-            <div>
+
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h1 className="app-title text-xl">Messages</h1>
+                <h1 className="text-lg font-bold text-foreground">Messages</h1>
                 {totalUnread > 0 && (
-                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-teal px-1.5 text-[0.65rem] font-bold text-white">
+                  <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
                     {totalUnread}
                   </span>
                 )}
               </div>
-              <p className="text-[0.72rem] text-brand-navy/45">
+              <p className="text-xs text-muted-foreground">
                 {conversations.length} conversation{conversations.length !== 1 ? "s" : ""}
               </p>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Main panel */}
-        <div className="app-panel overflow-hidden">
-          {/* Top accent */}
-          <div
-            className="h-0.5 w-full"
-            style={{ background: "linear-gradient(90deg, #052f44, #075f75 50%, #a9d3ef)" }}
-          />
+      {/* Search and content area */}
+      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        {/* Search bar */}
+        <div className="flex-shrink-0 border-b border-border bg-card px-4 sm:px-6 py-3">
+          <div className="relative">
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-2.5 text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
+              placeholder="Search conversations…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
 
-          {/* Search bar */}
-          <div className="border-b border-border px-4 py-3">
-            <div className="relative">
+        {/* Error */}
+        {errorMessage && (
+          <div className="flex-shrink-0 mx-4 sm:mx-6 mt-3 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="flex-shrink-0 mt-0.5"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            {errorMessage}
+          </div>
+        )}
+
+        {/* Loading */}
+        {isLoading && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-12">
+            <svg
+              className="animate-spin text-muted-foreground"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+            <span className="text-sm font-medium text-muted-foreground">Loading conversations…</span>
+          </div>
+        )}
+
+        {/* Empty */}
+        {!isLoading && conversations.length === 0 && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-4 px-4 sm:px-6 py-12 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-card shadow-sm">
               <svg
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-navy/30"
-                width="14"
-                height="14"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2.5"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="text-muted-foreground"
               >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              <input
-                className="app-input pl-9 text-sm"
-                placeholder="Search conversations…"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">No conversations yet</p>
+              <p className="mt-1 text-xs text-muted-foreground">Start a chat from teacher or job pages.</p>
             </div>
           </div>
+        )}
 
-          {/* Error */}
-          {errorMessage && (
-            <div className="mx-4 mt-3 flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-3.5 py-2.5 text-xs text-red-600">
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+        {/* No search results */}
+        {!isLoading && conversations.length > 0 && filtered.length === 0 && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-12 text-center px-4">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-muted-foreground"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-foreground">No results for &quot;{search}&quot;</p>
+              <button
+                onClick={() => setSearch("")}
+                className="text-xs text-primary hover:underline mt-2"
               >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-              {errorMessage}
-            </div>
-          )}
-
-          {/* Loading */}
-          {isLoading && (
-            <div className="flex flex-col items-center justify-center gap-3 py-16 text-brand-navy/35">
-              <svg
-                className="animate-spin"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-              </svg>
-              <span className="text-xs font-medium">Loading conversations…</span>
-            </div>
-          )}
-
-          {/* Empty */}
-          {!isLoading && conversations.length === 0 && (
-            <div className="flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-white shadow-sm">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#a9d3ef"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-brand-navy/70">No conversations yet</p>
-                <p className="mt-1 text-xs text-brand-navy/40">Start a chat from teacher or job pages.</p>
-              </div>
-            </div>
-          )}
-
-          {/* No search results */}
-          {!isLoading && conversations.length > 0 && filtered.length === 0 && (
-            <div className="flex flex-col items-center justify-center gap-2 py-12 text-center">
-              <p className="text-sm font-semibold text-brand-navy/50">No results for &quot;{search}&quot;</p>
-              <button onClick={() => setSearch("")} className="text-xs text-brand-teal underline underline-offset-2">
                 Clear search
               </button>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Conversation list */}
-          {!isLoading && filtered.length > 0 && (
+        {/* Conversation list */}
+        {!isLoading && filtered.length > 0 && (
+          <div className="flex-1 overflow-y-auto">
             <div className="divide-y divide-border">
               {filtered.map((conversation, i) => {
                 const partner =
@@ -256,44 +274,46 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
                   <Link
                     key={conversation.id}
                     href={`${conversationBasePath}/${conversation.id}`}
-                    className="group flex items-center gap-3.5 px-4 py-3.5 transition-colors duration-150 hover:bg-brand-light/60"
+                    className="group flex items-center gap-3 px-4 sm:px-6 py-3.5 transition-colors duration-150 hover:bg-muted/50 active:bg-muted"
                   >
                     {/* Avatar */}
                     <div
-                      className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-sm font-bold text-white shadow-sm"
+                      className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
                       style={{ background: avatarGradients[i % avatarGradients.length] }}
                     >
                       {getInitials(partner)}
                       {hasUnread && (
-                        <span className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-white bg-brand-teal" />
+                        <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-background bg-primary" />
                       )}
                     </div>
 
                     {/* Content */}
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline justify-between gap-2">
+                      <div className="flex items-baseline justify-between gap-2 mb-1">
                         <span
-                          className={`truncate text-sm ${hasUnread ? "font-bold text-brand-navy" : "font-semibold text-brand-navy/80"}`}
+                          className={`truncate text-sm ${hasUnread ? "font-bold text-foreground" : "font-semibold text-foreground"}`}
                         >
                           {partner}
                         </span>
                         {lastTime && (
                           <span
-                            className={`shrink-0 text-[0.65rem] ${hasUnread ? "font-semibold text-brand-teal" : "text-brand-navy/35"}`}
+                            className={`flex-shrink-0 text-xs ${hasUnread ? "font-semibold text-primary" : "text-muted-foreground"}`}
                           >
                             {lastTime}
                           </span>
                         )}
                       </div>
-                      <p className="mt-0.5 truncate text-[0.72rem] text-brand-navy/40">{partnerMeta}</p>
-                      <div className="mt-1 flex items-center justify-between gap-2">
+                      <p className="text-xs text-muted-foreground truncate">{partnerMeta}</p>
+                      <div className="mt-1.5 flex items-center justify-between gap-2">
                         <p
-                          className={`truncate text-xs ${hasUnread ? "font-medium text-brand-navy/70" : "text-brand-navy/45"}`}
+                          className={`truncate text-xs ${
+                            hasUnread ? "font-medium text-foreground" : "text-muted-foreground"
+                          }`}
                         >
                           {conversation.lastMessage?.message ?? "No messages yet"}
                         </p>
                         {hasUnread && (
-                          <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-brand-teal px-1.5 text-[0.6rem] font-bold text-white">
+                          <span className="flex h-5 min-w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
                             {conversation.unreadCount}
                           </span>
                         )}
@@ -302,9 +322,9 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
 
                     {/* Arrow */}
                     <svg
-                      className="shrink-0 text-brand-navy/20 transition group-hover:translate-x-0.5 group-hover:text-brand-teal"
-                      width="14"
-                      height="14"
+                      className="flex-shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary"
+                      width="18"
+                      height="18"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -318,8 +338,8 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
                 );
               })}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </main>
   );

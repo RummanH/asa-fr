@@ -15,59 +15,53 @@ type AuthFormProps = {
 
 function IconUser() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden>
-      <circle cx="7.5" cy="5" r="3" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M1.5 14c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
     </svg>
   );
 }
 
 function IconMail() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden>
-      <rect x="1" y="3" width="13" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M1 4.5l6.5 4.5L14 4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
     </svg>
   );
 }
 
 function IconLock() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden>
-      <rect x="2.5" y="6.5" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M4.5 6.5V4.5a3 3 0 116 0v2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      <circle cx="7.5" cy="10" r="1" fill="currentColor" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
     </svg>
   );
 }
 
 function IconShield() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-      <path
-        d="M9 2L3 4.5v5C3 13.1 5.7 16.1 9 17c3.3-.9 6-3.9 6-7.5v-5L9 2z"
-        stroke="#a9d3ef"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M6.5 9l1.8 1.8L11.5 7" stroke="#a9d3ef" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
     </svg>
   );
 }
 
 function IconArrow() {
   return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden>
-      <path d="M3 7.5h9M8 3.5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
     </svg>
   );
 }
 
 function IconSpinner() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden style={{ animation: "auth-spin 0.8s linear infinite" }}>
-      <circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.25)" strokeWidth="2" />
-      <path d="M8 2a6 6 0 016 6" stroke="white" strokeWidth="2" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden style={{ animation: "spin 0.8s linear infinite" }}>
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M12 2a10 10 0 0 1 10 10"></path>
     </svg>
   );
 }
@@ -96,25 +90,18 @@ function Field({
   const [focused, setFocused] = useState(false);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+    <div className="flex flex-col gap-2">
       <label
         htmlFor={id}
-        style={{ fontSize: 10, fontWeight: 800, color: "#052f44", letterSpacing: "0.06em", textTransform: "uppercase" }}
+        className="text-xs font-semibold text-foreground uppercase tracking-wider"
       >
         {label}
       </label>
-      <div style={{ position: "relative" }}>
+      <div className="relative">
         <span
-          style={{
-            position: "absolute",
-            left: 13,
-            top: "50%",
-            transform: "translateY(-50%)",
-            color: focused ? "#075f75" : "#8eaab8",
-            transition: "color 160ms",
-            pointerEvents: "none",
-            display: "flex",
-          }}
+          className={`absolute left-3 top-1/2 -translate-y-1/2 transition-colors flex items-center justify-center pointer-events-none h-5 w-5 ${
+            focused ? "text-primary" : "text-muted-foreground"
+          }`}
         >
           {icon}
         </span>
@@ -129,21 +116,11 @@ function Field({
           minLength={minLength}
           required={required}
           placeholder={placeholder}
-          style={{
-            width: "100%",
-            height: "2.7rem",
-            paddingLeft: 40,
-            paddingRight: 14,
-            borderRadius: 10,
-            border: focused ? "1.5px solid #075f75" : "1.5px solid #ccdde8",
-            background: focused ? "#f4fbff" : "#fafcfe",
-            color: "#052f44",
-            fontSize: 14,
-            fontWeight: 500,
-            outline: "none",
-            transition: "border-color 160ms, background 160ms, box-shadow 160ms",
-            boxShadow: focused ? "0 0 0 3px rgba(7,95,117,0.1)" : "none",
-          }}
+          className={`w-full h-11 pl-10 pr-4 rounded-lg border-2 transition-all duration-150 focus:outline-none font-medium text-sm ${
+            focused
+              ? "border-primary bg-background/80 ring-2 ring-primary/20"
+              : "border-border bg-background hover:border-border/80"
+          }`}
         />
       </div>
     </div>
@@ -191,67 +168,52 @@ export function AuthForm({ mode, role }: AuthFormProps) {
   return (
     <>
       <style>{`
-        @keyframes auth-spin { to { transform: rotate(360deg); } }
-        @keyframes auth-fade-up {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
-        .auth-form-root { animation: auth-fade-up 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-        .auth-submit-btn { transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
-        .auth-submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 20px 44px rgba(5,47,68,0.28); }
-        .auth-submit-btn:active:not(:disabled) { transform: translateY(0); }
-        .auth-link { transition: color 140ms; }
-        .auth-link:hover { color: #075f75; }
+        .auth-form-root {
+          animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
       `}</style>
 
-      <div className="auth-form-root w-full" style={{ maxWidth: 480 }}>
-        <div
-          style={{
-            background: "white",
-            borderRadius: 24,
-            border: "1px solid rgba(212,230,239,0.8)",
-            boxShadow: "0 20px 60px rgba(5,47,68,0.1), 0 1px 0 rgba(255,255,255,0.9) inset",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              background: "linear-gradient(135deg, #052f44 0%, #065770 55%, #076b82 100%)",
-              padding: "22px 28px 20px",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <svg style={{ position: "absolute", bottom: -24, right: -12, opacity: 0.1 }} width="150" height="100" viewBox="0 0 150 100" fill="none">
-              <circle cx="130" cy="100" r="90" stroke="white" strokeWidth="1" />
-              <circle cx="130" cy="100" r="55" stroke="white" strokeWidth="0.7" />
-            </svg>
+      <div className="auth-form-root w-full max-w-md mx-auto px-4 sm:px-6">
+        <div className="rounded-xl border border-border bg-card shadow-lg overflow-hidden">
+          {/* Header */}
+          <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-accent p-6 sm:p-8">
+            {/* Decorative background */}
+            <div className="absolute inset-0 opacity-10">
+              <svg className="absolute bottom-0 right-0 w-40 h-40 -mb-20 -mr-20" viewBox="0 0 200 200" fill="none">
+                <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="1" />
+              </svg>
+            </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 12,
-                  flexShrink: 0,
-                  background: "rgba(169,211,239,0.15)",
-                  border: "1px solid rgba(169,211,239,0.25)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+            {/* Content */}
+            <div className="relative z-10 flex items-start gap-4">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary-foreground/20 text-primary-foreground">
                 <IconShield />
               </div>
-              <div>
-                <h1 style={{ fontSize: 20, fontWeight: 900, color: "white", letterSpacing: "-0.035em", margin: 0 }}>{title}</h1>
-                <p style={{ fontSize: 12, color: "rgba(169,211,239,0.78)", lineHeight: 1.5, margin: "2px 0 0" }}>{subtitle}</p>
+              <div className="flex-1 min-w-0">
+                <h1 className="text-xl sm:text-2xl font-bold text-primary-foreground">{title}</h1>
+                <p className="text-sm text-primary-foreground/80 mt-1 leading-snug">{subtitle}</p>
               </div>
             </div>
           </div>
 
-          <div style={{ padding: "26px 28px 30px" }}>
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {/* Form */}
+          <div className="p-6 sm:p-8">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {isRegisterMode && (
                 <Field
                   id="name"
@@ -289,11 +251,10 @@ export function AuthForm({ mode, role }: AuthFormProps) {
               />
 
               {isLogin && (
-                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: -4 }}>
+                <div className="flex justify-end pt-1">
                   <Link
                     href="/forgot-password"
-                    className="auth-link"
-                    style={{ fontSize: 12, fontWeight: 600, color: "#5d7280", textDecoration: "none" }}
+                    className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -301,28 +262,9 @@ export function AuthForm({ mode, role }: AuthFormProps) {
               )}
 
               <button
-                className="auth-submit-btn"
                 type="submit"
                 disabled={isSubmitting}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                  width: "100%",
-                  height: "2.85rem",
-                  borderRadius: 12,
-                  border: "none",
-                  cursor: isSubmitting ? "not-allowed" : "pointer",
-                  background: isSubmitting ? "#7a9fb0" : "linear-gradient(135deg, #052f44 0%, #065770 60%, #076b82 100%)",
-                  color: "white",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  letterSpacing: "-0.01em",
-                  boxShadow: "0 12px 32px rgba(5,47,68,0.22)",
-                  opacity: isSubmitting ? 0.8 : 1,
-                  marginTop: 4,
-                }}
+                className="w-full h-11 mt-6 flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 active:scale-95"
               >
                 {isSubmitting ? (
                   <>
@@ -330,26 +272,27 @@ export function AuthForm({ mode, role }: AuthFormProps) {
                   </>
                 ) : (
                   <>
-                    {isLogin ? "Sign in to account" : "Create account"} <IconArrow />
+                    {isLogin ? "Sign in" : "Create account"} <IconArrow />
                   </>
                 )}
               </button>
             </form>
 
-            <div style={{ marginTop: 18, paddingTop: 16, borderTop: "1px solid rgba(212,230,239,0.7)" }}>
-              <p style={{ textAlign: "center", fontSize: 13, color: "#5d7280" }}>
+            {/* Footer */}
+            <div className="mt-6 pt-6 border-t border-border text-center">
+              <p className="text-sm text-muted-foreground">
                 {isLogin ? (
                   <>
                     No account yet?{" "}
-                    <Link href="/register" className="auth-link" style={{ fontWeight: 700, color: "#052f44", textDecoration: "none" }}>
-                      Register free {"->"}
+                    <Link href="/register" className="font-semibold text-primary hover:text-primary/90 transition-colors">
+                      Register free
                     </Link>
                   </>
                 ) : (
                   <>
                     Already have an account?{" "}
-                    <Link href="/login" className="auth-link" style={{ fontWeight: 700, color: "#052f44", textDecoration: "none" }}>
-                      Sign in {"->"}
+                    <Link href="/login" className="font-semibold text-primary hover:text-primary/90 transition-colors">
+                      Sign in
                     </Link>
                   </>
                 )}

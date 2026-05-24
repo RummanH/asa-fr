@@ -38,87 +38,302 @@
   --color-brand-cream: var(--brand-cream);
   --color-brand-gold: var(--brand-gold);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 10px);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
 
-  --shadow-soft: 0 14px 40px rgba(2, 38, 55, 0.08);
-  --shadow-brand: 0 22px 60px rgba(3, 65, 88, 0.18);
-  --shadow-card: 0 12px 36px rgba(15, 45, 60, 0.1);
-  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 24px 80px rgba(0, 82, 110, 0.25);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 :root {
-  --radius: 1rem;
+  --radius: 0.75rem;
 
-  /* Main brand colors extracted from the reference design */
-  --brand-navy: #052f44;
-  --brand-teal: #075f75;
+  /* Modern brand colors */
+  --brand-navy: #0f172a;
+  --brand-teal: #0d7d8f;
   --brand-sky: #a9d3ef;
-  --brand-light: #eaf6fb;
-  --brand-cream: #f8f5eb;
-  --brand-gold: #f5c84b;
+  --brand-light: #f0fafb;
+  --brand-cream: #fffbf7;
+  --brand-gold: #f59e0b;
 
   /* Shadcn / Tailwind design tokens */
-  --background: #f7fbfd;
-  --foreground: #06283a;
+  --background: #ffffff;
+  --foreground: #0f172a;
 
   --card: #ffffff;
-  --card-foreground: #06283a;
+  --card-foreground: #0f172a;
 
   --popover: #ffffff;
-  --popover-foreground: #06283a;
+  --popover-foreground: #0f172a;
 
-  --primary: #052f44;
+  --primary: #0d7d8f;
   --primary-foreground: #ffffff;
 
   --secondary: #a9d3ef;
-  --secondary-foreground: #06283a;
+  --secondary-foreground: #0f172a;
 
-  --muted: #eaf3f7;
-  --muted-foreground: #5d7280;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
 
-  --accent: #075f75;
+  --accent: #06b6d4;
   --accent-foreground: #ffffff;
 
-  --destructive: #e5484d;
+  --destructive: #ef4444;
 
-  --border: #d8e8ef;
-  --input: #d8e8ef;
-  --ring: #075f75;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0d7d8f;
 }
 
 .dark {
-  --background: #031f2e;
-  --foreground: #f3fbff;
+  --background: #0f172a;
+  --foreground: #f8fafc;
 
-  --card: #052f44;
-  --card-foreground: #f3fbff;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
 
-  --popover: #052f44;
-  --popover-foreground: #f3fbff;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
 
-  --primary: #a9d3ef;
-  --primary-foreground: #052f44;
+  --primary: #06b6d4;
+  --primary-foreground: #0f172a;
 
-  --secondary: #07384d;
-  --secondary-foreground: #f3fbff;
+  --secondary: #0d7d8f;
+  --secondary-foreground: #f8fafc;
 
-  --muted: #0b3c52;
-  --muted-foreground: #b8cad3;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
 
-  --accent: #14a0bc;
-  --accent-foreground: #ffffff;
+  --accent: #f59e0b;
+  --accent-foreground: #0f172a;
 
-  --destructive: #ff6b6b;
+  --destructive: #f87171;
 
-  --border: rgba(255, 255, 255, 0.12);
-  --input: rgba(255, 255, 255, 0.14);
-  --ring: #a9d3ef;
+  --border: #334155;
+  --input: #334155;
+  --ring: #06b6d4;
 }
 
+* {
+  @apply border-border;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-background text-foreground;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#__next {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modern animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Utility classes */
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.4s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-from-left 0.3s ease-out;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(13, 125, 143, 0.3);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 125, 143, 0.6);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* Modern card */
+.modern-card {
+  @apply rounded-lg border border-border bg-card p-4 shadow-sm transition-all duration-200 hover:shadow-md sm:p-6;
+}
+
+.modern-card:hover {
+  @apply border-accent/30;
+}
+
+/* Full screen with safe area */
+.full-screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive container */
+.container-responsive {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    padding: 1.5rem;
+  }
+}
+
+/* Auth spin animation */
+@keyframes auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 * {
   border-color: var(--border);
 }

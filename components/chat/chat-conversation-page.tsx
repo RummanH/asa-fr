@@ -120,16 +120,16 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
 
   if (!conversationId) {
     return (
-      <main className="app-shell px-4 py-8">
-        <div className="app-container">
-          <div className="app-panel p-8 text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50">
+      <main className="w-full h-full flex flex-col bg-background">
+        <div className="flex-1 flex items-center justify-center px-4 py-8 sm:px-6">
+          <div className="text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50">
               <svg
-                width="22"
-                height="22"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#e5484d"
+                stroke="#ef4444"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -139,8 +139,11 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
             </div>
-            <p className="text-sm font-semibold text-brand-navy">Invalid conversation ID</p>
-            <Link className="app-btn-secondary mt-4 text-xs" href={inboxPath}>
+            <p className="text-sm font-semibold text-foreground">Invalid conversation ID</p>
+            <Link
+              className="inline-block mt-6 px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors"
+              href={inboxPath}
+            >
               ← Back to Messages
             </Link>
           </div>
@@ -174,21 +177,18 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
   }
 
   return (
-    <main className="app-shell px-3 py-5 sm:px-6 sm:py-8">
-      <div className="app-container flex flex-col gap-0" style={{ height: "calc(100vh - 4rem)" }}>
-        {/* Header */}
-        <div
-          className="flex items-center justify-between gap-3 rounded-t-2xl border border-b-0 border-border bg-white px-5 py-4"
-          style={{ boxShadow: "0 -2px 0 0 transparent" }}
-        >
-          <div className="flex items-center gap-3">
+    <main className="w-full h-full flex flex-col bg-background">
+      {/* Header */}
+      <div className="flex-shrink-0 border-b border-border bg-card shadow-sm">
+        <div className="h-16 px-4 sm:px-6 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
             <Link
               href={inboxPath}
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-white text-brand-navy/50 transition hover:bg-brand-light hover:text-brand-navy"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground hover:bg-muted transition-colors flex-shrink-0"
             >
               <svg
-                width="14"
-                height="14"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -199,171 +199,155 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </Link>
-            <div
-              className="flex h-9 w-9 items-center justify-center rounded-xl text-sm font-bold text-white"
-              style={{ background: "linear-gradient(135deg, #052f44, #075f75)" }}
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-            </div>
-            <div>
-              <p className="app-title text-sm">Conversation</p>
-              <p className="text-[0.68rem] text-brand-navy/45 truncate max-w-[180px]">ID: {conversationId}</p>
+
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-foreground truncate">Conversation</p>
+              <p className="text-xs text-muted-foreground truncate">ID: {conversationId.slice(0, 12)}...</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex-shrink-0">
             <div
-              className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.68rem] font-semibold ${
+              className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
                 isConnected
-                  ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
-                  : "bg-amber-50 text-amber-600 border border-amber-100"
+                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                  : "bg-amber-50 text-amber-700 border border-amber-200"
               }`}
             >
               <span
-                className={`h-1.5 w-1.5 rounded-full ${isConnected ? "bg-emerald-500" : "bg-amber-400 animate-pulse"}`}
+                className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${isConnected ? "bg-emerald-500" : "bg-amber-500 animate-pulse"}`}
               />
               {isConnected ? "Live" : "Connecting"}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Messages area */}
-        <div className="flex-1 overflow-y-auto border-x border-border bg-gradient-to-b from-[#f7fbfd] to-[#edf7fb] px-4 py-4 min-h-0">
-          {errorMessage && (
-            <div className="mb-3 flex items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-3.5 py-2.5 text-xs text-red-600">
+      {/* Messages area */}
+      <div className="flex-1 overflow-y-auto bg-background px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 min-h-0">
+        {errorMessage && (
+          <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 animate-fade-in-up">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="flex-shrink-0 mt-0.5"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span>{errorMessage}</span>
+          </div>
+        )}
+
+        {isLoading && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-12">
+            <svg
+              className="animate-spin text-muted-foreground"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+            <span className="text-sm font-medium text-muted-foreground">Loading messages…</span>
+          </div>
+        )}
+
+        {!isLoading && messages.length === 0 && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-12">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-card shadow-sm">
               <svg
-                width="13"
-                height="13"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="text-muted-foreground"
               >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              {errorMessage}
             </div>
-          )}
-
-          {isLoading && (
-            <div className="flex flex-col items-center justify-center gap-3 py-16 text-brand-navy/40">
-              <svg
-                className="animate-spin"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-              </svg>
-              <span className="text-xs font-medium">Loading messages…</span>
+            <div className="text-center">
+              <p className="text-sm font-semibold text-foreground">No messages yet</p>
+              <p className="text-xs text-muted-foreground mt-1">Send the first message below</p>
             </div>
-          )}
+          </div>
+        )}
 
-          {!isLoading && messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center gap-3 py-16">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-white shadow-sm">
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#a9d3ef"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-              <p className="text-xs font-semibold text-brand-navy/50">No messages yet</p>
-              <p className="text-[0.7rem] text-brand-navy/35">Send the first message below</p>
-            </div>
-          )}
+        {!isLoading && groupedMessages.length > 0 && (
+          <div className="space-y-6">
+            {groupedMessages.map(({ date, items }) => (
+              <div key={date}>
+                {/* Date separator */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="h-px flex-1 bg-border" />
+                  <span className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+                    {date}
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
 
-          {!isLoading && groupedMessages.length > 0 && (
-            <div className="space-y-5">
-              {groupedMessages.map(({ date, items }) => (
-                <div key={date}>
-                  {/* Date separator */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-                    <span className="rounded-full border border-border bg-white px-2.5 py-0.5 text-[0.65rem] font-semibold text-brand-navy/40">
-                      {date}
-                    </span>
-                    <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-transparent" />
-                  </div>
+                <div className="space-y-3">
+                  {items.map((message, idx) => {
+                    const isMine = message.senderId === currentUserId;
+                    const isFirst = idx === 0 || items[idx - 1]?.senderId !== message.senderId;
+                    const isLast = idx === items.length - 1 || items[idx + 1]?.senderId !== message.senderId;
 
-                  <div className="space-y-2">
-                    {items.map((message, idx) => {
-                      const isMine = message.senderId === currentUserId;
-                      const isFirst = idx === 0 || items[idx - 1]?.senderId !== message.senderId;
-                      const isLast = idx === items.length - 1 || items[idx + 1]?.senderId !== message.senderId;
+                    return (
+                      <div
+                        key={message.id}
+                        className={`flex gap-3 ${isMine ? "justify-end" : "justify-start"} animate-fade-in-up`}
+                      >
+                        {!isMine && (
+                          <div
+                            className={`h-8 w-8 rounded-lg flex-shrink-0 ${
+                              isLast
+                                ? "flex items-center justify-center text-xs font-bold text-white bg-gradient-to-br from-teal-500 to-teal-600"
+                                : "opacity-0"
+                            }`}
+                          >
+                            {isLast ? "T" : ""}
+                          </div>
+                        )}
 
-                      return (
-                        <div
-                          key={message.id}
-                          className={`flex ${isMine ? "justify-end" : "justify-start"}`}
-                          style={{ marginTop: isFirst && idx !== 0 ? "0.75rem" : undefined }}
-                        >
-                          {/* Other user avatar placeholder */}
-                          {!isMine && (
+                        <div className={`flex max-w-xs ${isMine ? "flex-row-reverse" : "flex-row"} gap-2`}>
+                          <div className={`flex flex-col ${isMine ? "items-end" : "items-start"}`}>
                             <div
-                              className={`mr-2 mt-auto h-6 w-6 shrink-0 rounded-lg ${
-                                isLast
-                                  ? "flex items-center justify-center text-[0.6rem] font-bold text-white"
-                                  : "opacity-0"
-                              }`}
-                              style={isLast ? { background: "linear-gradient(135deg, #075f75, #a9d3ef)" } : {}}
-                            >
-                              {isLast ? "T" : ""}
-                            </div>
-                          )}
-
-                          <div className={`flex max-w-[75%] flex-col ${isMine ? "items-end" : "items-start"}`}>
-                            <div
-                              className={`px-3.5 py-2.5 text-sm leading-relaxed shadow-sm ${
+                              className={`px-4 py-2.5 rounded-xl text-sm leading-relaxed ${
                                 isMine
-                                  ? "rounded-2xl rounded-br-md text-white"
-                                  : "rounded-2xl rounded-bl-md border border-border bg-white text-brand-navy"
+                                  ? "bg-primary text-primary-foreground rounded-br-none shadow-md"
+                                  : "bg-card border border-border text-foreground rounded-bl-none shadow-sm"
                               }`}
-                              style={isMine ? { background: "linear-gradient(135deg, #052f44 0%, #075f75 100%)" } : {}}
                             >
                               {message.message}
                             </div>
 
                             {isLast && (
-                              <div
-                                className={`mt-1 flex items-center gap-1 text-[0.62rem] ${isMine ? "text-brand-navy/40" : "text-brand-navy/35"}`}
-                              >
+                              <div className="mt-1.5 flex items-center gap-1.5 text-xs text-muted-foreground px-1">
                                 <span>{formatTime(message.createdAt)}</span>
                                 {isMine && (
-                                  <span className={message.isRead ? "text-brand-teal" : "text-brand-navy/30"}>
+                                  <span className={message.isRead ? "text-primary" : "text-muted-foreground"}>
                                     {message.isRead ? (
                                       <svg
-                                        width="12"
-                                        height="12"
+                                        width="14"
+                                        height="14"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        strokeWidth="2.5"
+                                        strokeWidth="3"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                       >
@@ -371,8 +355,8 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                                       </svg>
                                     ) : (
                                       <svg
-                                        width="12"
-                                        height="12"
+                                        width="14"
+                                        height="14"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -389,24 +373,23 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                             )}
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-              <div ref={endRef} />
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+            <div ref={endRef} />
+          </div>
+        )}
+      </div>
 
-        {/* Input bar */}
-        <form
-          onSubmit={handleSendMessage}
-          className="flex items-end gap-2.5 rounded-b-2xl border border-t-0 border-border bg-white px-4 py-3.5"
-        >
+      {/* Input bar */}
+      <div className="flex-shrink-0 border-t border-border bg-card">
+        <form onSubmit={handleSendMessage} className="h-20 px-4 sm:px-6 py-3 flex items-end gap-3">
           <input
             ref={inputRef}
-            className="app-input flex-1 text-sm"
+            className="flex-1 bg-background border border-border rounded-lg px-4 py-2.5 text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors disabled:opacity-50"
             placeholder="Type a message…"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
@@ -416,17 +399,13 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
           <button
             type="submit"
             disabled={isSending || !inputMessage.trim()}
-            className="flex h-[2.85rem] w-[2.85rem] shrink-0 items-center justify-center rounded-xl text-white transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-40"
-            style={{
-              background: "linear-gradient(135deg, #052f44, #075f75)",
-              boxShadow: "0 8px 20px rgba(5,47,68,0.22)",
-            }}
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
           >
             {isSending ? (
               <svg
                 className="animate-spin"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -436,8 +415,8 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
               </svg>
             ) : (
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

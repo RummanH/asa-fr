@@ -9,12 +9,16 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          navy: "#03293d",
-          teal: "#075f75",
+          navy: "#0f172a",
+          teal: "#0d7d8f",
           sky: "#a9d3ef",
-          light: "#f0f8fc",
+          light: "#f0fafb",
           cream: "#fffbf7",
-          gold: "#f5c84b",
+          gold: "#f59e0b",
+          accent: "#06b6d4",
+          success: "#10b981",
+          warning: "#f59e0b",
+          error: "#ef4444",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -36,7 +40,7 @@ const config: Config = {
         ring: "hsl(var(--ring))",
       },
       fontSize: {
-        xs: ["12px", { lineHeight: "16px", fontWeight: "500" }],
+        xs: ["11px", { lineHeight: "16px", fontWeight: "500" }],
         sm: ["13px", { lineHeight: "18px", fontWeight: "500" }],
         base: ["14px", { lineHeight: "20px", fontWeight: "500" }],
         lg: ["16px", { lineHeight: "24px", fontWeight: "500" }],
@@ -45,6 +49,16 @@ const config: Config = {
         "3xl": ["24px", { lineHeight: "32px", fontWeight: "700" }],
         "4xl": ["32px", { lineHeight: "40px", fontWeight: "700" }],
         "5xl": ["40px", { lineHeight: "48px", fontWeight: "800" }],
+      },
+      spacing: {
+        "safe-top": "max(1rem, env(safe-area-inset-top))",
+        "safe-bottom": "max(1rem, env(safe-area-inset-bottom))",
+        "safe-left": "max(1rem, env(safe-area-inset-left))",
+        "safe-right": "max(1rem, env(safe-area-inset-right))",
+        13: "3.25rem",
+        15: "3.75rem",
+        17: "4.25rem",
+        18: "4.5rem",
       },
       fontWeight: {
         regular: "500",
@@ -97,12 +111,6 @@ const config: Config = {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.7" },
         },
-      },
-      spacing: {
-        13: "3.25rem",
-        15: "3.75rem",
-        17: "4.25rem",
-        18: "4.5rem",
       },
       maxWidth: {
         container: "1280px",

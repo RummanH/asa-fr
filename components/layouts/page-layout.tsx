@@ -28,39 +28,26 @@ export function PageLayout({
   className = "",
 }: PageLayoutProps) {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50">
-      {/* Background decorative elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <main className="w-full h-screen flex flex-col bg-background overflow-hidden">
+      {/* Title header */}
+      {title && (
         <motion.div
-          className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-sky/10 blur-3xl"
-          animate={{ x: [0, 30, 0], y: [0, 30, 0] }}
-          transition={{ duration: 12, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-brand-teal/5 blur-3xl"
-          animate={{ x: [0, -40, 0], y: [0, -30, 0] }}
-          transition={{ duration: 14, repeat: Infinity }}
-        />
-      </div>
+          className="border-b border-border bg-card flex-shrink-0 shadow-sm"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="px-4 py-4 sm:px-6 md:px-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{title}</h1>
+            {subtitle && (
+              <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
+            )}
+          </div>
+        </motion.div>
+      )}
 
-      {/* Content */}
-      <div className="relative z-10">
-        {title && (
-          <motion.div
-            className="border-b border-slate-200/60 bg-white/60 backdrop-blur-sm sticky top-0"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="px-4 py-6 sm:px-6 md:px-8">
-              <h1 className="text-3xl font-bold text-brand-navy">{title}</h1>
-              {subtitle && (
-                <p className="mt-2 text-sm text-brand-navy/65">{subtitle}</p>
-              )}
-            </div>
-          </motion.div>
-        )}
-
+      {/* Content area */}
+      <div className="flex-1 overflow-y-auto min-h-0">
         <div className={`px-4 py-6 sm:px-6 md:px-8 ${className}`}>
           <motion.div
             className={`mx-auto ${maxWidthClasses[maxWidth]}`}
