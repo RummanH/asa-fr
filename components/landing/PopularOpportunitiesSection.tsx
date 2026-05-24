@@ -5,33 +5,34 @@ import Link from "next/link";
 import { ArrowRight, Clock3, Star } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const opportunities = [
   {
     title: "School Teacher",
     description: "Full classroom roles for primary, secondary, and institution-based teaching needs.",
-    image: "/landing/opportunity-school.png",
+    image: redesignImages.opportunitySchool,
     meta: "On-site",
     accent: "bg-brand-teal text-white",
   },
   {
     title: "Online Tutor",
     description: "Remote tutoring opportunities for institutions and families that need flexible support.",
-    image: "/landing/opportunity-online.png",
+    image: redesignImages.opportunityOnline,
     meta: "Remote",
     accent: "bg-brand-coral text-white",
   },
   {
     title: "Subject Specialist",
     description: "Focused hiring for math, science, English, Arabic, and exam preparation.",
-    image: "/landing/opportunity-specialist.png",
+    image: redesignImages.opportunitySpecialist,
     meta: "Expert",
     accent: "bg-brand-gold text-brand-navy",
   },
   {
     title: "Part-Time Teacher",
     description: "Flexible schedules for coaching centers, institutions, and short-term programs.",
-    image: "/landing/opportunity-parttime.png",
+    image: redesignImages.opportunityParttime,
     meta: "Flexible",
     accent: "bg-brand-emerald text-white",
   },

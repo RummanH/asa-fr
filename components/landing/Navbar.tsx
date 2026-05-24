@@ -6,6 +6,7 @@ import { ArrowRight, BookOpenCheck, LogIn, Menu, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { fadeUp } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const navLinks = [
   { href: "#flexible-recruitment", label: "Platform" },
@@ -44,7 +45,7 @@ export function Navbar() {
                 className="object-cover"
                 fill
                 sizes="40px"
-                src="/landing/logo-mark.png"
+                src={redesignImages.logoMark}
               />
             </span>
             <span className="truncate text-sm font-black text-brand-navy sm:text-base">

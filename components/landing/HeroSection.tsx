@@ -14,6 +14,7 @@ import {
 import { motion, useReducedMotion } from "motion/react";
 import { Navbar } from "@/components/landing/Navbar";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const proofPoints = [
   { icon: GraduationCap, metric: "3K+", label: "teacher profiles" },
@@ -37,7 +38,7 @@ export function HeroSection() {
         fill
         priority
         sizes="100vw"
-        src="/landing/hero-main.png"
+        src={redesignImages.heroMain}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,31,0.98)_0%,rgba(7,17,31,0.9)_36%,rgba(7,17,31,0.52)_70%,rgba(7,17,31,0.28)_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.08)_0%,rgba(7,17,31,0.18)_58%,rgba(7,17,31,0.82)_100%)]" />

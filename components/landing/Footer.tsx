@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Mail, MapPin } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const footerLinks = [
   { label: "Platform", href: "#flexible-recruitment" },
@@ -42,7 +43,7 @@ export function Footer() {
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
             <Link className="inline-flex items-center gap-3" href="/">
               <span className="landing-radius relative inline-flex h-11 w-11 overflow-hidden border border-white/10 bg-white/10">
-                <Image alt="Teacher Hiring Platform" className="object-cover" fill sizes="44px" src="/landing/logo-mark.png" />
+                <Image alt="Teacher Hiring Platform" className="object-cover" fill sizes="44px" src={redesignImages.logoMark} />
               </span>
               <span className="text-xl font-black text-white">Teacher Hiring Platform</span>
             </Link>

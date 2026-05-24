@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const faqItems = [
   {
@@ -56,7 +57,7 @@ export function FAQSection() {
                 className="object-cover"
                 fill
                 sizes="(max-width: 1024px) 100vw, 380px"
-                src="/landing-2/faq-cover.png"
+                src={redesignImages.faqCover}
               />
             </motion.div>
           </motion.div>

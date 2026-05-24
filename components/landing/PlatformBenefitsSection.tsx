@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CheckCircle2, ClipboardCheck, MessageSquareText, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const benefits = [
   {
@@ -29,10 +30,10 @@ const benefits = [
 ];
 
 const benefitImages = [
-  "/landing-2/benefit-1.png",
-  "/landing-2/benefit-2.png",
-  "/landing-2/benefit-3.png",
-  "/landing-2/benefit-4.png",
+  redesignImages.benefitOne,
+  redesignImages.benefitTwo,
+  redesignImages.benefitThree,
+  redesignImages.benefitFour,
 ];
 
 export function PlatformBenefitsSection() {

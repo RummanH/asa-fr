@@ -4,27 +4,28 @@ import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const steps = [
   {
     number: "01",
     title: "Create a polished profile",
     description: "Teachers add subjects, class levels, experience, expected salary, availability, and teaching mode.",
-    image: "/landing-2/step-1.png",
+    image: redesignImages.stepOne,
     note: "Teacher-ready identity",
   },
   {
     number: "02",
     title: "Find the right match",
     description: "Institutions browse qualified teachers while teachers review active requirements and roles.",
-    image: "/landing-2/step-2.png",
+    image: redesignImages.stepTwo,
     note: "Fast discovery",
   },
   {
     number: "03",
     title: "Chat, request, confirm",
     description: "Both sides clarify expectations, then send, accept, reject, or continue a hiring request.",
-    image: "/landing-2/step-3.png",
+    image: redesignImages.stepThree,
     note: "Clear decision flow",
   },
 ];

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Building2, GraduationCap } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const audiences = [
   {
@@ -79,14 +80,14 @@ export function TeacherInstitutionSection() {
               className="landing-image relative h-72 shadow-[0_18px_46px_rgba(7,17,31,0.12)] md:h-[420px]"
               variants={scaleIn(prefersReducedMotion)}
             >
-              <Image alt="Teacher profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 420px" src="/landing/teacher-card.png" />
+              <Image alt="Teacher profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 420px" src={redesignImages.teacherCard} />
             </motion.div>
             <motion.div className="space-y-4" variants={staggerContainer(prefersReducedMotion, 0.1)}>
               <motion.div
                 className="landing-image relative h-48 shadow-[0_18px_46px_rgba(7,17,31,0.1)] md:h-64"
                 variants={scaleIn(prefersReducedMotion)}
               >
-                <Image alt="Institution profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 380px" src="/landing/institution-card.png" />
+                <Image alt="Institution profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 380px" src={redesignImages.institutionCard} />
               </motion.div>
               <motion.div
                 className="landing-radius border border-brand-navy/10 bg-brand-navy p-5 text-white shadow-[0_18px_44px_rgba(7,17,31,0.18)]"

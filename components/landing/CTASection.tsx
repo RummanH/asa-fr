@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Building2, GraduationCap } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 export function CTASection() {
   const prefersReducedMotion = useReducedMotion();
@@ -16,7 +17,7 @@ export function CTASection() {
         className="object-cover opacity-[0.24]"
         fill
         sizes="100vw"
-        src="/landing/flexibility-main.png"
+        src={redesignImages.flexibilityMain}
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,31,0.96)_0%,rgba(7,17,31,0.88)_52%,rgba(7,17,31,0.7)_100%)]" />
       <div className="brand-container relative z-10">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Quote, Star } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { fadeUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 const testimonials = [
   {
@@ -11,21 +12,21 @@ const testimonials = [
     quote: "Posting requirements, reviewing profiles, and starting a direct chat from one place gives our admin team a cleaner hiring rhythm.",
     name: "Admin Representative",
     role: "School Institution",
-    image: "/landing/testimonial-1.png",
+    image: redesignImages.testimonialOne,
   },
   {
     id: "testimonial-2",
     quote: "My subjects, schedule, salary expectation, and teaching mode are visible before the conversation starts, so the matches feel more relevant.",
     name: "Professional Teacher",
     role: "Subject Specialist",
-    image: "/landing/testimonial-2.png",
+    image: redesignImages.testimonialTwo,
   },
   {
     id: "testimonial-3",
     quote: "The request flow is simple enough for everyday hiring, but structured enough that every decision has context.",
     name: "Education Coordinator",
     role: "Training Center",
-    image: "/landing/testimonial-3.png",
+    image: redesignImages.testimonialThree,
   },
 ];
 
