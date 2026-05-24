@@ -42,7 +42,7 @@ export function HeroSection() {
 
       <Navbar />
 
-      <div className="brand-container relative z-20 pt-12 md:pt-16 lg:pt-20">
+      <div className="brand-container relative z-20 pt-24 md:pt-28 lg:pt-32">
         <motion.div
           animate="visible"
           className="max-w-4xl"

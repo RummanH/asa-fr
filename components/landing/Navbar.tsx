@@ -34,11 +34,11 @@ export function Navbar() {
   return (
     <motion.header
       animate="visible"
-      className="brand-container relative z-30 pt-4 md:pt-6"
+      className="fixed inset-x-0 top-0 z-50 pt-4 md:pt-6"
       initial="hidden"
       variants={fadeUp(prefersReducedMotion, 16)}
     >
-      <nav className="landing-radius border border-white/55 bg-white/88 px-3 py-3 text-brand-navy shadow-[0_24px_70px_rgba(7,17,31,0.18)] backdrop-blur-xl sm:px-4 lg:px-5">
+      <nav className="brand-container landing-radius border border-white/55 bg-white/88 px-3 py-3 text-brand-navy shadow-[0_24px_70px_rgba(7,17,31,0.18)] backdrop-blur-xl sm:px-4 lg:px-5">
         <div className="flex min-h-12 items-center justify-between gap-3">
           <Link className="inline-flex min-w-0 items-center gap-3" href="/">
             <span className="landing-radius relative inline-flex h-10 w-10 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
