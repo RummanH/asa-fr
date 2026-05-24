@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { CTASection } from "@/components/landing/CTASection";
 import { ContactSection } from "@/components/landing/ContactSection";
 import { FAQSection } from "@/components/landing/FAQSection";
+import { FloatingSocialLinks } from "@/components/landing/FloatingSocialLinks";
 import { Footer } from "@/components/landing/Footer";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
@@ -80,6 +81,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-brand-light">
       <LandingLanguageProvider>
+        <FloatingSocialLinks />
         <HeroSection />
         <StatsSection />
         <LearningFlexibilitySection />

@@ -67,30 +67,15 @@ export function TeacherInstitutionSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            className="grid grid-cols-[0.9fr_1fr] items-end gap-4"
-            initial="hidden"
-            variants={staggerContainer(prefersReducedMotion, 0.1)}
-            viewport={{ once: true, amount: 0.2 }}
-            whileInView="visible"
-          >
-            <motion.div
-              className="landing-image relative h-72 shadow-[0_18px_46px_rgba(7,17,31,0.12)] md:h-[420px]"
-              variants={scaleIn(prefersReducedMotion)}
-            >
+          <div className="grid grid-cols-[0.9fr_1fr] items-end gap-4">
+            <div className="landing-image relative h-72 shadow-[0_18px_46px_rgba(7,17,31,0.12)] md:h-[420px]">
               <Image alt="Teacher profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 420px" src={redesignImages.teacherCard} />
-            </motion.div>
-            <motion.div className="space-y-4" variants={staggerContainer(prefersReducedMotion, 0.1)}>
-              <motion.div
-                className="landing-image relative h-48 shadow-[0_18px_46px_rgba(7,17,31,0.1)] md:h-64"
-                variants={scaleIn(prefersReducedMotion)}
-              >
+            </div>
+            <div className="space-y-4">
+              <div className="landing-image relative h-48 shadow-[0_18px_46px_rgba(7,17,31,0.1)] md:h-64">
                 <Image alt="Institution profile preview" className="object-cover" fill sizes="(max-width: 1024px) 45vw, 380px" src={redesignImages.institutionCard} />
-              </motion.div>
-              <motion.div
-                className="landing-radius border border-brand-navy/10 bg-brand-navy p-5 text-white shadow-[0_18px_44px_rgba(7,17,31,0.18)]"
-                variants={fadeUp(prefersReducedMotion, 10)}
-              >
+              </div>
+              <div className="landing-radius border border-brand-navy/10 bg-brand-navy p-5 text-white shadow-[0_18px_44px_rgba(7,17,31,0.18)]">
                 <p className="text-sm font-black text-brand-sky">{copy.audiences.directMatching}</p>
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-lg font-black sm:text-xl">
                   <span>{copy.audiences.flow[0]}</span>
@@ -99,9 +84,9 @@ export function TeacherInstitutionSection() {
                   <ArrowRight className="text-brand-sky" size={20} />
                   <span>{copy.audiences.flow[2]}</span>
                 </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -74,8 +74,10 @@ export function HeroSection() {
             >
               {copy.hero.primary} <ArrowRight size={18} strokeWidth={2.4} />
             </Link>
-            <Link className="btn-secondary px-6 py-3 text-sm font-black md:text-base" href="/register/teacher">
+            <Link className="btn-primary teacher-focus-cta px-6 py-3 text-sm font-black md:text-base" href="/register/teacher">
+              <GraduationCap size={18} strokeWidth={2.4} />
               {copy.hero.secondary}
+              <ArrowRight size={17} strokeWidth={2.4} />
             </Link>
           </motion.div>
 
