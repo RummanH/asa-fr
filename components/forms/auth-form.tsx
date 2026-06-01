@@ -88,15 +88,12 @@ function Field({
   placeholder?: string;
 }) {
   const [focused, setFocused] = useState(false);
-
   return (
-    <div className="flex flex-col gap-2">
-      <label
-        htmlFor={id}
-        className="text-xs font-semibold text-foreground uppercase tracking-wider"
-      >
+    <div className="flex flex-col gap-1 sm:gap-2">
+      <label htmlFor={id} className="text-xs font-semibold text-foreground uppercase tracking-wider">
         {label}
       </label>
+
       <div className="relative">
         <span
           className={`absolute left-3 top-1/2 -translate-y-1/2 transition-colors flex items-center justify-center pointer-events-none h-5 w-5 ${
@@ -105,6 +102,7 @@ function Field({
         >
           {icon}
         </span>
+
         <input
           id={id}
           name={id}
@@ -116,7 +114,7 @@ function Field({
           minLength={minLength}
           required={required}
           placeholder={placeholder}
-          className={`w-full h-11 pl-10 pr-4 rounded-lg border-2 transition-all duration-150 focus:outline-none font-medium text-sm ${
+          className={`w-full h-10 sm:h-11 pl-9 sm:pl-10 pr-3 rounded-lg border-2 transition-all duration-150 focus:outline-none font-medium text-sm ${
             focused
               ? "border-primary bg-background/80 ring-2 ring-primary/20"
               : "border-border bg-background hover:border-border/80"
@@ -188,8 +186,8 @@ export function AuthForm({ mode, role }: AuthFormProps) {
         }
       `}</style>
 
-      <div className="auth-form-root w-full max-w-md mx-auto px-4 sm:px-6">
-        <div className="rounded-xl border border-border bg-card shadow-lg overflow-hidden">
+      <div className="auth-form-root w-full max-w-md mx-auto px-2 sm:px-6">
+        <div className="rounded-lg sm:rounded-xl border border-border bg-card shadow-lg overflow-hidden">
           {/* Header */}
           <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-accent p-6 sm:p-8">
             {/* Decorative background */}
@@ -200,19 +198,19 @@ export function AuthForm({ mode, role }: AuthFormProps) {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 flex items-start gap-4">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary-foreground/20 text-primary-foreground">
+            <div className="relative z-10 flex items-start gap-3">
+              <div className="flex h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary-foreground/20 text-primary-foreground">
                 <IconShield />
               </div>
               <div className="flex-1 min-w-0">
-                <h1 className="text-xl sm:text-2xl font-bold text-primary-foreground">{title}</h1>
+                <h1 className="text-lg sm:text-2xl font-bold text-primary-foreground">{title}</h1>
                 <p className="text-sm text-primary-foreground/80 mt-1 leading-snug">{subtitle}</p>
               </div>
             </div>
           </div>
 
           {/* Form */}
-          <div className="p-6 sm:p-8">
+          <div className="p-4 sm:p-8">
             <form onSubmit={handleSubmit} className="space-y-4">
               {isRegisterMode && (
                 <Field
@@ -264,7 +262,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-11 mt-6 flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 active:scale-95"
+                className="w-full h-10 sm:h-11 mt-4 sm:mt-6 flex items-center justify-center gap-1 sm:gap-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 active:scale-95"
               >
                 {isSubmitting ? (
                   <>
@@ -279,8 +277,8 @@ export function AuthForm({ mode, role }: AuthFormProps) {
             </form>
 
             {/* Footer */}
-            <div className="mt-6 pt-6 border-t border-border text-center">
-              <p className="text-sm text-muted-foreground">
+            <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 {isLogin ? (
                   <>
                     No account yet?{" "}

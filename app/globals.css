@@ -725,6 +725,31 @@ body {
   border-radius: 0.8rem;
   border: 1px solid #c8dde9;
   background: #fff;
+
+/* Mobile adjustments to reduce vertical space and input sizes */
+@media (max-width: 640px) {
+  .app-input {
+    height: 2.3rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .app-btn-primary,
+  .app-btn-secondary,
+  .app-btn-danger {
+    padding: 0.42rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .app-panel {
+    border-radius: 1rem;
+  }
+
+  .auth-form-root {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
   color: var(--brand-navy);
   padding: 0.68rem 0.85rem;
   font-size: 0.9rem;

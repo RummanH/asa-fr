@@ -12,8 +12,8 @@ export default function ResetPasswordPage() {
   return (
     <AuthPageShell>
       <AuthLayout
-        title="Reset Password"
-        subtitle="Enter your reset token and choose a new password"
+        title="Reset your password"
+        subtitle="Paste your reset token and choose a strong new password to regain access."
       >
         <ResetPasswordForm />
       </AuthLayout>
@@ -54,16 +54,18 @@ function ResetPasswordForm() {
   }
 
   return (
-    <div className="w-full max-w-md app-panel p-6 sm:p-8 shadow-[0_20px_55px_rgba(5,47,68,0.12)]">
-      <h1 className="text-2xl font-semibold text-brand-navy">Reset Password</h1>
-      <p className="mt-2 text-sm text-brand-navy/65">
-        Enter your reset token and choose a new password.
-      </p>
+    <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50/95 p-6 shadow-[0_20px_55px_rgba(5,47,68,0.12)] sm:p-8">
+      <div className="space-y-3">
+        <h2 className="text-2xl font-bold text-brand-navy">Reset your password</h2>
+        <p className="text-sm leading-6 text-slate-600">
+          Use the token sent to your email and set a fresh password that’s secure and easy to remember.
+        </p>
+      </div>
 
-      <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-brand-navy/90" htmlFor="token">
-            Reset Token
+      <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700" htmlFor="token">
+            Reset token
           </label>
           <input
             className="app-input"
@@ -72,13 +74,14 @@ function ResetPasswordForm() {
             value={token}
             onChange={(event) => setToken(event.target.value)}
             minLength={32}
+            placeholder="Enter reset token"
             required
           />
         </div>
 
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-brand-navy/90" htmlFor="newPassword">
-            New Password
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700" htmlFor="newPassword">
+            New password
           </label>
           <input
             className="app-input"
@@ -88,13 +91,14 @@ function ResetPasswordForm() {
             value={newPassword}
             onChange={(event) => setNewPassword(event.target.value)}
             minLength={8}
+            placeholder="At least 8 characters"
             required
           />
         </div>
 
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-brand-navy/90" htmlFor="confirmPassword">
-            Confirm New Password
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700" htmlFor="confirmPassword">
+            Confirm new password
           </label>
           <input
             className="app-input"
@@ -104,6 +108,7 @@ function ResetPasswordForm() {
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
             minLength={8}
+            placeholder="Repeat your password"
             required
           />
         </div>
@@ -113,14 +118,14 @@ function ResetPasswordForm() {
           disabled={isSubmitting}
           type="submit"
         >
-          {isSubmitting ? "Please wait..." : "Reset Password"}
+          {isSubmitting ? "Resetting…" : "Reset password"}
         </button>
       </form>
 
-      <p className="mt-5 text-sm text-brand-navy/65">
-        Back to{" "}
-        <Link className="font-medium text-brand-navy underline" href="/login">
-          Login
+      <p className="mt-6 text-sm text-slate-600">
+        Need a new token?{' '}
+        <Link className="font-semibold text-brand-teal hover:text-brand-navy" href="/forgot-password">
+          Request another reset link
         </Link>
       </p>
     </div>

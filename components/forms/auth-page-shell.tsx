@@ -13,64 +13,50 @@ type AuthPageShellProps = {
 
 function SessionLoader() {
   return (
-    <main className="relative min-h-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-brand-navy via-brand-teal to-brand-sky">
-      {/* Animated background */}
-      <div className="fixed inset-0 pointer-events-none">
-        {/* Gradient orbs */}
+    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(11,143,136,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(243,179,61,0.16),transparent_30%)]">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(249,250,251,0.92))]" />
+      <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-brand-sky/20 blur-3xl"
-          animate={{ x: [0, 30, 0], y: [0, -30, 0] }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-brand-gold/10 blur-3xl"
-          animate={{ x: [0, -40, 0], y: [0, 40, 0] }}
+          className="absolute -left-10 top-1/4 h-72 w-72 rounded-full bg-brand-sky/20 blur-3xl"
+          animate={{ x: [0, 36, 0], y: [0, -24, 0] }}
           transition={{ duration: 10, repeat: Infinity }}
         />
         <motion.div
-          className="absolute top-1/3 right-1/3 w-72 h-72 rounded-full bg-brand-sky/15 blur-3xl"
-          animate={{ x: [0, 20, 0], y: [0, 20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+          className="absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-brand-gold/15 blur-3xl"
+          animate={{ x: [0, -28, 0], y: [0, 24, 0] }}
+          transition={{ duration: 12, repeat: Infinity }}
         />
       </div>
 
-      {/* Content */}
-      <motion.div
-        className="relative z-10 flex flex-col items-center gap-6 text-center"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Animated spinner */}
-        <div className="relative w-16 h-16">
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-white/20"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-transparent border-t-white border-r-brand-sky"
-            animate={{ rotate: -360 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            className="absolute inset-3 rounded-full bg-gradient-to-br from-brand-sky to-brand-gold/50"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md rounded-[2rem] border border-slate-200/80 bg-white/95 p-8 shadow-2xl shadow-slate-900/10">
+          <div className="flex flex-col items-center gap-5 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-sky/15 text-brand-navy text-2xl font-extrabold">
+              TH
+            </div>
+            <p className="text-lg font-semibold text-brand-navy">Authenticating your session</p>
+            <p className="text-sm leading-6 text-slate-600">Please wait while we restore your secure access.</p>
+            <div className="relative h-20 w-20">
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-brand-sky/30"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-transparent border-t-brand-navy border-r-brand-sky"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-brand-navy transition hover:bg-slate-100"
+            >
+              Back to landing
+            </Link>
+          </div>
         </div>
-
-        <div>
-          <motion.p
-            className="text-brand-sky font-semibold tracking-widest text-sm uppercase"
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            Authenticating your session
-          </motion.p>
-          <p className="text-white/60 text-xs mt-2">Please wait a moment...</p>
-        </div>
-      </motion.div>
+      </div>
     </main>
   );
 }
@@ -111,9 +97,12 @@ export default function AuthPageShell({ children }: AuthPageShellProps) {
 
   if (error) {
     return (
-      <main className="relative min-h-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-brand-navy via-brand-teal to-brand-sky">
-        <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-6 max-w-md text-center">
-          <p className="text-red-300 font-semibold">{error}</p>
+      <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(11,143,136,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(243,179,61,0.16),transparent_30%)]">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(249,250,251,0.92))]" />
+        <div className="relative z-10 flex min-h-screen items-center justify-center px-6 py-12">
+          <div className="w-full max-w-md rounded-[2rem] border border-red-200 bg-white/95 p-8 shadow-2xl shadow-red-200/20 text-center">
+            <p className="text-lg font-semibold text-red-600">{error}</p>
+          </div>
         </div>
       </main>
     );
