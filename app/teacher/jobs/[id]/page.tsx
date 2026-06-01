@@ -4,12 +4,31 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { fetchJobPostById, type JobPost } from "@/lib/api";
 
 export default function TeacherJobDetailsPage() {
   return (
     <RoleProtectedPage role="TEACHER" loadingLabel="Loading job details...">
-      {({ accessToken }) => <TeacherJobDetailsContent accessToken={accessToken} />}
+      {({ user, accessToken, logoutAction, isLoggingOut }) => (
+        <DashboardLayout
+          navItems={[
+            { href: "/teacher/profile", label: "Edit Profile", icon: <span />, isActive: false },
+            { href: "/teacher/jobs", label: "Browse Jobs", icon: <span />, isActive: true },
+            { href: "/teacher/messages", label: "Messages", icon: <span /> },
+            { href: "/teacher/change-password", label: "Change Password", icon: <span /> },
+            { href: "/teacher/hire-requests", label: "Received Requests", icon: <span /> },
+          ]}
+          userName={user.name}
+          userEmail={user.email}
+          userRole={user.role}
+          settingsHref="/teacher/profile"
+          onLogout={logoutAction}
+          isLoggingOut={isLoggingOut}
+        >
+          <TeacherJobDetailsContent accessToken={accessToken} />
+        </DashboardLayout>
+      )}
     </RoleProtectedPage>
   );
 }
@@ -50,20 +69,6 @@ const I = {
   arrow:     "M3 8h10M9 4l4 4-4 4",
 };
 
-/* ── chip ── */
-function Chip({ icon, label }: { icon: string; label: string }) {
-  return (
-    <div style={{
-      display: "inline-flex", alignItems: "center", gap: 6,
-      background: "rgba(169,211,239,0.12)", border: "1px solid rgba(169,211,239,0.28)",
-      borderRadius: 9, padding: "5px 12px", color: "#052f44",
-    }}>
-      <span style={{ color: "#075f75", display: "flex" }}><Icon d={icon} size={12} /></span>
-      <span style={{ fontSize: 12, fontWeight: 600 }}>{label}</span>
-    </div>
-  );
-}
-
 /* ── section card ── */
 function SectionCard({ iconD, title, children }: { iconD: string; title: string; children: React.ReactNode }) {
   return (
@@ -99,14 +104,14 @@ function Skeleton() {
   return (
     <>
       <style>{`@keyframes sk-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
-      <main className="app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
+      <div style={{ padding: "1.5rem 1rem 3rem" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 }}>
           {[120, 180, 140].map((h, i) => (
             <div key={i} style={{ background: "white", borderRadius: 20, border: "1px solid rgba(212,230,239,0.8)", height: h,
               animation: "sk-pulse 1.4s ease-in-out infinite", boxShadow: "0 4px 18px rgba(5,47,68,0.05)" }} />
           ))}
         </div>
-      </main>
+      </div>
     </>
   );
 }
@@ -114,7 +119,7 @@ function Skeleton() {
 /* ── error state ── */
 function ErrorState({ message }: { message: string }) {
   return (
-    <main className="app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
+    <div style={{ padding: "1.5rem 1rem 3rem" }}>
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         <div style={{
           background: "white", borderRadius: 20, border: "1px solid rgba(229,72,77,0.2)",
@@ -142,7 +147,7 @@ function ErrorState({ message }: { message: string }) {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -180,8 +185,8 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
         .jd-action-btn:hover { transform: translateY(-2px); }
       `}</style>
 
-      <main className="jd-root app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
-        <div style={{ width: "100%", maxWidth: 760, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 }}>
+      <div className="jd-root" style={{ padding: "0 0 2rem" }}>
+        <div style={{ width: "100%", maxWidth: 860, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 }}>
 
           {/* ── Hero header ── */}
           <div style={{
@@ -302,7 +307,7 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
           </SectionCard>
 
         </div>
-      </main>
+      </div>
     </>
   );
 }

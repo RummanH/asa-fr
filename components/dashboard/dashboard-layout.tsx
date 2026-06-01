@@ -17,6 +17,7 @@ interface DashboardLayoutProps {
   userEmail?: string;
   userName?: string;
   userRole?: string;
+  settingsHref?: string;
   onLogout?: () => Promise<void>;
   isLoggingOut?: boolean;
 }
@@ -27,6 +28,7 @@ export function DashboardLayout({
   userEmail,
   userName,
   userRole,
+  settingsHref,
   onLogout,
   isLoggingOut = false,
 }: DashboardLayoutProps) {
@@ -111,7 +113,7 @@ export function DashboardLayout({
         {/* Sidebar footer */}
         <div className="border-t border-border p-4 lg:p-6 mt-auto space-y-2 sticky bottom-0 bg-card">
           <Link
-            href="/profile"
+            href={settingsHref ?? "/profile"}
             className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
           >
             <Settings size={18} />

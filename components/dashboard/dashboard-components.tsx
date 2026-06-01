@@ -21,20 +21,18 @@ export function DashboardCard({
 }: DashboardCardProps) {
   return (
     <motion.div
-      className={`rounded-2xl border ${
+      className={`rounded-[1.5rem] border p-6 lg:p-8 transition-all duration-300 ${
         highlight
-          ? "border-brand-sky/40 bg-gradient-to-br from-brand-light/50 to-brand-sky/10"
-          : "border-slate-200/60 bg-white/50"
-      } backdrop-blur-sm p-6 lg:p-8 transition-all duration-300 ${
-        interactive ? "hover:shadow-lg hover:border-brand-sky/60 cursor-pointer" : ""
-      } ${className}`}
+          ? "border-brand-sky/20 bg-brand-light/80 shadow-[0_18px_45px_rgba(11,143,136,0.08)]"
+          : "border-slate-200/70 bg-white shadow-sm"
+      } ${interactive ? "hover:shadow-lg hover:-translate-y-0.5 cursor-pointer" : ""} ${className}`}
       whileHover={interactive ? { y: -4 } : {}}
       transition={{ duration: 0.2 }}
     >
       {(title || description) && (
         <div className="mb-6 pb-4 border-b border-slate-200/40">
-          {title && <h3 className="text-lg lg:text-xl font-bold text-brand-navy">{title}</h3>}
-          {description && <p className="text-sm text-slate-600 mt-1">{description}</p>}
+          {title && <h3 className="text-xl lg:text-2xl font-semibold text-brand-ink">{title}</h3>}
+          {description && <p className="text-sm text-slate-600 mt-2 max-w-2xl">{description}</p>}
         </div>
       )}
       {children}
@@ -124,28 +122,28 @@ interface StatBoxProps {
 
 export function StatBox({ label, value, icon, color = "teal", trend }: StatBoxProps) {
   const colorClasses = {
-    teal: "from-brand-teal/10 to-brand-sky/5 border-brand-teal/20 text-brand-teal",
-    gold: "from-brand-gold/10 to-brand-gold/5 border-brand-gold/20 text-brand-gold",
-    sky: "from-brand-sky/10 to-brand-light/5 border-brand-sky/20 text-brand-sky",
-    navy: "from-brand-navy/10 to-brand-teal/5 border-brand-navy/20 text-brand-navy",
+    teal: "border-brand-teal/20 bg-brand-teal/10 text-brand-ink",
+    gold: "border-brand-gold/20 bg-brand-gold/10 text-brand-ink",
+    sky: "border-brand-sky/20 bg-brand-sky/10 text-brand-ink",
+    navy: "border-brand-navy/20 bg-brand-sky/5 text-brand-navy",
   };
 
   return (
     <motion.div
-      className={`rounded-2xl border bg-gradient-to-br ${colorClasses[color]} p-6 lg:p-8`}
-      whileHover={{ y: -4 }}
+      className={`rounded-[1.25rem] border p-5 lg:p-6 shadow-sm ${colorClasses[color]}`}
+      whileHover={{ y: 1 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="flex items-start justify-between mb-4">
-        {icon && <span className="text-2xl opacity-75">{icon}</span>}
+      <div className="flex items-start justify-between gap-4 mb-4">
+        {icon && <span className="text-2xl opacity-90">{icon}</span>}
         {trend && (
-          <span className={`text-xs font-semibold px-2 py-1 rounded-full ${trend.direction === "up" ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"}`}>
+          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${trend.direction === "up" ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"}`}>
             {trend.direction === "up" ? "↑" : "↓"} {Math.abs(trend.value)}%
           </span>
         )}
       </div>
-      <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-2">{label}</h3>
-      <p className="text-3xl lg:text-4xl font-bold text-brand-navy">{value}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-2">{label}</p>
+      <p className="text-3xl font-bold tracking-tight text-brand-ink">{value}</p>
     </motion.div>
   );
 }

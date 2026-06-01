@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, type ReactNode, useEffect, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
@@ -12,6 +13,7 @@ import {
   type InstitutionProfilePayload,
 } from "@/lib/api";
 import { useToast } from "@/components/ui/toast-provider";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 export default function InstitutionProfilePage() {
   return (
@@ -131,17 +133,20 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
       <div className="app-container max-w-4xl space-y-5">
         <section className="app-panel p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="text-2xl font-semibold text-brand-navy">Institution Profile</h1>
-            <Link
-              className="app-btn-secondary"
-              href="/institution/dashboard"
-            >
+            <div className="inline-flex items-center gap-3">
+              <span className="relative inline-flex h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-brand-navy/10 bg-brand-light">
+                <Image alt="Institution" className="object-contain" fill sizes="48px" src={redesignImages.logoMark} />
+              </span>
+              <div>
+                <h1 className="text-2xl font-semibold text-brand-navy">Institution Profile</h1>
+                <p className="mt-1 text-xs text-brand-navy/60">{profileExists ? "Update institution profile details." : "Create institution profile."}</p>
+              </div>
+            </div>
+            <Link className="app-btn-secondary" href="/institution/dashboard">
               Back to Dashboard
             </Link>
           </div>
-          <p className="mt-2 text-sm text-brand-navy/65">
-            {profileExists ? "Update institution profile details." : "Create institution profile."}
-          </p>
+          
         </section>
 
         <section className="app-panel p-6 sm:p-8">

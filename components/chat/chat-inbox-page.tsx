@@ -96,14 +96,14 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
   ];
 
   return (
-    <main className="w-full h-full flex flex-col bg-background">
+    <div className="w-full h-full flex flex-col bg-background">
       {/* Header */}
-      <div className="flex-shrink-0 border-b border-border bg-card px-4 sm:px-6 py-4">
-        <div className="flex items-center justify-between gap-3">
+      <div className="flex-shrink-0 border-b border-border bg-card/80 backdrop-blur-sm px-4 sm:px-6 py-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-3 min-w-0">
             <Link
               href={dashboardPath}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-foreground hover:bg-muted transition-colors flex-shrink-0"
+              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-background text-foreground hover:bg-muted transition-colors"
             >
               <svg
                 width="18"
@@ -260,8 +260,8 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
 
         {/* Conversation list */}
         {!isLoading && filtered.length > 0 && (
-          <div className="flex-1 overflow-y-auto">
-            <div className="divide-y divide-border">
+          <div className="flex-1 overflow-y-auto py-4">
+            <div className="space-y-3 pb-6">
               {filtered.map((conversation, i) => {
                 const partner =
                   role === "TEACHER" ? conversation.institution.institutionName : conversation.teacher.user.name;
@@ -274,7 +274,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
                   <Link
                     key={conversation.id}
                     href={`${conversationBasePath}/${conversation.id}`}
-                    className="group flex items-center gap-3 px-4 sm:px-6 py-3.5 transition-colors duration-150 hover:bg-muted/50 active:bg-muted"
+                    className="group block rounded-3xl border border-border bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
                   >
                     {/* Avatar */}
                     <div
@@ -322,7 +322,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
 
                     {/* Arrow */}
                     <svg
-                      className="flex-shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary"
+                      className="flex-shrink-0 text-muted-foreground transition duration-200 group-hover:text-primary"
                       width="18"
                       height="18"
                       viewBox="0 0 24 24"
@@ -341,6 +341,6 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

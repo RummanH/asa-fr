@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
@@ -13,14 +14,39 @@ import {
   type TeacherProfilePayload,
 } from "@/lib/api";
 import { useToast } from "@/components/ui/toast-provider";
+import { redesignImages } from "@/components/landing/redesign-images";
 
 type GenderValue = "" | "MALE" | "FEMALE" | "OTHER" | "UNSPECIFIED";
 type TeachingModeValue = "" | "ONLINE" | "OFFLINE" | "BOTH";
 
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+
 export default function TeacherProfilePage() {
   return (
     <RoleProtectedPage role="TEACHER" loadingLabel="Loading teacher profile...">
-      {({ accessToken }) => <TeacherProfileForm accessToken={accessToken} />}
+      {({ user, accessToken, logoutAction, isLoggingOut }) => {
+        const navItems = [
+          { href: "/teacher/profile", label: "Edit Profile", icon: <span />, isActive: true },
+          { href: "/teacher/jobs", label: "Browse Jobs", icon: <span /> },
+          { href: "/teacher/messages", label: "Messages", icon: <span /> },
+          { href: "/teacher/change-password", label: "Change Password", icon: <span /> },
+          { href: "/teacher/hire-requests", label: "Received Requests", icon: <span /> },
+        ];
+
+        return (
+          <DashboardLayout
+            navItems={navItems}
+            userName={user.name}
+            userEmail={user.email}
+            userRole={user.role}
+            settingsHref="/teacher/profile"
+            onLogout={logoutAction}
+            isLoggingOut={isLoggingOut}
+          >
+            <TeacherProfileForm accessToken={accessToken} />
+          </DashboardLayout>
+        );
+      }}
     </RoleProtectedPage>
   );
 }
@@ -86,7 +112,7 @@ function StyledInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
         padding: props.type === "file" ? "6px 12px" : "0 12px",
         borderRadius: 10,
         border: `1.5px solid ${focused ? "#075f75" : "#ccdde8"}`,
-        background: focused ? "#f4fbff" : "#fafcfe",
+        backgroundColor: focused ? "#f4fbff" : "#fafcfe",
         color: "#052f44",
         fontSize: 13,
         fontWeight: 500,
@@ -119,7 +145,7 @@ function StyledSelect(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
         padding: "0 30px 0 12px",
         borderRadius: 10,
         border: `1.5px solid ${focused ? "#075f75" : "#ccdde8"}`,
-        background: focused ? "#f4fbff" : "#fafcfe",
+        backgroundColor: focused ? "#f4fbff" : "#fafcfe",
         color: "#052f44",
         fontSize: 13,
         fontWeight: 500,
@@ -156,7 +182,7 @@ function StyledTextarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>
         padding: "10px 12px",
         borderRadius: 10,
         border: `1.5px solid ${focused ? "#075f75" : "#ccdde8"}`,
-        background: focused ? "#f4fbff" : "#fafcfe",
+        backgroundColor: focused ? "#f4fbff" : "#fafcfe",
         color: "#052f44",
         fontSize: 13,
         fontWeight: 500,
@@ -359,7 +385,7 @@ function AvatarUpload({
   isUploading,
   onUpload,
 }: {
-  profileImage: string;
+  profileImage?: string | undefined;
   isUploading: boolean;
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
@@ -521,7 +547,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
   const [location, setLocation] = useState("");
   const [teachingMode, setTeachingMode] = useState<TeachingModeValue>("");
   const [bio, setBio] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState<string | undefined>(undefined);
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
@@ -539,7 +565,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
         setLocation(profile.location ?? "");
         setTeachingMode(profile.teachingMode ?? "");
         setBio(profile.bio ?? "");
-        setProfileImage(profile.profileImage ?? "");
+        setProfileImage(profile.profileImage ?? undefined);
         setIsAvailable(profile.isAvailable);
       })
       .catch((error: unknown) => {
@@ -555,6 +581,23 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
   async function handleProfileImageUpload(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+    // Basic client-side validation
+    if (!file.type.startsWith("image/")) {
+      const msg = "Please upload a valid image file (JPG/PNG/WebP).";
+      setErrorMessage(msg);
+      showToast(msg, "error");
+      e.target.value = "";
+      return;
+    }
+    const maxBytes = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxBytes) {
+      const msg = "Image is too large. Maximum size is 5MB.";
+      setErrorMessage(msg);
+      showToast(msg, "error");
+      e.target.value = "";
+      return;
+    }
+
     setIsUploadingImage(true);
     setErrorMessage("");
     try {
@@ -587,7 +630,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
         location,
         teachingMode: teachingMode || undefined,
         bio,
-        profileImage,
+        ...(profileImage ? { profileImage } : {}),
       };
       if (profileExists) {
         await updateTeacherProfile(accessToken, payload);
@@ -682,20 +725,8 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 12,
-                      background: "rgba(169,211,239,0.15)",
-                      border: "1px solid rgba(169,211,239,0.25)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#a9d3ef",
-                    }}
-                  >
-                    <Icon d={I.user} size={18} />
+                  <div style={{ width: 52, height: 52, position: "relative", flexShrink: 0 }}>
+                    <Image src={redesignImages.logoMark} alt="Logo" fill className="object-contain" sizes="52px" />
                   </div>
                   <div>
                     <h1
@@ -709,7 +740,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                     >
                       Teacher Profile
                     </h1>
-                    <p style={{ fontSize: 11, color: "rgba(169,211,239,0.7)", margin: 0 }}>
+                    <p style={{ fontSize: 11, color: "rgba(169,211,239,0.85)", margin: 0 }}>
                       {profileExists ? "Update your profile details" : "Create your teacher profile"}
                     </p>
                   </div>

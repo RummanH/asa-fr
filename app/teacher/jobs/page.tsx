@@ -3,12 +3,31 @@
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { fetchActiveJobPosts, type JobPost, type JobPostsQuery, type JobType, type TeachingMode } from "@/lib/api";
 
 export default function TeacherJobsPage() {
   return (
     <RoleProtectedPage role="TEACHER" loadingLabel="Loading teacher jobs...">
-      {({ accessToken }) => <TeacherJobsContent accessToken={accessToken} />}
+      {({ user, accessToken, logoutAction, isLoggingOut }) => (
+        <DashboardLayout
+          navItems={[
+            { href: "/teacher/profile", label: "Edit Profile", icon: <span />, isActive: false },
+            { href: "/teacher/jobs", label: "Browse Jobs", icon: <span />, isActive: true },
+            { href: "/teacher/messages", label: "Messages", icon: <span /> },
+            { href: "/teacher/change-password", label: "Change Password", icon: <span /> },
+            { href: "/teacher/hire-requests", label: "Received Requests", icon: <span /> },
+          ]}
+          userName={user.name}
+          userEmail={user.email}
+          userRole={user.role}
+          settingsHref="/teacher/profile"
+          onLogout={logoutAction}
+          isLoggingOut={isLoggingOut}
+        >
+          <TeacherJobsContent accessToken={accessToken} />
+        </DashboardLayout>
+      )}
     </RoleProtectedPage>
   );
 }
@@ -433,9 +452,9 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
         .tj-filter-toggle:hover { background: rgba(5,47,68,0.06) !important; }
       `}</style>
 
-      <main className="tj-root app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
+      <div className="tj-root" style={{ padding: "0 0 2rem" }}>
         <div
-          style={{ width: "100%", maxWidth: 820, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }}
+          style={{ width: "100%", maxWidth: 920, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }}
         >
           {/* ── Header ── */}
           <div
@@ -784,7 +803,7 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
             </div>
           )}
         </div>
-      </main>
+      </div>
     </>
   );
 }

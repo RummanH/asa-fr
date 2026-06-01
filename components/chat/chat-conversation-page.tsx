@@ -120,7 +120,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
 
   if (!conversationId) {
     return (
-      <main className="w-full h-full flex flex-col bg-background">
+      <div className="w-full h-full flex flex-col bg-background">
         <div className="flex-1 flex items-center justify-center px-4 py-8 sm:px-6">
           <div className="text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50">
@@ -148,7 +148,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
             </Link>
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -176,10 +176,13 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
     else groupedMessages.push({ date, items: [msg] });
   }
 
+  const partnerName = messages.find((m) => m.senderId !== currentUserId)?.sender?.name ?? "Conversation";
+  const partnerRole = messages.find((m) => m.senderId !== currentUserId)?.sender?.role ?? "INSTITUTION";
+
   return (
-    <main className="w-full h-full flex flex-col bg-background">
+    <div className="w-full h-full flex flex-col bg-background">
       {/* Header */}
-      <div className="flex-shrink-0 border-b border-border bg-card shadow-sm">
+      <div className="flex-shrink-0 border-b border-border bg-card/80 shadow-sm">
         <div className="h-16 px-4 sm:px-6 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <Link
@@ -201,8 +204,8 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
             </Link>
 
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-foreground truncate">Conversation</p>
-              <p className="text-xs text-muted-foreground truncate">ID: {conversationId.slice(0, 12)}...</p>
+              <p className="text-sm font-semibold text-foreground truncate">{partnerName}</p>
+              <p className="text-xs text-muted-foreground truncate">{partnerRole === "TEACHER" ? "Teacher chat" : "Institution chat"}</p>
             </div>
           </div>
 
@@ -323,13 +326,13 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                           </div>
                         )}
 
-                        <div className={`flex max-w-xs ${isMine ? "flex-row-reverse" : "flex-row"} gap-2`}>
+                        <div className={`flex max-w-[82%] ${isMine ? "flex-row-reverse" : "flex-row"} gap-2`}>
                           <div className={`flex flex-col ${isMine ? "items-end" : "items-start"}`}>
                             <div
-                              className={`px-4 py-2.5 rounded-xl text-sm leading-relaxed ${
+                              className={`px-4 py-3 rounded-3xl text-sm leading-relaxed ${
                                 isMine
-                                  ? "bg-primary text-primary-foreground rounded-br-none shadow-md"
-                                  : "bg-card border border-border text-foreground rounded-bl-none shadow-sm"
+                                  ? "bg-primary text-primary-foreground rounded-br-none shadow-xl"
+                                  : "bg-white border border-border text-foreground rounded-bl-none shadow-sm"
                               }`}
                             >
                               {message.message}
@@ -385,8 +388,8 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
       </div>
 
       {/* Input bar */}
-      <div className="flex-shrink-0 border-t border-border bg-card">
-        <form onSubmit={handleSendMessage} className="h-20 px-4 sm:px-6 py-3 flex items-end gap-3">
+      <div className="flex-shrink-0 border-t border-border bg-card/90 backdrop-blur-sm">
+        <form onSubmit={handleSendMessage} className="h-20 px-4 sm:px-6 py-4 flex items-center gap-3">
           <input
             ref={inputRef}
             className="flex-1 bg-background border border-border rounded-lg px-4 py-2.5 text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors disabled:opacity-50"
@@ -431,7 +434,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
           </button>
         </form>
       </div>
-    </main>
+    </div>
   );
 }
 
