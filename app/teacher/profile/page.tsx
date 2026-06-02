@@ -688,12 +688,12 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
           {/* ── Header ── */}
           <div
             style={{
-              background: "radial-gradient(circle at top left, rgba(185,231,251,0.24), transparent 28%), linear-gradient(135deg,#07111f 0%,#0b3d47 52%,#0b8f88 100%)",
+              background: "linear-gradient(180deg,#ffffff 0%,#f7fbff 100%)",
               borderRadius: 28,
               overflow: "hidden",
               position: "relative",
-              border: "1px solid rgba(16,32,51,0.42)",
-              boxShadow: "0 24px 60px rgba(16,32,51,0.22)",
+              border: "1px solid rgba(212,230,239,0.8)",
+              boxShadow: "0 18px 44px rgba(17,34,68,0.08)",
             }}
           >
             <svg
@@ -725,14 +725,14 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                       style={{
                         fontSize: 18,
                         fontWeight: 900,
-                        color: "white",
+                        color: "#102033",
                         letterSpacing: "-0.035em",
                         margin: "0 0 2px",
                       }}
                     >
                       Teacher Profile
                     </h1>
-                    <p style={{ fontSize: 11, color: "rgba(169,211,239,0.85)", margin: 0 }}>
+                    <p style={{ fontSize: 11, color: "rgba(16,32,51,0.58)", margin: 0 }}>
                       {profileExists ? "Update your profile details" : "Create your teacher profile"}
                     </p>
                   </div>
@@ -743,12 +743,12 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                     display: "flex",
                     alignItems: "center",
                     gap: 5,
-                    background: "rgba(255,255,255,0.1)",
-                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "#f5fbfd",
+                    border: "1px solid rgba(169,211,239,0.35)",
                     borderRadius: 14,
                     padding: "9px 14px",
                     textDecoration: "none",
-                    color: "rgba(169,211,239,0.85)",
+                    color: "#102033",
                     fontSize: 12,
                     fontWeight: 700,
                   }}
@@ -764,7 +764,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 5,
-                    background: profileExists ? "rgba(48,164,108,0.15)" : "rgba(245,168,36,0.15)",
+                    background: profileExists ? "rgba(48,164,108,0.10)" : "rgba(245,168,36,0.10)",
                     border: `1px solid ${profileExists ? "rgba(48,164,108,0.3)" : "rgba(245,168,36,0.3)"}`,
                     borderRadius: 999,
                     padding: "3px 10px",
@@ -778,7 +778,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                       background: profileExists ? "#30a46c" : "#f5a524",
                     }}
                   />
-                  <span style={{ fontSize: 10, fontWeight: 700, color: profileExists ? "#a9d3ef" : "#fde68a" }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: profileExists ? "#1f7a57" : "#a56b10" }}>
                     {profileExists ? "Profile exists" : "No profile yet"}
                   </span>
                 </div>
@@ -788,14 +788,14 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 5,
-                      background: "rgba(48,164,108,0.15)",
+                      background: "rgba(48,164,108,0.10)",
                       border: "1px solid rgba(48,164,108,0.3)",
                       borderRadius: 999,
                       padding: "3px 10px",
                     }}
                   >
                     <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#30a46c" }} />
-                    <span style={{ fontSize: 10, fontWeight: 700, color: "#a9d3ef" }}>Available for hire</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: "#1f7a57" }}>Available for hire</span>
                   </div>
                 )}
               </div>
@@ -811,16 +811,15 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                 <div
                   style={{
                     borderRadius: 18,
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    background: "rgba(255,255,255,0.1)",
+                    border: "1px solid rgba(212,230,239,0.8)",
+                    background: "#ffffff",
                     padding: "14px 16px",
-                    backdropFilter: "blur(8px)",
                   }}
                 >
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.46)", margin: 0 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(16,32,51,0.42)", margin: 0 }}>
                     Profile
                   </p>
-                  <p style={{ fontSize: 28, fontWeight: 800, color: "white", margin: "8px 0 0" }}>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "#102033", margin: "8px 0 0" }}>
                     {profileExists ? "Ready" : "Draft"}
                   </p>
                 </div>
@@ -828,15 +827,14 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                   style={{
                     borderRadius: 18,
                     border: "1px solid rgba(185,231,251,0.18)",
-                    background: "rgba(185,231,251,0.12)",
+                    background: "#f5fbfd",
                     padding: "14px 16px",
-                    backdropFilter: "blur(8px)",
                   }}
                 >
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.46)", margin: 0 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(16,32,51,0.42)", margin: 0 }}>
                     Visibility
                   </p>
-                  <p style={{ fontSize: 28, fontWeight: 800, color: "#b9e7fb", margin: "8px 0 0" }}>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "#0b8f88", margin: "8px 0 0" }}>
                     {isAvailable ? "Live" : "Hidden"}
                   </p>
                 </div>
@@ -844,15 +842,14 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                   style={{
                     borderRadius: 18,
                     border: "1px solid rgba(243,179,61,0.18)",
-                    background: "rgba(243,179,61,0.12)",
+                    background: "#fff8ed",
                     padding: "14px 16px",
-                    backdropFilter: "blur(8px)",
                   }}
                 >
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.46)", margin: 0 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(16,32,51,0.42)", margin: 0 }}>
                     Photo
                   </p>
-                  <p style={{ fontSize: 28, fontWeight: 800, color: "#fde68a", margin: "8px 0 0" }}>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "#c58a14", margin: "8px 0 0" }}>
                     {profileImage ? "Added" : "Missing"}
                   </p>
                 </div>

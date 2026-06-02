@@ -181,13 +181,14 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
       `}</style>
 
       <div className="jd-root" style={{ padding: "0 0 2rem" }}>
-        <div style={{ width: "100%", maxWidth: 860, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 }}>
+        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 14 }}>
 
           {/* ── Hero header ── */}
           <div style={{
-            background: "linear-gradient(135deg, #052f44 0%, #065770 55%, #076b82 100%)",
-            borderRadius: 22, overflow: "hidden", position: "relative",
-            boxShadow: "0 16px 48px rgba(5,47,68,0.22)",
+            background: "linear-gradient(180deg,#ffffff 0%,#f7fbff 100%)",
+            borderRadius: 26, overflow: "hidden", position: "relative",
+            border: "1px solid rgba(212,230,239,0.8)",
+            boxShadow: "0 18px 44px rgba(17,34,68,0.08)",
           }}>
             <svg style={{ position: "absolute", top: -20, right: -10, opacity: 0.08, pointerEvents: "none" }}
               width="200" height="160" viewBox="0 0 200 160" fill="none">
@@ -200,9 +201,9 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
               {/* Back link */}
               <Link href="/teacher/jobs" style={{
                 display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 18,
-                background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)",
-                borderRadius: 8, padding: "5px 11px", textDecoration: "none",
-                color: "rgba(169,211,239,0.8)", fontSize: 11, fontWeight: 700,
+                background: "#f5fbfd", border: "1px solid rgba(169,211,239,0.35)",
+                borderRadius: 12, padding: "8px 12px", textDecoration: "none",
+                color: "#102033", fontSize: 12, fontWeight: 700,
                 transition: "background 150ms",
               }}>
                 <Icon d={I.back} size={12} /> Back to Jobs
@@ -212,18 +213,18 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
               <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
                 <div style={{
                   width: 52, height: 52, borderRadius: 14, flexShrink: 0,
-                  background: "linear-gradient(135deg,rgba(169,211,239,0.22),rgba(169,211,239,0.1))",
-                  border: "1.5px solid rgba(169,211,239,0.3)",
+                  background: "linear-gradient(135deg,#102033,#0b8f88)",
+                  border: "1.5px solid rgba(169,211,239,0.22)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 17, fontWeight: 800, color: "#a9d3ef", letterSpacing: "-0.02em",
+                  fontSize: 17, fontWeight: 800, color: "white", letterSpacing: "-0.02em",
                 }}>
                   {initials}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <h1 style={{ fontSize: 20, fontWeight: 900, color: "white", letterSpacing: "-0.04em", margin: "0 0 4px", lineHeight: 1.15 }}>
+                  <h1 style={{ fontSize: 20, fontWeight: 900, color: "#102033", letterSpacing: "-0.04em", margin: "0 0 4px", lineHeight: 1.15 }}>
                     {job.title}
                   </h1>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(169,211,239,0.75)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(16,32,51,0.6)" }}>
                     <Icon d={I.building} size={12} />
                     <span style={{ fontSize: 12, fontWeight: 600 }}>{job.institution.institutionName}</span>
                   </div>
@@ -232,7 +233,7 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
 
               {/* Meta chips */}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 18 }}>
-                {[
+                {[ 
                   { icon: I.book,    label: job.subject },
                   { icon: I.grade,   label: job.classLevel },
                   { icon: I.clock,   label: formatJobType(job.jobType) },
@@ -242,11 +243,11 @@ function TeacherJobDetailsContent({ accessToken }: { accessToken: string }) {
                 ].map(({ icon, label }) => (
                   <div key={label} style={{
                     display: "inline-flex", alignItems: "center", gap: 5,
-                    background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.14)",
-                    borderRadius: 8, padding: "5px 11px",
+                    background: "#ffffff", border: "1px solid rgba(212,230,239,0.8)",
+                    borderRadius: 10, padding: "7px 11px",
                   }}>
-                    <span style={{ color: "#a9d3ef", display: "flex" }}><Icon d={icon} size={11} /></span>
-                    <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.9)" }}>{label}</span>
+                    <span style={{ color: "#0b8f88", display: "flex" }}><Icon d={icon} size={11} /></span>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: "#102033" }}>{label}</span>
                   </div>
                 ))}
               </div>

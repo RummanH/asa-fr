@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Bell, LogOut, Menu, Settings, X } from "lucide-react";
 
 interface DashboardLayoutProps {
@@ -50,11 +50,24 @@ export function DashboardLayout({
   const initials = useMemo(() => getInitials(userName), [userName]);
   const roleLabel = userRole === "TEACHER" ? "Teacher" : "Institution";
 
+  useEffect(() => {
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.52),_transparent_22%),linear-gradient(180deg,_#f5fbfd_0%,_#eaf4f8_100%)]">
-      <div className="flex min-h-screen w-full gap-3 border border-white/70 bg-white/60 p-2 shadow-[0_24px_80px_rgba(16,32,51,0.12)] backdrop-blur-sm sm:gap-4 sm:p-3">
+    <div className="h-[100dvh] overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.52),_transparent_22%),linear-gradient(180deg,_#f5fbfd_0%,_#eaf4f8_100%)]">
+      <div className="flex h-[100dvh] w-full gap-3 overflow-hidden border border-white/70 bg-white/60 p-2 shadow-[0_24px_80px_rgba(16,32,51,0.12)] backdrop-blur-sm sm:gap-4 sm:p-3">
         <aside
-          className={`fixed inset-y-3 left-3 z-40 flex w-[284px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] text-white shadow-[0_24px_60px_rgba(34,53,77,0.34)] transition-transform duration-300 lg:static lg:inset-auto lg:translate-x-0 ${
+          className={`fixed inset-y-3 left-3 z-40 flex w-[284px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] text-white shadow-[0_24px_60px_rgba(34,53,77,0.34)] transition-transform duration-300 lg:static lg:inset-auto lg:h-full lg:translate-x-0 ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-[115%]"
           }`}
         >
