@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 import { Bell, LogOut, Menu, Settings, X } from "lucide-react";
 
@@ -47,18 +46,6 @@ export function DashboardLayout({
   isLoggingOut = false,
 }: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
-
-  const containerVariants = {
-    hidden: { opacity: 0, y: 8 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.28,
-      },
-    },
-  };
 
   const initials = useMemo(() => getInitials(userName), [userName]);
   const roleLabel = userRole === "TEACHER" ? "Teacher" : "Institution";
@@ -66,13 +53,10 @@ export function DashboardLayout({
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.52),_transparent_22%),linear-gradient(180deg,_#f4f8fc_0%,_#edf3f8_100%)]">
       <div className="flex min-h-screen w-full gap-3 border border-white/65 bg-white/55 p-2 shadow-[0_24px_80px_rgba(16,32,51,0.12)] backdrop-blur-sm sm:gap-4 sm:p-3">
-        <motion.aside
+        <aside
           className={`fixed inset-y-3 left-3 z-40 flex w-[284px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[#455a73] text-white shadow-[0_24px_60px_rgba(34,53,77,0.34)] transition-transform duration-300 lg:static lg:inset-auto lg:translate-x-0 ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-[115%]"
           }`}
-          animate={{ opacity: 1, x: 0 }}
-          initial={{ opacity: 0, x: -18 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.28 }}
         >
           <div className="border-b border-white/10 px-5 pb-5 pt-6">
             <Link href="/" className="flex items-center gap-3">
@@ -95,13 +79,8 @@ export function DashboardLayout({
           </div>
 
           <nav className="flex-1 space-y-1.5 overflow-y-auto px-4 py-6">
-            {navItems.map((item, idx) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: prefersReducedMotion ? 0 : idx * 0.035, duration: prefersReducedMotion ? 0 : 0.24 }}
-              >
+            {navItems.map((item) => (
+              <div key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setIsSidebarOpen(false)}
@@ -123,7 +102,7 @@ export function DashboardLayout({
                   <span className="flex-1 truncate">{item.label}</span>
                   {item.isHighlight && !item.isActive ? <span className="h-2 w-2 rounded-full bg-brand-gold" /> : null}
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </nav>
 
@@ -152,7 +131,7 @@ export function DashboardLayout({
               ) : null}
             </div>
           </div>
-        </motion.aside>
+        </aside>
 
         <div className="relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-[24px] bg-[#f8fbff]">
           <header className="border-b border-slate-200/80 bg-white/86 px-4 py-3 backdrop-blur sm:px-5 lg:px-7">
@@ -192,20 +171,14 @@ export function DashboardLayout({
           </header>
 
           <main className="min-h-0 flex-1 overflow-y-auto">
-            <motion.div className="p-4 sm:p-5 lg:p-7" variants={containerVariants} initial="hidden" animate="visible">
+            <div className="p-4 sm:p-5 lg:p-7">
               {children}
-            </motion.div>
+            </div>
           </main>
         </div>
 
         {isSidebarOpen ? (
-          <motion.div
-            className="fixed inset-0 z-30 bg-slate-950/35 lg:hidden"
-            onClick={() => setIsSidebarOpen(false)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
+          <div className="fixed inset-0 z-30 bg-slate-950/35 lg:hidden" onClick={() => setIsSidebarOpen(false)} />
         ) : null}
       </div>
     </div>

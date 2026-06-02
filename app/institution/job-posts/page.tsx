@@ -138,7 +138,7 @@ function InstitutionJobPostsContent({ accessToken }: { accessToken: string }) {
 
   return (
     <main className="app-shell min-h-screen px-3 py-5 sm:px-6 sm:py-8">
-      <div className="app-container max-w-5xl space-y-4">
+      <div className="app-container space-y-4">
         {/* Header */}
         <div className="app-panel overflow-hidden">
           <div

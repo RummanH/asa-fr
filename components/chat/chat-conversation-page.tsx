@@ -173,7 +173,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               {partnerName}
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
               Continue the conversation in the same teacher workspace without switching to a separate messaging surface.
             </p>
           </div>

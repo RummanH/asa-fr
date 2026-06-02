@@ -28,7 +28,7 @@ function CreateJobPostContent({ accessToken }: CreateJobPostContentProps) {
 
   return (
     <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-      <div className="app-container max-w-4xl space-y-5">
+      <div className="app-container space-y-5">
         <section className="app-panel p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="text-2xl font-semibold text-brand-navy">Create Job Post</h1>

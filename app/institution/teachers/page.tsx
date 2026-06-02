@@ -79,7 +79,7 @@ function InstitutionTeachersContent({ accessToken }: InstitutionTeachersContentP
 
   return (
     <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-      <div className="app-container max-w-6xl space-y-5">
+      <div className="app-container space-y-5">
         <section className="app-panel p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>

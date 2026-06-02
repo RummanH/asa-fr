@@ -117,13 +117,13 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               Messages
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
               Keep active institution conversations organized, searchable, and easy to continue without leaving the
               teacher workspace.
             </p>
           </div>
 
-          <div className="grid w-full gap-3 sm:grid-cols-2 xl:max-w-[420px]">
+          <div className="grid w-full gap-3 sm:grid-cols-2">
             <div className="rounded-[20px] border border-white/10 bg-white/10 px-4 py-3.5 backdrop-blur-sm">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Conversations</p>
               <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-white">
@@ -190,7 +190,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
             <h3 className="mt-5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
               No conversations yet
             </h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+            <p className="mx-auto mt-3 text-sm leading-7 text-slate-500">
               Start a conversation from a job post or institution profile and it will appear here.
             </p>
           </div>

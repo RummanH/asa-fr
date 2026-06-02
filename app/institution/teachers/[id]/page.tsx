@@ -53,7 +53,7 @@ function InstitutionTeacherDetailsContent({ accessToken }: InstitutionTeacherDet
   if (isLoading) {
     return (
       <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-        <div className="app-container max-w-4xl app-panel p-6 sm:p-8">
+        <div className="app-container app-panel p-6 sm:p-8">
           <p className="text-sm text-brand-navy/78">Loading teacher details...</p>
         </div>
       </main>
@@ -63,7 +63,7 @@ function InstitutionTeacherDetailsContent({ accessToken }: InstitutionTeacherDet
   if (!teacherId) {
     return (
       <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-        <div className="app-container max-w-4xl app-panel p-6 sm:p-8">
+        <div className="app-container app-panel p-6 sm:p-8">
           <p className="text-sm text-red-700">Invalid teacher id.</p>
           <Link
             className="mt-4 inline-block app-btn-secondary"
@@ -79,7 +79,7 @@ function InstitutionTeacherDetailsContent({ accessToken }: InstitutionTeacherDet
   if (!teacher) {
     return (
       <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-        <div className="app-container max-w-4xl app-panel p-6 sm:p-8">
+        <div className="app-container app-panel p-6 sm:p-8">
           <p className="text-sm text-red-700">{errorMessage || "Teacher not found"}</p>
           <Link
             className="mt-4 inline-block app-btn-secondary"
@@ -94,7 +94,7 @@ function InstitutionTeacherDetailsContent({ accessToken }: InstitutionTeacherDet
 
   return (
     <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-      <div className="app-container max-w-4xl space-y-5">
+      <div className="app-container space-y-5">
         <section className="app-panel p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="text-2xl font-semibold text-brand-navy">{teacher.user.name}</h1>

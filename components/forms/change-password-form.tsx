@@ -92,7 +92,7 @@ function ChangePasswordFormContent({ accessToken, dashboardPath }: ChangePasswor
   }
 
   return (
-    <div className="mx-auto grid max-w-3xl gap-5">
+    <div className="grid gap-5">
       <section className="overflow-hidden rounded-[28px] border border-[#344b66] bg-[radial-gradient(circle_at_top_left,_rgba(100,202,239,0.28),_transparent_28%),linear-gradient(135deg,#31465f_0%,#41566f_58%,#4a6079_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(34,53,77,0.26)] sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -100,7 +100,7 @@ function ChangePasswordFormContent({ accessToken, dashboardPath }: ChangePasswor
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.5rem]">
               Change Password
             </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/72">
+            <p className="mt-2 text-sm leading-6 text-white/72">
               Update your password inside the same workspace shell so account security stays consistent with the rest of the product.
             </p>
           </div>

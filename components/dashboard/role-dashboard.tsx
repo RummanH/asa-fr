@@ -423,7 +423,7 @@ function TeacherDashboardView({
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               {title}
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
               A calmer teacher workspace with clearer hierarchy, stronger spacing, and better action grouping. Your
               data and routes stay the same, but the dashboard now reads like a proper product surface.
             </p>
@@ -451,7 +451,7 @@ function TeacherDashboardView({
             </div>
           </div>
 
-          <div className="grid w-full gap-3 sm:grid-cols-2 xl:max-w-[400px]">
+          <div className="grid w-full gap-3 sm:grid-cols-2">
             {dashboardSummary.map((item) => (
               <div
                 key={item.label}
@@ -799,7 +799,7 @@ function InstitutionDashboardFallback({
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Institution dashboard</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#31455f]">{title}</h1>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-500">
+            <p className="mt-3 text-sm leading-7 text-slate-500">
               The teacher dashboard is now the first modernized screen. This institution view keeps the current
               workflow intact while sharing the upgraded shell.
             </p>

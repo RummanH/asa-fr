@@ -240,13 +240,13 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               Received Hire Requests
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
               Review incoming institution interest, accept the strongest opportunities quickly, and keep the teacher
               workflow under one consistent interface.
             </p>
           </div>
 
-          <div className="grid w-full gap-3 sm:grid-cols-3 xl:max-w-[520px]">
+          <div className="grid w-full gap-3 sm:grid-cols-3">
             <div className="rounded-[20px] border border-white/10 bg-white/10 px-4 py-3.5 backdrop-blur-sm">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Total</p>
               <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-white">
@@ -316,7 +316,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
             <h3 className="mt-5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
               {activeFilter === "ALL" ? "No hire requests yet" : `No ${activeFilter.toLowerCase()} requests`}
             </h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+            <p className="mx-auto mt-3 text-sm leading-7 text-slate-500">
               {activeFilter === "ALL"
                 ? "Requests from institutions will appear here as they reach out through your profile."
                 : "Try switching to another filter to review the rest of your request history."}

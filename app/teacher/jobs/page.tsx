@@ -196,7 +196,7 @@ function EmptyState({ hasFilters, onReset }: { hasFilters: boolean; onReset: () 
       <h3 className="mt-5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
         No jobs found
       </h3>
-      <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+      <p className="mx-auto mt-3 text-sm leading-7 text-slate-500">
         {hasFilters
           ? "Try adjusting the filters to broaden the results."
           : "Active teaching opportunities will appear here as institutions publish them."}
@@ -279,13 +279,13 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               Browse Jobs
             </h1>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
               Review active teaching opportunities, narrow the list with filters, and move into details or conversation
               without switching visual systems.
             </p>
           </div>
 
-          <div className="grid w-full gap-3 sm:grid-cols-3 xl:max-w-[520px]">
+          <div className="grid w-full gap-3 sm:grid-cols-3">
             <div className="rounded-[20px] border border-white/10 bg-white/10 px-4 py-3.5 backdrop-blur-sm">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Open roles</p>
               <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-white">
