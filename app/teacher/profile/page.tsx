@@ -645,7 +645,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
       <>
         <style>{`@keyframes tpf-spin{to{transform:rotate(360deg)}} @keyframes tpf-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
         <main className="app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
-          <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 14 }}>
             {[100, 400, 120].map((h, i) => (
               <div
                 key={i}
@@ -684,17 +684,16 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
       `}</style>
 
       <main className="tpf-root app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
-        <div
-          style={{ width: "100%", maxWidth: 800, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }}
-        >
+        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
           {/* ── Header ── */}
           <div
             style={{
-              background: "linear-gradient(135deg,#052f44 0%,#065770 55%,#076b82 100%)",
-              borderRadius: 22,
+              background: "radial-gradient(circle at top left, rgba(185,231,251,0.24), transparent 28%), linear-gradient(135deg,#07111f 0%,#0b3d47 52%,#0b8f88 100%)",
+              borderRadius: 28,
               overflow: "hidden",
               position: "relative",
-              boxShadow: "0 16px 48px rgba(5,47,68,0.22)",
+              border: "1px solid rgba(16,32,51,0.42)",
+              boxShadow: "0 24px 60px rgba(16,32,51,0.22)",
             }}
           >
             <svg
@@ -707,7 +706,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
               <circle cx="180" cy="0" r="140" stroke="white" strokeWidth="1" />
               <circle cx="180" cy="0" r="90" stroke="white" strokeWidth="0.7" />
             </svg>
-            <div style={{ padding: "22px 24px 22px", position: "relative" }}>
+            <div style={{ padding: "24px 26px", position: "relative" }}>
               <div
                 style={{
                   display: "flex",
@@ -744,13 +743,13 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                     display: "flex",
                     alignItems: "center",
                     gap: 5,
-                    background: "rgba(255,255,255,0.08)",
-                    border: "1px solid rgba(255,255,255,0.14)",
-                    borderRadius: 9,
-                    padding: "6px 12px",
+                    background: "rgba(255,255,255,0.1)",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                    borderRadius: 14,
+                    padding: "9px 14px",
                     textDecoration: "none",
                     color: "rgba(169,211,239,0.85)",
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: 700,
                   }}
                 >
@@ -800,6 +799,64 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                   </div>
                 )}
               </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                  gap: 12,
+                  marginTop: 18,
+                }}
+              >
+                <div
+                  style={{
+                    borderRadius: 18,
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    background: "rgba(255,255,255,0.1)",
+                    padding: "14px 16px",
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.46)", margin: 0 }}>
+                    Profile
+                  </p>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "white", margin: "8px 0 0" }}>
+                    {profileExists ? "Ready" : "Draft"}
+                  </p>
+                </div>
+                <div
+                  style={{
+                    borderRadius: 18,
+                    border: "1px solid rgba(185,231,251,0.18)",
+                    background: "rgba(185,231,251,0.12)",
+                    padding: "14px 16px",
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.46)", margin: 0 }}>
+                    Visibility
+                  </p>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "#b9e7fb", margin: "8px 0 0" }}>
+                    {isAvailable ? "Live" : "Hidden"}
+                  </p>
+                </div>
+                <div
+                  style={{
+                    borderRadius: 18,
+                    border: "1px solid rgba(243,179,61,0.18)",
+                    background: "rgba(243,179,61,0.12)",
+                    padding: "14px 16px",
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.46)", margin: 0 }}>
+                    Photo
+                  </p>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "#fde68a", margin: "8px 0 0" }}>
+                    {profileImage ? "Added" : "Missing"}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -807,14 +864,14 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
           <div
             style={{
               background: "white",
-              borderRadius: 22,
+              borderRadius: 26,
               border: "1px solid rgba(212,230,239,0.8)",
-              boxShadow: "0 8px 32px rgba(5,47,68,0.08)",
+              boxShadow: "0 14px 38px rgba(5,47,68,0.08)",
               overflow: "hidden",
             }}
           >
-            <form onSubmit={handleSubmit} style={{ padding: "24px 24px 28px" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px 20px" }}>
+            <form onSubmit={handleSubmit} style={{ padding: "28px 28px 32px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px 22px" }}>
                 {/* Section 1 – Personal */}
                 <SectionHeader icon={I.user} title="Personal Info" step={1} total={4} />
 
