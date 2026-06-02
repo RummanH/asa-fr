@@ -194,7 +194,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
         </div>
       ) : null}
 
-      <section className="rounded-[26px] border border-slate-200 bg-white shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+      <section className="flex min-h-[560px] flex-col rounded-[26px] border border-slate-200 bg-white shadow-[0_16px_38px_rgba(17,34,68,0.06)] lg:h-[calc(100vh-18rem)] lg:max-h-[960px]">
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -214,7 +214,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
           </div>
         </div>
 
-        <div className="space-y-4 px-5 py-5">
+        <div className="min-h-0 flex-1 px-5 py-5">
           {isLoading ? (
             <div className="py-12 text-center">
               <Loader2 size={24} className="mx-auto animate-spin text-slate-400" />
@@ -228,49 +228,51 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
               <p className="mt-3 text-sm leading-7 text-slate-500">Send the first message below to start the conversation.</p>
             </div>
           ) : (
-            <div className="space-y-6">
-              {groupedMessages.map(({ date, items }) => (
-                <div key={date}>
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="h-px flex-1 bg-slate-200" />
-                    <span className="rounded-full bg-[#f7faff] px-3 py-1 text-xs font-semibold text-slate-500">
-                      {date}
-                    </span>
-                    <div className="h-px flex-1 bg-slate-200" />
-                  </div>
+            <div className="h-full overflow-y-auto pr-1">
+              <div className="space-y-6">
+                {groupedMessages.map(({ date, items }) => (
+                  <div key={date}>
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="h-px flex-1 bg-slate-200" />
+                      <span className="rounded-full bg-[#f7faff] px-3 py-1 text-xs font-semibold text-slate-500">
+                        {date}
+                      </span>
+                      <div className="h-px flex-1 bg-slate-200" />
+                    </div>
 
-                  <div className="space-y-3">
-                    {items.map((message) => {
-                      const isMine = message.senderId === currentUserId;
+                    <div className="space-y-3">
+                      {items.map((message) => {
+                        const isMine = message.senderId === currentUserId;
 
-                      return (
-                        <div key={message.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
-                          <div className={`max-w-[82%] ${isMine ? "items-end" : "items-start"} flex flex-col`}>
-                            <div
-                              className={`rounded-[22px] px-4 py-3 text-sm leading-7 ${
-                                isMine
-                                  ? "rounded-br-md bg-[#31465f] text-white"
-                                  : "rounded-bl-md border border-slate-200 bg-[#fbfdff] text-slate-700"
-                              }`}
-                            >
-                              {message.message}
-                            </div>
-                            <div className="mt-1.5 flex items-center gap-2 px-1 text-xs text-slate-400">
-                              <span>{formatTime(message.createdAt)}</span>
-                              {isMine ? (
-                                <span className={message.isRead ? "text-brand-teal" : "text-slate-400"}>
-                                  {message.isRead ? "Read" : "Sent"}
-                                </span>
-                              ) : null}
+                        return (
+                          <div key={message.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
+                            <div className={`max-w-[82%] ${isMine ? "items-end" : "items-start"} flex flex-col`}>
+                              <div
+                                className={`rounded-[22px] px-4 py-3 text-sm leading-7 ${
+                                  isMine
+                                    ? "rounded-br-md bg-[#31465f] text-white"
+                                    : "rounded-bl-md border border-slate-200 bg-[#fbfdff] text-slate-700"
+                                }`}
+                              >
+                                {message.message}
+                              </div>
+                              <div className="mt-1.5 flex items-center gap-2 px-1 text-xs text-slate-400">
+                                <span>{formatTime(message.createdAt)}</span>
+                                {isMine ? (
+                                  <span className={message.isRead ? "text-brand-teal" : "text-slate-400"}>
+                                    {message.isRead ? "Read" : "Sent"}
+                                  </span>
+                                ) : null}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
-              <div ref={endRef} />
+                ))}
+                <div ref={endRef} />
+              </div>
             </div>
           )}
         </div>

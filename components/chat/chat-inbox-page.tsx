@@ -211,64 +211,70 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
             </button>
           </div>
         ) : (
-          filtered.map((conversation, index) => {
-            const partnerName =
-              role === "TEACHER" ? conversation.institution.institutionName : conversation.teacher.user.name;
-            const partnerMeta =
-              role === "TEACHER" ? conversation.institution.user.email : conversation.teacher.user.email;
-            const hasUnread = (conversation.unreadCount ?? 0) > 0;
+          <div className="rounded-[26px] border border-slate-200 bg-white shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+            <div className="max-h-[calc(100vh-22rem)] overflow-y-auto p-4 sm:p-5">
+              <div className="space-y-3">
+                {filtered.map((conversation, index) => {
+                  const partnerName =
+                    role === "TEACHER" ? conversation.institution.institutionName : conversation.teacher.user.name;
+                  const partnerMeta =
+                    role === "TEACHER" ? conversation.institution.user.email : conversation.teacher.user.email;
+                  const hasUnread = (conversation.unreadCount ?? 0) > 0;
 
-            return (
-              <Link
-                key={conversation.id}
-                href={`${conversationBasePath}/${conversation.id}`}
-                className="block rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(17,34,68,0.08)]"
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[16px] text-sm font-semibold text-white shadow-sm"
-                    style={{
-                      background:
-                        index % 3 === 0
-                          ? "linear-gradient(135deg,#31465f,#4a6079)"
-                          : index % 3 === 1
-                            ? "linear-gradient(135deg,#5fc8ec,#36b4de)"
-                            : "linear-gradient(135deg,#f3b33d,#d89f26)",
-                    }}
-                  >
-                    {getInitials(partnerName)}
-                  </div>
+                  return (
+                    <Link
+                      key={conversation.id}
+                      href={`${conversationBasePath}/${conversation.id}`}
+                      className="block rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(17,34,68,0.08)]"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div
+                          className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[16px] text-sm font-semibold text-white shadow-sm"
+                          style={{
+                            background:
+                              index % 3 === 0
+                                ? "linear-gradient(135deg,#31465f,#4a6079)"
+                                : index % 3 === 1
+                                  ? "linear-gradient(135deg,#5fc8ec,#36b4de)"
+                                  : "linear-gradient(135deg,#f3b33d,#d89f26)",
+                          }}
+                        >
+                          {getInitials(partnerName)}
+                        </div>
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <h3 className="truncate text-base font-semibold text-[#31455f]">{partnerName}</h3>
-                        <p className="mt-1 truncate text-sm text-slate-500">{partnerMeta}</p>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <h3 className="truncate text-base font-semibold text-[#31455f]">{partnerName}</h3>
+                              <p className="mt-1 truncate text-sm text-slate-500">{partnerMeta}</p>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              {hasUnread ? (
+                                <span className="inline-flex min-h-7 items-center rounded-full bg-[#eef5fb] px-3 text-xs font-semibold text-brand-teal">
+                                  {conversation.unreadCount} unread
+                                </span>
+                              ) : null}
+                              <span className="text-xs font-medium text-slate-400">
+                                {formatTime(conversation.lastMessage?.createdAt)}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 flex items-center justify-between gap-3">
+                            <p className="line-clamp-2 text-sm leading-6 text-slate-500">
+                              {conversation.lastMessage?.message || "No messages yet"}
+                            </p>
+                            <span className="flex-shrink-0 text-sm font-semibold text-brand-teal">Open</span>
+                          </div>
+                        </div>
                       </div>
-
-                      <div className="flex items-center gap-2">
-                        {hasUnread ? (
-                          <span className="inline-flex min-h-7 items-center rounded-full bg-[#eef5fb] px-3 text-xs font-semibold text-brand-teal">
-                            {conversation.unreadCount} unread
-                          </span>
-                        ) : null}
-                        <span className="text-xs font-medium text-slate-400">
-                          {formatTime(conversation.lastMessage?.createdAt)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between gap-3">
-                      <p className="line-clamp-2 text-sm leading-6 text-slate-500">
-                        {conversation.lastMessage?.message || "No messages yet"}
-                      </p>
-                      <span className="flex-shrink-0 text-sm font-semibold text-brand-teal">Open</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         )}
       </section>
     </div>
