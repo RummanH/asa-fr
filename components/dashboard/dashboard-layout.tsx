@@ -64,8 +64,8 @@ export function DashboardLayout({
   const roleLabel = userRole === "TEACHER" ? "Teacher" : "Institution";
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.52),_transparent_22%),linear-gradient(180deg,_#f4f8fc_0%,_#edf3f8_100%)] p-3 sm:p-4 lg:p-5">
-      <div className="mx-auto flex min-h-[calc(100vh-1.5rem)] max-w-[1480px] gap-3 rounded-[28px] border border-white/65 bg-white/55 p-2 shadow-[0_24px_80px_rgba(16,32,51,0.12)] backdrop-blur-sm sm:min-h-[calc(100vh-2rem)] sm:gap-4 sm:p-3 lg:min-h-[calc(100vh-2.5rem)]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.52),_transparent_22%),linear-gradient(180deg,_#f4f8fc_0%,_#edf3f8_100%)]">
+      <div className="flex min-h-screen w-full gap-3 border border-white/65 bg-white/55 p-2 shadow-[0_24px_80px_rgba(16,32,51,0.12)] backdrop-blur-sm sm:gap-4 sm:p-3">
         <motion.aside
           className={`fixed inset-y-3 left-3 z-40 flex w-[284px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[#455a73] text-white shadow-[0_24px_60px_rgba(34,53,77,0.34)] transition-transform duration-300 lg:static lg:inset-auto lg:translate-x-0 ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-[115%]"
