@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ReactNode } from "react";
+import { ArrowLeft, BriefcaseBusiness, Building2, MessageSquareMore, ShieldCheck } from "lucide-react";
 import { redesignImages } from "@/components/landing/redesign-images";
 
 interface AuthLayoutProps {
@@ -16,69 +17,92 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
   return (
     <div className="w-full bg-transparent">
       <motion.div
-        className="relative flex min-h-[auto] lg:min-h-screen flex-col bg-brand-light/80 lg:flex-row"
+        className="relative flex min-h-[100dvh] flex-col bg-brand-light/85 lg:flex-row"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.35 }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(11,143,136,0.18),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(243,179,61,0.16),transparent_25%)] pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(11,143,136,0.18),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(243,179,61,0.16),transparent_25%)]" />
 
-        <div className="relative flex-1 flex items-center justify-center px-5 py-8 sm:px-10 lg:px-12">
-          <div className="w-full max-w-5xl">
-            <div className="flex flex-col gap-8 rounded-[2rem] border border-slate-200/70 bg-white/95 shadow-2xl shadow-slate-900/10 backdrop-blur-xl overflow-hidden lg:grid lg:grid-cols-[minmax(420px,0.95fr)_minmax(380px,0.8fr)]">
+        <div className="relative flex flex-1 items-center justify-center px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
+          <div className="w-full">
+            <div className="overflow-hidden rounded-[34px] border border-slate-200/75 bg-white/96 shadow-[0_36px_90px_rgba(16,32,51,0.12)] backdrop-blur-xl lg:grid lg:grid-cols-[minmax(560px,1fr)_minmax(420px,0.88fr)]">
               <div className="p-8 sm:p-10 lg:p-12">
-                <div className="flex items-center justify-between gap-4 mb-10">
+                <div className="mb-10 flex items-center justify-between gap-4">
                   <Link href="/" className="inline-flex items-center gap-3 text-sm font-semibold text-brand-navy transition hover:text-brand-teal">
                     <span className="landing-radius relative inline-flex h-12 w-12 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
                       <Image alt="Teacher Hiring Platform" className="object-contain" fill sizes="48px" src={redesignImages.logoMark} />
                     </span>
                     <span className="truncate text-sm font-black text-brand-navy">Teacher Hiring Platform</span>
                   </Link>
-                  <Link href="/" className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-teal hover:text-brand-teal">
-                    Back to landing
+                  <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-teal hover:text-brand-teal"
+                  >
+                    <ArrowLeft size={16} />
+                    Back
                   </Link>
                 </div>
 
                 <div className="space-y-4">
-                  <p className="inline-flex rounded-full bg-brand-sky/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-brand-teal">
-                    Modern auth experience
+                  <p className="inline-flex rounded-full border border-brand-sky/30 bg-brand-sky/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-teal">
+                    Account access
                   </p>
-                  {title && <h1 className="text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl">{title}</h1>}
-                  {subtitle && <p className="max-w-xl text-base leading-7 text-slate-600">{subtitle}</p>}
+                  {title ? <h1 className="text-3xl font-semibold tracking-tight text-brand-navy sm:text-4xl">{title}</h1> : null}
+                  {subtitle ? <p className="max-w-xl text-base leading-7 text-slate-600">{subtitle}</p> : null}
                 </div>
 
                 <div className="mt-10">{children}</div>
               </div>
 
-              <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-brand-navy via-brand-teal to-brand-sky p-10 text-white">
+              <div className="hidden items-center justify-center bg-[linear-gradient(180deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] p-10 text-white lg:flex">
                 <div className="relative w-full max-w-sm">
                   <div className="absolute inset-0 rounded-[1.75rem] bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,_rgba(255,255,255,0.08),transparent_40%)]" />
                   <div className="relative space-y-8">
                     <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white/85">
-                      Smooth hiring workflows
+                      Teacher hiring platform
                     </div>
-                    <h2 className="text-3xl font-bold leading-tight">Bring great teachers and institutions together.</h2>
+                    <h2 className="text-3xl font-semibold leading-tight">Simple access for teachers and institutions.</h2>
                     <p className="text-sm leading-7 text-sky-100/90">
-                      A polished onboarding journey with fast registration, secure access, and helpful reminders so every user lands in the right place.
+                      Clean onboarding, secure access, and a direct path into the real workspace.
                     </p>
 
-                    <div className="grid gap-4 rounded-[1.75rem] border border-white/15 bg-white/10 p-6">
-                      <div className="space-y-2">
-                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-100/90">Why it works</p>
-                        <p className="text-base leading-6 text-slate-100/95">Clear, friendly steps for teachers and institutions so onboarding feels intuitive and premium.</p>
+                    <div className="grid gap-4 rounded-[28px] border border-white/15 bg-white/10 p-6">
+                      <div className="grid gap-3 text-sm leading-6 text-slate-100/90">
+                        <div className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-[16px] bg-white/12 text-brand-sky">
+                            <ShieldCheck size={18} />
+                          </span>
+                          <div>
+                            <p className="font-semibold text-white">Secure access</p>
+                            <p className="text-sky-100/80">Protected sign in and direct dashboard routing.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-[16px] bg-white/12 text-brand-sky">
+                            <MessageSquareMore size={18} />
+                          </span>
+                          <div>
+                            <p className="font-semibold text-white">Fast onboarding</p>
+                            <p className="text-sky-100/80">Clear forms with focused inputs and quick next steps.</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="grid gap-3 text-sm leading-6 text-slate-100/85">
-                        <div className="flex items-start gap-3">
-                          <span className="mt-1 h-8 w-8 rounded-2xl bg-white/15 grid place-items-center text-brand-sky">01</span>
-                          <span>Fast access with secure signin and password recovery.</span>
+
+                      <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-4">
+                        <div className="rounded-[20px] border border-white/10 bg-white/8 p-4">
+                          <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-[16px] bg-white/12 text-brand-sky">
+                            <BriefcaseBusiness size={18} />
+                          </div>
+                          <p className="text-sm font-semibold text-white">Teachers</p>
+                          <p className="mt-1 text-xs leading-5 text-sky-100/75">Profiles, jobs, requests</p>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <span className="mt-1 h-8 w-8 rounded-2xl bg-white/15 grid place-items-center text-brand-sky">02</span>
-                          <span>Beautiful forms with modern spacing, labels, and focus states.</span>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="mt-1 h-8 w-8 rounded-2xl bg-white/15 grid place-items-center text-brand-sky">03</span>
-                          <span>Responsive layout that matches the landing page tone.</span>
+                        <div className="rounded-[20px] border border-white/10 bg-white/8 p-4">
+                          <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-[16px] bg-white/12 text-brand-sky">
+                            <Building2 size={18} />
+                          </div>
+                          <p className="text-sm font-semibold text-white">Institutions</p>
+                          <p className="mt-1 text-xs leading-5 text-sky-100/75">Hiring, messaging, review</p>
                         </div>
                       </div>
                     </div>

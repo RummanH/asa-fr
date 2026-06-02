@@ -84,6 +84,7 @@ export default function AuthPageShell({ children }: AuthPageShellProps) {
         const errorMessage = err instanceof Error ? err.message : "Failed to check session";
         console.error("Session check failed:", errorMessage);
         clearSession();
+        setError(null);
         setIsLoading(false);
       }
     }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { ArrowRight, Lock, Mail, Shield, User } from "lucide-react";
 import { login, registerInstitution, registerTeacher } from "@/lib/api";
 import { resolveDashboardPath, saveSession, type UserRole } from "@/lib/auth";
 import { useToast } from "@/components/ui/toast-provider";
@@ -13,55 +14,20 @@ type AuthFormProps = {
   role?: UserRole;
 };
 
-function IconUser() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-  );
-}
-
-function IconMail() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-      <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-    </svg>
-  );
-}
-
-function IconLock() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-    </svg>
-  );
-}
-
-function IconShield() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-    </svg>
-  );
-}
-
-function IconArrow() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
-      <line x1="5" y1="12" x2="19" y2="12"></line>
-      <polyline points="12 5 19 12 12 19"></polyline>
-    </svg>
-  );
-}
-
 function IconSpinner() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden style={{ animation: "spin 0.8s linear infinite" }}>
-      <circle cx="12" cy="12" r="10"></circle>
-      <path d="M12 2a10 10 0 0 1 10 10"></path>
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+      style={{ animation: "spin 0.8s linear infinite" }}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a10 10 0 0 1 10 10" />
     </svg>
   );
 }
@@ -88,16 +54,17 @@ function Field({
   placeholder?: string;
 }) {
   const [focused, setFocused] = useState(false);
+
   return (
-    <div className="flex flex-col gap-1 sm:gap-2">
-      <label htmlFor={id} className="text-xs font-semibold text-foreground uppercase tracking-wider">
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-navy/55">
         {label}
       </label>
 
       <div className="relative">
         <span
-          className={`absolute left-3 top-1/2 -translate-y-1/2 transition-colors flex items-center justify-center pointer-events-none h-5 w-5 ${
-            focused ? "text-primary" : "text-muted-foreground"
+          className={`pointer-events-none absolute left-4 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center transition-colors ${
+            focused ? "text-brand-teal" : "text-brand-navy/40"
           }`}
         >
           {icon}
@@ -114,10 +81,10 @@ function Field({
           minLength={minLength}
           required={required}
           placeholder={placeholder}
-          className={`w-full h-10 sm:h-11 pl-9 sm:pl-10 pr-3 rounded-lg border-2 transition-all duration-150 focus:outline-none font-medium text-sm ${
+          className={`h-12 w-full rounded-[18px] border px-12 pr-4 text-sm font-medium text-brand-navy transition-all duration-150 placeholder:text-brand-navy/32 focus:outline-none ${
             focused
-              ? "border-primary bg-background/80 ring-2 ring-primary/20"
-              : "border-border bg-background hover:border-border/80"
+              ? "border-brand-teal bg-white shadow-[0_0_0_4px_rgba(11,143,136,0.12)]"
+              : "border-slate-200 bg-slate-50/80 hover:border-brand-sky/65 hover:bg-white"
           }`}
         />
       </div>
@@ -135,14 +102,14 @@ export function AuthForm({ mode, role }: AuthFormProps) {
 
   const isRegisterMode = mode === "register";
   const isLogin = mode === "login";
-  const title = isLogin ? "Welcome Back" : role === "TEACHER" ? "Join as Teacher" : "Register Institution";
-  const subtitle = isLogin
-    ? "Sign in to continue to your hiring dashboard."
-    : "Create your account to start hiring, messaging, and managing requests.";
+  const title = isLogin ? "Welcome back" : role === "TEACHER" ? "Create teacher account" : "Create institution account";
+  const subtitle = isLogin ? "Sign in to continue." : "Create your account and continue to your workspace.";
+  const accentTone = role === "INSTITUTION" ? "gold" : "teal";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmitting(true);
+
     try {
       if (mode === "register" && !role) throw new Error("Registration role is required");
 
@@ -186,33 +153,30 @@ export function AuthForm({ mode, role }: AuthFormProps) {
         }
       `}</style>
 
-      <div className="auth-form-root w-full max-w-md mx-auto px-2 sm:px-6">
-        <div className="rounded-lg sm:rounded-xl border border-border bg-card shadow-lg overflow-hidden">
-          {/* Header */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-accent p-6 sm:p-8">
-            {/* Decorative background */}
-            <div className="absolute inset-0 opacity-10">
-              <svg className="absolute bottom-0 right-0 w-40 h-40 -mb-20 -mr-20" viewBox="0 0 200 200" fill="none">
-                <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="1" />
-              </svg>
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10 flex items-start gap-3">
-              <div className="flex h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary-foreground/20 text-primary-foreground">
-                <IconShield />
+      <div className="auth-form-root w-full">
+        <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_28px_70px_rgba(16,32,51,0.12)]">
+          <div className="border-b border-brand-sky/25 bg-[linear-gradient(180deg,rgba(234,244,248,0.9)_0%,rgba(255,255,255,0.98)_100%)] p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div
+                className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] ${
+                  accentTone === "gold" ? "bg-brand-gold/16 text-brand-gold" : "bg-brand-teal/12 text-brand-teal"
+                }`}
+              >
+                <Shield size={20} />
               </div>
-              <div className="flex-1 min-w-0">
-                <h1 className="text-lg sm:text-2xl font-bold text-primary-foreground">{title}</h1>
-                <p className="text-sm text-primary-foreground/80 mt-1 leading-snug">{subtitle}</p>
+              <div className="min-w-0 flex-1">
+                <div className="mb-3 inline-flex rounded-full border border-brand-sky/35 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-navy/55">
+                  {isLogin ? "Secure sign in" : role === "INSTITUTION" ? "Institution access" : "Teacher access"}
+                </div>
+                <h1 className="text-2xl font-semibold text-brand-navy sm:text-[2rem]">{title}</h1>
+                <p className="mt-2 text-sm leading-6 text-brand-navy/62">{subtitle}</p>
               </div>
             </div>
           </div>
 
-          {/* Form */}
-          <div className="p-4 sm:p-8">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {isRegisterMode && (
+          <div className="p-5 sm:p-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {isRegisterMode ? (
                 <Field
                   id="name"
                   label="Full name"
@@ -220,10 +184,10 @@ export function AuthForm({ mode, role }: AuthFormProps) {
                   onChange={setName}
                   minLength={2}
                   required
-                  icon={<IconUser />}
+                  icon={<User size={18} />}
                   placeholder="Jane Smith"
                 />
-              )}
+              ) : null}
 
               <Field
                 id="email"
@@ -232,7 +196,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
                 value={email}
                 onChange={setEmail}
                 required
-                icon={<IconMail />}
+                icon={<Mail size={18} />}
                 placeholder="you@example.com"
               />
 
@@ -244,25 +208,26 @@ export function AuthForm({ mode, role }: AuthFormProps) {
                 onChange={setPassword}
                 minLength={8}
                 required
-                icon={<IconLock />}
+                icon={<Lock size={18} />}
                 placeholder="Min. 8 characters"
               />
 
-              {isLogin && (
-                <div className="flex justify-end pt-1">
-                  <Link
-                    href="/forgot-password"
-                    className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
-                  >
+              {isLogin ? (
+                <div className="flex justify-end">
+                  <Link href="/forgot-password" className="text-xs font-semibold text-brand-teal transition-colors hover:text-brand-navy">
                     Forgot password?
                   </Link>
                 </div>
-              )}
+              ) : null}
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-10 sm:h-11 mt-4 sm:mt-6 flex items-center justify-center gap-1 sm:gap-2 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 active:scale-95"
+                className={`mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[18px] text-sm font-semibold text-white transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 ${
+                  accentTone === "gold"
+                    ? "bg-brand-gold hover:brightness-95"
+                    : "bg-[linear-gradient(135deg,#102033_0%,#0b8f88_100%)] hover:brightness-95"
+                }`}
               >
                 {isSubmitting ? (
                   <>
@@ -270,26 +235,25 @@ export function AuthForm({ mode, role }: AuthFormProps) {
                   </>
                 ) : (
                   <>
-                    {isLogin ? "Sign in" : "Create account"} <IconArrow />
+                    {isLogin ? "Sign in" : "Create account"} <ArrowRight size={16} />
                   </>
                 )}
               </button>
             </form>
 
-            {/* Footer */}
-            <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border text-center">
-              <p className="text-xs sm:text-sm text-muted-foreground">
+            <div className="mt-6 border-t border-slate-200 pt-5 text-center">
+              <p className="text-sm text-brand-navy/55">
                 {isLogin ? (
                   <>
                     No account yet?{" "}
-                    <Link href="/register" className="font-semibold text-primary hover:text-primary/90 transition-colors">
+                    <Link href="/register" className="font-semibold text-brand-teal transition-colors hover:text-brand-navy">
                       Register free
                     </Link>
                   </>
                 ) : (
                   <>
                     Already have an account?{" "}
-                    <Link href="/login" className="font-semibold text-primary hover:text-primary/90 transition-colors">
+                    <Link href="/login" className="font-semibold text-brand-teal transition-colors hover:text-brand-navy">
                       Sign in
                     </Link>
                   </>
