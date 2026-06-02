@@ -28,6 +28,7 @@ import {
 } from "@/lib/api";
 import { type UserRole } from "@/lib/auth";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
+import { DistributionChartCard, MetricChartCard } from "@/components/dashboard/dashboard-charts";
 import { DashboardLayout } from "./dashboard-layout";
 
 type RoleDashboardProps = {
@@ -472,38 +473,25 @@ function TeacherDashboardView({
         </div>
       ) : null}
 
-      <section className="grid gap-3 xl:grid-cols-4">
-        <MetricCard
-          label="Open opportunities"
-          value={jobCount}
-          loading={dashboardLoading}
-          detail="Visible roles"
-          icon={<BriefcaseBusiness size={20} strokeWidth={2} />}
-          accent="bg-[#31465f]"
+      <section className="grid gap-3 xl:grid-cols-[1.25fr_0.9fr]">
+        <MetricChartCard
+          title="Activity chart"
+          totalLabel="Current visible work"
+          totalValue={dashboardLoading ? "..." : totalVisibleWork}
+          labels={["Roles", "Messages", "Requests"]}
+          values={[jobCount, messageCount, requestCount]}
+          colors={["#102033", "#0b8f88", "#f3b33d"]}
         />
-        <MetricCard
-          label="Conversations"
-          value={messageCount}
-          loading={dashboardLoading}
-          detail="Active threads"
-          icon={<Mail size={20} strokeWidth={2} />}
-          accent="bg-[#57c5eb]"
-        />
-        <MetricCard
-          label="Hire requests"
-          value={requestCount}
-          loading={dashboardLoading}
-          detail="Waiting for review"
-          icon={<Users size={20} strokeWidth={2} />}
-          accent="bg-[#efbf59]"
-        />
-        <MetricCard
-          label="Profile status"
-          value={isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Action"}
-          loading={false}
-          detail={isProfileComplete ? "Ready to apply" : "Needs attention"}
-          icon={<CheckCircle2 size={20} strokeWidth={2} />}
-          accent={isProfileComplete ? "bg-emerald-500" : "bg-rose-500"}
+        <DistributionChartCard
+          title="Profile mix"
+          labels={["Ready", "Needs work", "Requests", "Messages"]}
+          values={[
+            isProfileComplete ? 1 : 0,
+            isProfileComplete ? 0 : 1,
+            Math.max(requestCount, 0),
+            Math.max(messageCount, 0),
+          ]}
+          colors={["#15a36f", "#ef6a5b", "#f3b33d", "#0b8f88"]}
         />
       </section>
 
@@ -869,6 +857,26 @@ function InstitutionDashboardFallback({
   );
 }
 
+function DashboardMiniPanel({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{eyebrow}</p>
+      <h3 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
+        {title}
+      </h3>
+      <div className="mt-5">{children}</div>
+    </section>
+  );
+}
+
 function MetricCard({
   label,
   value,
@@ -899,26 +907,6 @@ function MetricCard({
       </div>
       <p className="mt-3 text-sm leading-6 text-slate-500">{detail}</p>
     </div>
-  );
-}
-
-function DashboardMiniPanel({
-  eyebrow,
-  title,
-  children,
-}: {
-  eyebrow: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{eyebrow}</p>
-      <h3 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
-        {title}
-      </h3>
-      <div className="mt-5">{children}</div>
-    </section>
   );
 }
 

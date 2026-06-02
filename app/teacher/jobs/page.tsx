@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { DistributionChartCard, MetricChartCard } from "@/components/dashboard/dashboard-charts";
 import { getTeacherNavItems } from "@/components/dashboard/teacher-nav";
 import {
   fetchActiveJobPosts,
@@ -67,26 +68,6 @@ function buildQuery(filters: FilterState): JobPostsQuery {
     teachingMode: filters.teachingMode || undefined,
     jobType: filters.jobType || undefined,
   };
-}
-
-function StatCard({
-  label,
-  value,
-  description,
-}: {
-  label: string;
-  value: string | number;
-  description: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{label}</p>
-      <p className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-[#31455f]">
-        {value}
-      </p>
-      <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
-    </div>
-  );
 }
 
 function FilterInput({
@@ -402,10 +383,21 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
         </div>
       ) : null}
 
-      <section className="grid gap-3 xl:grid-cols-3">
-        <StatCard label="Current feed" value={isLoading ? "..." : jobs.length} description="Visible roles" />
-        <StatCard label="Hybrid / online" value={isLoading ? "..." : remoteFriendly} description="Remote-friendly roles" />
-        <StatCard label="Salary listed" value={isLoading ? "..." : salaryVisible} description="Visible compensation" />
+      <section className="grid gap-3 xl:grid-cols-[1.25fr_0.9fr]">
+        <MetricChartCard
+          title="Opportunity chart"
+          totalLabel="Current feed"
+          totalValue={isLoading ? "..." : jobs.length}
+          labels={["Open", "Remote", "Salary"]}
+          values={[openRoles, remoteFriendly, salaryVisible]}
+          colors={["#102033", "#0b8f88", "#f3b33d"]}
+        />
+        <DistributionChartCard
+          title="Role mix"
+          labels={["Remote-friendly", "On-site", "Salary shown"]}
+          values={[remoteFriendly, Math.max(openRoles - remoteFriendly, 0), salaryVisible]}
+          colors={["#0b8f88", "#102033", "#f3b33d"]}
+        />
       </section>
 
       <section className="space-y-4">

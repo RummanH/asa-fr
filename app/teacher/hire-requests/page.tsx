@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { DistributionChartCard, MetricChartCard } from "@/components/dashboard/dashboard-charts";
 import { getTeacherNavItems } from "@/components/dashboard/teacher-nav";
 import { useToast } from "@/components/ui/toast-provider";
 import {
@@ -29,26 +30,6 @@ function statusTone(status: HireRequestStatus) {
   if (status === "REJECTED") return "bg-rose-50 text-rose-700";
   if (status === "COMPLETED") return "bg-sky-50 text-sky-700";
   return "bg-slate-100 text-slate-700";
-}
-
-function StatCard({
-  label,
-  value,
-  description,
-}: {
-  label: string;
-  value: string | number;
-  description: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{label}</p>
-      <p className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-[#31455f]">
-        {value}
-      </p>
-      <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
-    </div>
-  );
 }
 
 function RequestCard({
@@ -266,11 +247,21 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
         </div>
       </section>
 
-      <section className="grid gap-3 xl:grid-cols-4">
-        <StatCard label="Total requests" value={isLoading ? "..." : counts.ALL} description="All requests" />
-        <StatCard label="Pending" value={isLoading ? "..." : counts.PENDING} description="Waiting for review" />
-        <StatCard label="Accepted" value={isLoading ? "..." : counts.ACCEPTED} description="Moved forward" />
-        <StatCard label="Rejected" value={isLoading ? "..." : counts.REJECTED} description="Closed" />
+      <section className="grid gap-3 xl:grid-cols-[1.25fr_0.9fr]">
+        <MetricChartCard
+          title="Request chart"
+          totalLabel="All requests"
+          totalValue={isLoading ? "..." : counts.ALL}
+          labels={["Pending", "Accepted", "Rejected"]}
+          values={[counts.PENDING, counts.ACCEPTED, counts.REJECTED]}
+          colors={["#f3b33d", "#15a36f", "#ef6a5b"]}
+        />
+        <DistributionChartCard
+          title="Status mix"
+          labels={["Pending", "Accepted", "Rejected"]}
+          values={[counts.PENDING, counts.ACCEPTED, counts.REJECTED]}
+          colors={["#f3b33d", "#15a36f", "#ef6a5b"]}
+        />
       </section>
 
       {!isLoading && requests.length > 0 ? (
