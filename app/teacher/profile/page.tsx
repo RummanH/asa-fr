@@ -20,6 +20,7 @@ type GenderValue = "" | "MALE" | "FEMALE" | "OTHER" | "UNSPECIFIED";
 type TeachingModeValue = "" | "ONLINE" | "OFFLINE" | "BOTH";
 
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { DashboardContentLoader } from "@/components/dashboard/dashboard-layout";
 import { getTeacherNavItems } from "@/components/dashboard/teacher-nav";
 
 export default function TeacherProfilePage() {
@@ -641,28 +642,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
   }
 
   if (isLoading) {
-    return (
-      <>
-        <style>{`@keyframes tpf-spin{to{transform:rotate(360deg)}} @keyframes tpf-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
-        <main className="app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 14 }}>
-            {[100, 400, 120].map((h, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "white",
-                  borderRadius: 20,
-                  height: h,
-                  border: "1px solid rgba(212,230,239,0.8)",
-                  animation: "tpf-pulse 1.4s ease-in-out infinite",
-                  boxShadow: "0 4px 16px rgba(5,47,68,0.05)",
-                }}
-              />
-            ))}
-          </div>
-        </main>
-      </>
-    );
+    return <DashboardContentLoader label="Loading teacher profile..." />;
   }
 
   const submitLabel = isSubmitting

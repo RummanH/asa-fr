@@ -22,6 +22,76 @@ interface DashboardLayoutProps {
   isLoggingOut?: boolean;
 }
 
+export function DashboardContentLoader({
+  label = "Loading...",
+}: {
+  label?: string;
+}) {
+  return (
+    <div className="flex min-h-full items-center justify-center py-6 sm:py-10">
+      <div className="w-full overflow-hidden rounded-[32px] border border-brand-sky/35 bg-white/96 shadow-[0_28px_80px_rgba(17,34,68,0.12)]">
+        <div className="border-b border-brand-sky/25 bg-[linear-gradient(180deg,rgba(234,244,248,0.86)_0%,rgba(255,255,255,0.98)_100%)] px-6 py-6 sm:px-8">
+          <div className="flex flex-col items-center gap-5 text-center">
+            <div className="relative h-20 w-20">
+              <div className="absolute inset-0 rounded-full border-[6px] border-brand-sky/35" />
+              <div className="absolute inset-0 animate-spin rounded-full border-[6px] border-transparent border-t-brand-teal border-r-brand-navy" />
+              <div className="absolute inset-[14px] rounded-full bg-white shadow-[inset_0_0_0_1px_rgba(185,231,251,0.4)]" />
+              <div className="absolute inset-[24px] rounded-full bg-[linear-gradient(135deg,#0b8f88_0%,#102033_100%)]" />
+            </div>
+            <div className="space-y-2">
+              <p className="text-lg font-semibold text-brand-navy">{label}</p>
+              <p className="text-sm text-brand-navy/55">Preparing your workspace and current activity.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-5 px-6 py-6 sm:px-8 sm:py-7">
+          <div className="grid gap-4 lg:grid-cols-[1.35fr_0.95fr]">
+            <div className="rounded-[26px] border border-slate-200/75 bg-brand-light/55 p-5">
+              <div className="h-4 w-36 animate-pulse rounded-full bg-brand-sky/45" />
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                {[0, 1, 2].map((item) => (
+                  <div key={item} className="rounded-[20px] border border-white/70 bg-white px-4 py-4 shadow-sm">
+                    <div className="h-3 w-20 animate-pulse rounded-full bg-brand-sky/35" />
+                    <div className="mt-4 h-8 w-12 animate-pulse rounded-2xl bg-brand-sky/55" />
+                    <div className="mt-3 h-3 w-24 animate-pulse rounded-full bg-slate-200" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[26px] border border-slate-200/75 bg-white p-5 shadow-sm">
+              <div className="h-4 w-28 animate-pulse rounded-full bg-brand-sky/35" />
+              <div className="mt-5 space-y-3">
+                {[0, 1, 2, 3].map((item) => (
+                  <div key={item} className="space-y-2">
+                    <div className="h-3 w-full animate-pulse rounded-full bg-slate-200" />
+                    <div
+                      className={`h-3 animate-pulse rounded-full bg-brand-sky/45 ${
+                        item === 0 ? "w-4/5" : item === 1 ? "w-3/5" : item === 2 ? "w-2/3" : "w-1/2"
+                      }`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {[0, 1, 2].map((item) => (
+              <div key={item} className="rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-sm">
+                <div className="h-4 w-24 animate-pulse rounded-full bg-brand-sky/35" />
+                <div className="mt-4 h-24 animate-pulse rounded-[20px] bg-[linear-gradient(180deg,rgba(185,231,251,0.32)_0%,rgba(245,248,251,0.9)_100%)]" />
+                <div className="mt-4 h-3 w-32 animate-pulse rounded-full bg-slate-200" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function getInitials(name?: string) {
   if (!name) return "TH";
 

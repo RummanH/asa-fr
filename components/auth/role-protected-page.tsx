@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
+import { DashboardContentLoader, DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { getInstitutionNavItems, getTeacherNavItems } from "@/components/dashboard/teacher-nav";
 import { fetchMe, logout } from "@/lib/api";
 import {
   clearSession,
@@ -78,12 +80,18 @@ export function RoleProtectedPage({
   }
 
   if (isLoading) {
+    const navItems = role === "TEACHER" ? getTeacherNavItems("dashboard") : getInstitutionNavItems("dashboard");
+
     return (
-      <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-        <div className="mx-auto max-w-4xl app-panel p-6 sm:p-8">
-          <p className="text-sm text-brand-navy/78">{loadingLabel}</p>
-        </div>
-      </main>
+      <DashboardLayout
+        navItems={navItems}
+        userName="Loading..."
+        userEmail=""
+        userRole={role}
+        settingsHref={role === "TEACHER" ? "/teacher/profile" : "/institution/profile"}
+      >
+        <DashboardContentLoader label={loadingLabel} />
+      </DashboardLayout>
     );
   }
 

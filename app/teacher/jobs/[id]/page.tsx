@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
-import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { DashboardContentLoader, DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { getTeacherNavItems } from "@/components/dashboard/teacher-nav";
 import { fetchJobPostById, type JobPost } from "@/lib/api";
 
@@ -96,19 +96,7 @@ function SectionCard({ iconD, title, children }: { iconD: string; title: string;
 
 /* ── skeleton ── */
 function Skeleton() {
-  return (
-    <>
-      <style>{`@keyframes sk-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
-      <div style={{ padding: "1.5rem 1rem 3rem" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 }}>
-          {[120, 180, 140].map((h, i) => (
-            <div key={i} style={{ background: "white", borderRadius: 20, border: "1px solid rgba(212,230,239,0.8)", height: h,
-              animation: "sk-pulse 1.4s ease-in-out infinite", boxShadow: "0 4px 18px rgba(5,47,68,0.05)" }} />
-          ))}
-        </div>
-      </div>
-    </>
-  );
+  return <DashboardContentLoader label="Loading job details..." />;
 }
 
 /* ── error state ── */
