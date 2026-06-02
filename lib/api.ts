@@ -28,6 +28,16 @@ function resolveApiUrl(): string {
 
 const API_URL = resolveApiUrl();
 
+function normalizeMediaUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+
+  try {
+    return new URL(url).toString();
+  } catch {
+    return new URL(url.replace(/^\/+/, ""), `${API_URL}/`).toString();
+  }
+}
+
 export class ApiError extends Error {
   status: number;
 
@@ -509,10 +519,18 @@ export async function uploadImage(token: string, file: File): Promise<UploadImag
       throw new ApiError(payload.message ?? "Image upload failed", response.status);
     }
 
-    return payload.data as UploadImageResponse;
+    const data = payload.data as UploadImageResponse;
+    return {
+      ...data,
+      url: normalizeMediaUrl(data.url) ?? data.url,
+    };
   }
 
-  return payload as UploadImageResponse;
+  const data = payload as UploadImageResponse;
+  return {
+    ...data,
+    url: normalizeMediaUrl(data.url) ?? data.url,
+  };
 }
 
 export function fetchTeacherProfile(token: string): Promise<TeacherProfile> {
@@ -522,7 +540,10 @@ export function fetchTeacherProfile(token: string): Promise<TeacherProfile> {
       Authorization: `Bearer ${token}`,
     },
     cache: "no-store",
-  });
+  }).then((profile) => ({
+    ...profile,
+    profileImage: normalizeMediaUrl(profile.profileImage),
+  }));
 }
 
 export function createTeacherProfile(token: string, payload: TeacherProfilePayload): Promise<TeacherProfile> {

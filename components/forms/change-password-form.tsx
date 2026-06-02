@@ -93,19 +93,19 @@ function ChangePasswordFormContent({ accessToken, dashboardPath }: ChangePasswor
 
   return (
     <div className="grid gap-5">
-      <section className="overflow-hidden rounded-[28px] border border-brand-navy/50 bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.24),_transparent_28%),linear-gradient(135deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(16,32,51,0.26)] sm:px-6">
+      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/72">Account security</p>
-            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.5rem]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Account security</p>
+            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-brand-navy sm:text-[2.5rem]">
               Change Password
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72">Update your password.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-500">Update your password.</p>
           </div>
 
           <Link
             href={dashboardPath}
-            className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-white/12 bg-white/10 px-4 text-sm font-semibold text-white transition hover:bg-white/14"
+            className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-brand-sky/35 bg-brand-light px-4 text-sm font-semibold text-brand-navy transition hover:bg-white"
           >
             <ArrowLeft className="h-4 w-4" />
             Dashboard

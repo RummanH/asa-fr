@@ -206,43 +206,45 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-brand-navy/50 bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.24),_transparent_28%),linear-gradient(135deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(16,32,51,0.26)] sm:px-6">
-        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:px-6">
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(420px,0.9fr)] xl:items-start">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
-                <Sparkles size={14} className="text-[#7ce2e8]" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-brand-sky/40 bg-brand-light px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-navy/70">
+                <Sparkles size={14} className="text-brand-teal" />
                 Institution interest
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
+              <span className="inline-flex items-center gap-2 rounded-full border border-brand-sky/35 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-navy/65">
                 {isLoading ? "Refreshing" : `${filtered.length} visible requests`}
               </span>
             </div>
-            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
+            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-brand-navy sm:text-[2.7rem]">
               Received Hire Requests
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">Review and respond to incoming requests.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-500 sm:text-[14px]">Review and respond to incoming requests.</p>
           </div>
 
+          <div className="rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_12px_32px_rgba(17,34,68,0.06)]">
           <div className="grid w-full gap-3 sm:grid-cols-3">
-            <div className="rounded-[20px] border border-white/10 bg-white/10 px-4 py-3.5 backdrop-blur-sm">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Total</p>
-              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-white">
+            <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-3.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Total</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-navy">
                 {isLoading ? "..." : counts.ALL}
               </p>
             </div>
-            <div className="rounded-[20px] border border-[#ffd57d]/20 bg-[#f3b33d]/14 px-4 py-3.5 backdrop-blur-sm">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Pending</p>
-              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#ffe39a]">
+            <div className="rounded-[20px] border border-brand-gold/25 bg-brand-cream px-4 py-3.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Pending</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#c58a14]">
                 {isLoading ? "..." : counts.PENDING}
               </p>
             </div>
-            <div className="rounded-[20px] border border-emerald-300/20 bg-emerald-400/12 px-4 py-3.5 backdrop-blur-sm">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Accepted</p>
-              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#8df0bf]">
+            <div className="rounded-[20px] border border-emerald-300/25 bg-emerald-50 px-4 py-3.5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Accepted</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-emerald-600">
                 {isLoading ? "..." : counts.ACCEPTED}
               </p>
             </div>
+          </div>
           </div>
         </div>
       </section>
