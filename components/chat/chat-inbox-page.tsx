@@ -3,6 +3,13 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import {
+  ArrowLeft,
+  Loader2,
+  MessageSquare,
+  Search,
+  Sparkles,
+} from "lucide-react";
 import { createConversation, fetchConversations, type ConversationSummary } from "@/lib/api";
 import { type UserRole } from "@/lib/auth";
 
@@ -10,6 +17,28 @@ type ChatInboxPageProps = {
   role: UserRole;
   accessToken: string;
 };
+
+function formatTime(dateStr?: string) {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  const now = new Date();
+  if (date.toDateString() === now.toDateString()) {
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
+  return date.toLocaleDateString([], { month: "short", day: "numeric" });
+}
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
 
 export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
   const router = useRouter();
@@ -21,6 +50,8 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
 
   const teacherId = searchParams.get("teacherId");
   const institutionId = searchParams.get("institutionId");
+  const conversationBasePath = role === "TEACHER" ? "/teacher/messages" : "/institution/messages";
+  const dashboardPath = role === "TEACHER" ? "/teacher/dashboard" : "/institution/dashboard";
 
   const createPayload = useMemo(() => {
     if (role === "INSTITUTION" && teacherId) return { teacherId };
@@ -28,15 +59,13 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
     return null;
   }, [institutionId, role, teacherId]);
 
-  const conversationBasePath = role === "TEACHER" ? "/teacher/messages" : "/institution/messages";
-  const dashboardPath = role === "TEACHER" ? "/teacher/dashboard" : "/institution/dashboard";
-
   useEffect(() => {
     let cancelled = false;
 
     async function bootstrap() {
       setIsLoading(true);
       setErrorMessage("");
+
       try {
         if (createPayload) {
           const conversation = await createConversation(accessToken, createPayload);
@@ -45,302 +74,203 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
             return;
           }
         }
+
         const data = await fetchConversations(accessToken);
         if (!cancelled) setConversations(data);
       } catch (error) {
-        if (!cancelled) setErrorMessage(error instanceof Error ? error.message : "Failed to load conversations");
+        if (!cancelled) {
+          setErrorMessage(error instanceof Error ? error.message : "Failed to load conversations");
+        }
       } finally {
         if (!cancelled) setIsLoading(false);
       }
     }
 
     void bootstrap();
+
     return () => {
       cancelled = true;
     };
   }, [accessToken, conversationBasePath, createPayload, router]);
 
-  const filtered = conversations.filter((c) => {
-    const name = role === "TEACHER" ? c.institution.institutionName : c.teacher.user.name;
+  const filtered = conversations.filter((conversation) => {
+    const name = role === "TEACHER" ? conversation.institution.institutionName : conversation.teacher.user.name;
     return name.toLowerCase().includes(search.toLowerCase());
   });
 
-  const totalUnread = conversations.reduce((sum, c) => sum + (c.unreadCount ?? 0), 0);
-
-  const getInitials = (name: string) =>
-    name
-      .split(" ")
-      .slice(0, 2)
-      .map((w) => w[0])
-      .join("")
-      .toUpperCase();
-
-  const formatTime = (dateStr?: string) => {
-    if (!dateStr) return "";
-    const d = new Date(dateStr);
-    const now = new Date();
-    if (d.toDateString() === now.toDateString()) {
-      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    }
-    const yesterday = new Date(now);
-    yesterday.setDate(now.getDate() - 1);
-    if (d.toDateString() === yesterday.toDateString()) return "Yesterday";
-    return d.toLocaleDateString([], { month: "short", day: "numeric" });
-  };
-
-  const avatarGradients = [
-    "linear-gradient(135deg, #0d7d8f, #06b6d4)",
-    "linear-gradient(135deg, #06b6d4, #a9d3ef)",
-    "linear-gradient(135deg, #0d7d8f, #0f172a)",
-    "linear-gradient(135deg, #06b6d4, #10b981)",
-  ];
+  const totalUnread = conversations.reduce((sum, conversation) => sum + (conversation.unreadCount ?? 0), 0);
 
   return (
-    <div className="w-full h-full flex flex-col bg-background">
-      {/* Header */}
-      <div className="flex-shrink-0 border-b border-border bg-card/80 backdrop-blur-sm px-4 sm:px-6 py-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-3 min-w-0">
-            <Link
-              href={dashboardPath}
-              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-background text-foreground hover:bg-muted transition-colors"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </Link>
+    <div className="space-y-4 lg:space-y-5">
+      <section className="overflow-hidden rounded-[28px] border border-[#344b66] bg-[radial-gradient(circle_at_top_left,_rgba(100,202,239,0.28),_transparent_28%),linear-gradient(135deg,#31465f_0%,#41566f_58%,#4a6079_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(34,53,77,0.26)] sm:px-6">
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
+                <Sparkles size={14} className="text-[#7ce2e8]" />
+                Inbox
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
+                {isLoading ? "Refreshing" : `${filtered.length} visible conversations`}
+              </span>
+            </div>
+            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
+              Messages
+            </h1>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+              Keep active institution conversations organized, searchable, and easy to continue without leaving the
+              teacher workspace.
+            </p>
+          </div>
 
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold text-foreground">Messages</h1>
-                {totalUnread > 0 && (
-                  <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-                    {totalUnread}
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {conversations.length} conversation{conversations.length !== 1 ? "s" : ""}
+          <div className="grid w-full gap-3 sm:grid-cols-2 xl:max-w-[420px]">
+            <div className="rounded-[20px] border border-white/10 bg-white/10 px-4 py-3.5 backdrop-blur-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Conversations</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-white">
+                {isLoading ? "..." : conversations.length}
+              </p>
+            </div>
+            <div className="rounded-[20px] border border-[#8fdcf5]/20 bg-[#5fc8ec]/14 px-4 py-3.5 backdrop-blur-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Unread</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#d6f3ff]">
+                {isLoading ? "..." : totalUnread}
               </p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Search and content area */}
-      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-        {/* Search bar */}
-        <div className="flex-shrink-0 border-b border-border bg-card px-4 sm:px-6 py-3">
-          <div className="relative">
-            <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <input
-              className="w-full bg-background border border-border rounded-lg pl-10 pr-4 py-2.5 text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"
-              placeholder="Search conversations…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+      <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Search</p>
+            <h2 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
+              Conversation list
+            </h2>
           </div>
+          <Link
+            href={dashboardPath}
+            className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-slate-200 bg-[#fbfdff] px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-50"
+          >
+            <ArrowLeft size={16} />
+            Dashboard
+          </Link>
         </div>
 
-        {/* Error */}
-        {errorMessage && (
-          <div className="flex-shrink-0 mx-4 sm:mx-6 mt-3 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="flex-shrink-0 mt-0.5"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            {errorMessage}
-          </div>
-        )}
+        <label className="relative mt-5 block">
+          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+            <Search size={16} />
+          </span>
+          <input
+            className="h-11 w-full rounded-[16px] border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-brand-teal focus:ring-4 focus:ring-brand-sky/25"
+            placeholder="Search conversations"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </label>
+      </section>
 
-        {/* Loading */}
-        {isLoading && (
-          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-12">
-            <svg
-              className="animate-spin text-muted-foreground"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-            </svg>
-            <span className="text-sm font-medium text-muted-foreground">Loading conversations…</span>
-          </div>
-        )}
+      {errorMessage ? (
+        <div className="rounded-[22px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+          {errorMessage}
+        </div>
+      ) : null}
 
-        {/* Empty */}
-        {!isLoading && conversations.length === 0 && (
-          <div className="flex-1 flex flex-col items-center justify-center gap-4 px-4 sm:px-6 py-12 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-card shadow-sm">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-muted-foreground"
+      <section className="space-y-3">
+        {isLoading ? (
+          <div className="rounded-[26px] border border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+            <Loader2 size={24} className="mx-auto animate-spin text-slate-400" />
+            <p className="mt-4 text-sm font-medium text-slate-500">Loading conversations</p>
+          </div>
+        ) : conversations.length === 0 ? (
+          <div className="rounded-[26px] border border-dashed border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#eef5fb] text-brand-teal">
+              <MessageSquare size={24} />
+            </div>
+            <h3 className="mt-5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
+              No conversations yet
+            </h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+              Start a conversation from a job post or institution profile and it will appear here.
+            </p>
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="rounded-[26px] border border-dashed border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#eef5fb] text-brand-teal">
+              <Search size={24} />
+            </div>
+            <h3 className="mt-5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
+              No matching conversations
+            </h3>
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+              className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-[16px] bg-[#31465f] px-4 text-sm font-semibold text-white transition hover:bg-[#25384f]"
+            >
+              Clear search
+            </button>
+          </div>
+        ) : (
+          filtered.map((conversation, index) => {
+            const partnerName =
+              role === "TEACHER" ? conversation.institution.institutionName : conversation.teacher.user.name;
+            const partnerMeta =
+              role === "TEACHER" ? conversation.institution.user.email : conversation.teacher.user.email;
+            const hasUnread = (conversation.unreadCount ?? 0) > 0;
+
+            return (
+              <Link
+                key={conversation.id}
+                href={`${conversationBasePath}/${conversation.id}`}
+                className="block rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(17,34,68,0.08)]"
               >
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-foreground">No conversations yet</p>
-              <p className="mt-1 text-xs text-muted-foreground">Start a chat from teacher or job pages.</p>
-            </div>
-          </div>
-        )}
-
-        {/* No search results */}
-        {!isLoading && conversations.length > 0 && filtered.length === 0 && (
-          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-12 text-center px-4">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-muted-foreground"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <div>
-              <p className="text-sm font-semibold text-foreground">No results for &quot;{search}&quot;</p>
-              <button
-                onClick={() => setSearch("")}
-                className="text-xs text-primary hover:underline mt-2"
-              >
-                Clear search
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Conversation list */}
-        {!isLoading && filtered.length > 0 && (
-          <div className="flex-1 overflow-y-auto py-4">
-            <div className="space-y-3 pb-6">
-              {filtered.map((conversation, i) => {
-                const partner =
-                  role === "TEACHER" ? conversation.institution.institutionName : conversation.teacher.user.name;
-                const partnerMeta =
-                  role === "TEACHER" ? conversation.institution.user.email : conversation.teacher.user.email;
-                const hasUnread = (conversation.unreadCount ?? 0) > 0;
-                const lastTime = formatTime(conversation.lastMessage?.createdAt);
-
-                return (
-                  <Link
-                    key={conversation.id}
-                    href={`${conversationBasePath}/${conversation.id}`}
-                    className="group block rounded-3xl border border-border bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                <div className="flex items-start gap-4">
+                  <div
+                    className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[16px] text-sm font-semibold text-white shadow-sm"
+                    style={{
+                      background:
+                        index % 3 === 0
+                          ? "linear-gradient(135deg,#31465f,#4a6079)"
+                          : index % 3 === 1
+                            ? "linear-gradient(135deg,#5fc8ec,#36b4de)"
+                            : "linear-gradient(135deg,#f3b33d,#d89f26)",
+                    }}
                   >
-                    {/* Avatar */}
-                    <div
-                      className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
-                      style={{ background: avatarGradients[i % avatarGradients.length] }}
-                    >
-                      {getInitials(partner)}
-                      {hasUnread && (
-                        <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-background bg-primary" />
-                      )}
-                    </div>
+                    {getInitials(partnerName)}
+                  </div>
 
-                    {/* Content */}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline justify-between gap-2 mb-1">
-                        <span
-                          className={`truncate text-sm ${hasUnread ? "font-bold text-foreground" : "font-semibold text-foreground"}`}
-                        >
-                          {partner}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="truncate text-base font-semibold text-[#31455f]">{partnerName}</h3>
+                        <p className="mt-1 truncate text-sm text-slate-500">{partnerMeta}</p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {hasUnread ? (
+                          <span className="inline-flex min-h-7 items-center rounded-full bg-[#eef5fb] px-3 text-xs font-semibold text-brand-teal">
+                            {conversation.unreadCount} unread
+                          </span>
+                        ) : null}
+                        <span className="text-xs font-medium text-slate-400">
+                          {formatTime(conversation.lastMessage?.createdAt)}
                         </span>
-                        {lastTime && (
-                          <span
-                            className={`flex-shrink-0 text-xs ${hasUnread ? "font-semibold text-primary" : "text-muted-foreground"}`}
-                          >
-                            {lastTime}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-muted-foreground truncate">{partnerMeta}</p>
-                      <div className="mt-1.5 flex items-center justify-between gap-2">
-                        <p
-                          className={`truncate text-xs ${
-                            hasUnread ? "font-medium text-foreground" : "text-muted-foreground"
-                          }`}
-                        >
-                          {conversation.lastMessage?.message ?? "No messages yet"}
-                        </p>
-                        {hasUnread && (
-                          <span className="flex h-5 min-w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-                            {conversation.unreadCount}
-                          </span>
-                        )}
                       </div>
                     </div>
 
-                    {/* Arrow */}
-                    <svg
-                      className="flex-shrink-0 text-muted-foreground transition duration-200 group-hover:text-primary"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+                    <div className="mt-4 flex items-center justify-between gap-3">
+                      <p className="line-clamp-2 text-sm leading-6 text-slate-500">
+                        {conversation.lastMessage?.message || "No messages yet"}
+                      </p>
+                      <span className="flex-shrink-0 text-sm font-semibold text-brand-teal">Open</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            );
+          })
         )}
-      </div>
+      </section>
     </div>
   );
 }

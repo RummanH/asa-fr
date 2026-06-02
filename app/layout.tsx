@@ -1,6 +1,19 @@
+import { Inter, Manrope } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -44,12 +57,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="min-h-full antialiased">
+    <html lang="en" className={`${inter.variable} ${manrope.variable} min-h-full antialiased`}>
       <body
         suppressHydrationWarning
         className="min-h-screen bg-background text-foreground"
         style={{
-          fontFamily: "system-ui, -apple-system, sans-serif",
           WebkitTapHighlightColor: "transparent",
         }}
       >

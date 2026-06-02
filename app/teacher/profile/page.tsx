@@ -20,22 +20,15 @@ type GenderValue = "" | "MALE" | "FEMALE" | "OTHER" | "UNSPECIFIED";
 type TeachingModeValue = "" | "ONLINE" | "OFFLINE" | "BOTH";
 
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
+import { getTeacherNavItems } from "@/components/dashboard/teacher-nav";
 
 export default function TeacherProfilePage() {
   return (
     <RoleProtectedPage role="TEACHER" loadingLabel="Loading teacher profile...">
       {({ user, accessToken, logoutAction, isLoggingOut }) => {
-        const navItems = [
-          { href: "/teacher/profile", label: "Edit Profile", icon: <span />, isActive: true },
-          { href: "/teacher/jobs", label: "Browse Jobs", icon: <span /> },
-          { href: "/teacher/messages", label: "Messages", icon: <span /> },
-          { href: "/teacher/change-password", label: "Change Password", icon: <span /> },
-          { href: "/teacher/hire-requests", label: "Received Requests", icon: <span /> },
-        ];
-
         return (
           <DashboardLayout
-            navItems={navItems}
+            navItems={getTeacherNavItems("profile")}
             userName={user.name}
             userEmail={user.email}
             userRole={user.role}

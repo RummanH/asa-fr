@@ -1,23 +1,438 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ArrowRight,
+  BookOpen,
+  BriefcaseBusiness,
+  Filter,
+  Loader2,
+  MapPin,
+  RefreshCcw,
+  Search,
+  SlidersHorizontal,
+  Sparkles,
+} from "lucide-react";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
 import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
-import { fetchActiveJobPosts, type JobPost, type JobPostsQuery, type JobType, type TeachingMode } from "@/lib/api";
+import { getTeacherNavItems } from "@/components/dashboard/teacher-nav";
+import {
+  fetchActiveJobPosts,
+  type JobPost,
+  type JobPostsQuery,
+  type JobType,
+  type TeachingMode,
+} from "@/lib/api";
+
+type FilterState = {
+  subject: string;
+  classLevel: string;
+  location: string;
+  teachingMode: TeachingMode | "";
+  jobType: JobType | "";
+};
+
+const defaultFilters: FilterState = {
+  subject: "",
+  classLevel: "",
+  location: "",
+  teachingMode: "",
+  jobType: "",
+};
+
+function formatTeachingMode(mode: TeachingMode) {
+  if (mode === "ONLINE") return "Online";
+  if (mode === "OFFLINE") return "In-person";
+  return "Hybrid";
+}
+
+function formatJobType(type: JobType) {
+  return type.replaceAll("_", " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function formatSalary(min: number | null, max: number | null) {
+  if (min === null && max === null) return "Salary not listed";
+  const format = (value: number) => `$${value.toLocaleString()}`;
+  if (min !== null && max !== null) return `${format(min)} - ${format(max)}`;
+  if (min !== null) return `From ${format(min)}`;
+  return `Up to ${format(max!)}`;
+}
+
+function buildQuery(filters: FilterState): JobPostsQuery {
+  return {
+    subject: filters.subject.trim() || undefined,
+    classLevel: filters.classLevel.trim() || undefined,
+    location: filters.location.trim() || undefined,
+    teachingMode: filters.teachingMode || undefined,
+    jobType: filters.jobType || undefined,
+  };
+}
+
+function StatCard({
+  label,
+  value,
+  description,
+}: {
+  label: string;
+  value: string | number;
+  description: string;
+}) {
+  return (
+    <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{label}</p>
+      <p className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-[#31455f]">
+        {value}
+      </p>
+      <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+    </div>
+  );
+}
+
+function FilterInput({
+  icon,
+  placeholder,
+  value,
+  onChange,
+}: {
+  icon: React.ReactNode;
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="relative block">
+      <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">{icon}</span>
+      <input
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder={placeholder}
+        className="h-11 w-full rounded-[16px] border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-brand-teal focus:ring-4 focus:ring-brand-sky/25"
+      />
+    </label>
+  );
+}
+
+function FilterSelect({
+  value,
+  onChange,
+  children,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <select
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
+      className="h-11 w-full rounded-[16px] border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-brand-teal focus:ring-4 focus:ring-brand-sky/25"
+    >
+      {children}
+    </select>
+  );
+}
+
+function JobListCard({ job }: { job: JobPost }) {
+  return (
+    <article className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(17,34,68,0.08)]">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#eef5fb] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#61748b]">
+              {formatTeachingMode(job.teachingMode)}
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#f7faff] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+              {formatJobType(job.jobType)}
+            </span>
+          </div>
+          <h2 className="mt-3 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
+            {job.title}
+          </h2>
+          <p className="mt-1 text-sm font-medium text-slate-500">{job.institution.institutionName}</p>
+        </div>
+
+        <Link
+          href={`/teacher/jobs/${job.id}`}
+          className="inline-flex min-h-11 items-center gap-2 rounded-[16px] bg-[#31465f] px-4 text-sm font-semibold text-white transition hover:bg-[#25384f]"
+        >
+          View details
+          <ArrowRight size={16} />
+        </Link>
+      </div>
+
+      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Subject</p>
+          <p className="mt-2 text-sm font-semibold text-[#31455f]">{job.subject}</p>
+        </div>
+        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Class level</p>
+          <p className="mt-2 text-sm font-semibold text-[#31455f]">{job.classLevel}</p>
+        </div>
+        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Location</p>
+          <p className="mt-2 text-sm font-semibold text-[#31455f]">{job.location || "Remote / flexible"}</p>
+        </div>
+        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Compensation</p>
+          <p className="mt-2 text-sm font-semibold text-[#31455f]">{formatSalary(job.salaryMin, job.salaryMax)}</p>
+        </div>
+      </div>
+
+      <div className="mt-5 rounded-[20px] border border-slate-200 bg-white px-4 py-4">
+        <p className="line-clamp-3 text-sm leading-7 text-slate-500">{job.description}</p>
+      </div>
+    </article>
+  );
+}
+
+function EmptyState({ hasFilters, onReset }: { hasFilters: boolean; onReset: () => void }) {
+  return (
+    <div className="rounded-[26px] border border-dashed border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#eef5fb] text-brand-teal">
+        <BriefcaseBusiness size={24} />
+      </div>
+      <h3 className="mt-5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
+        No jobs found
+      </h3>
+      <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+        {hasFilters
+          ? "Try adjusting the filters to broaden the results."
+          : "Active teaching opportunities will appear here as institutions publish them."}
+      </p>
+      {hasFilters ? (
+        <button
+          type="button"
+          onClick={onReset}
+          className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-[16px] bg-[#31465f] px-4 text-sm font-semibold text-white transition hover:bg-[#25384f]"
+        >
+          <RefreshCcw size={16} />
+          Clear filters
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function TeacherJobsContent({ accessToken }: { accessToken: string }) {
+  const [jobs, setJobs] = useState<JobPost[]>([]);
+  const [filters, setFilters] = useState<FilterState>(defaultFilters);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [filtersOpen, setFiltersOpen] = useState(true);
+
+  const hasFilters = Object.values(filters).some(Boolean);
+  const openRoles = jobs.length;
+  const remoteFriendly = jobs.filter((job) => job.teachingMode !== "OFFLINE").length;
+  const salaryVisible = jobs.filter((job) => job.salaryMin !== null || job.salaryMax !== null).length;
+
+  const loadJobs = useCallback(async (query: JobPostsQuery, options?: { preserveLoading?: boolean }) => {
+    if (!options?.preserveLoading) {
+      setIsLoading(true);
+    }
+    try {
+      const result = await fetchActiveJobPosts(accessToken, query);
+      setJobs(result);
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Failed to load jobs");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [accessToken]);
+
+  useEffect(() => {
+    void Promise.resolve().then(() => loadJobs({}, { preserveLoading: true }));
+  }, [loadJobs]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await loadJobs(buildQuery(filters));
+  }
+
+  async function handleReset() {
+    setFilters(defaultFilters);
+    await loadJobs({});
+  }
+
+  const summaryLabel = useMemo(() => {
+    if (isLoading) return "Refreshing opportunities";
+    if (hasFilters) return `${jobs.length} filtered opportunities`;
+    return `${jobs.length} active opportunities`;
+  }, [hasFilters, isLoading, jobs.length]);
+
+  return (
+    <div className="space-y-4 lg:space-y-5">
+      <section className="overflow-hidden rounded-[28px] border border-[#344b66] bg-[radial-gradient(circle_at_top_left,_rgba(100,202,239,0.28),_transparent_28%),linear-gradient(135deg,#31465f_0%,#41566f_58%,#4a6079_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(34,53,77,0.26)] sm:px-6">
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
+                <Sparkles size={14} className="text-[#7ce2e8]" />
+                Opportunity board
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/76">
+                {summaryLabel}
+              </span>
+            </div>
+            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
+              Browse Jobs
+            </h1>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/72 sm:text-[14px]">
+              Review active teaching opportunities, narrow the list with filters, and move into details or conversation
+              without switching visual systems.
+            </p>
+          </div>
+
+          <div className="grid w-full gap-3 sm:grid-cols-3 xl:max-w-[520px]">
+            <div className="rounded-[20px] border border-white/10 bg-white/10 px-4 py-3.5 backdrop-blur-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Open roles</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-white">
+                {isLoading ? "..." : openRoles}
+              </p>
+            </div>
+            <div className="rounded-[20px] border border-[#8fdcf5]/20 bg-[#5fc8ec]/14 px-4 py-3.5 backdrop-blur-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Remote friendly</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#d6f3ff]">
+                {isLoading ? "..." : remoteFriendly}
+              </p>
+            </div>
+            <div className="rounded-[20px] border border-[#ffd57d]/20 bg-[#f3b33d]/14 px-4 py-3.5 backdrop-blur-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/44">Salary shown</p>
+              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#ffe39a]">
+                {isLoading ? "..." : salaryVisible}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Filters</p>
+            <h2 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
+              Find the right match
+            </h2>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((open) => !open)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-slate-200 bg-[#fbfdff] px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-50"
+            >
+              <SlidersHorizontal size={16} />
+              {filtersOpen ? "Hide filters" : "Show filters"}
+            </button>
+            <button
+              type="button"
+              onClick={() => void loadJobs(buildQuery(filters))}
+              className="inline-flex min-h-11 items-center gap-2 rounded-[16px] bg-[#31465f] px-4 text-sm font-semibold text-white transition hover:bg-[#25384f]"
+            >
+              <RefreshCcw size={16} className={isLoading ? "animate-spin" : ""} />
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        {filtersOpen ? (
+          <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+              <FilterInput
+                icon={<Search size={16} />}
+                placeholder="Subject"
+                value={filters.subject}
+                onChange={(value) => setFilters((current) => ({ ...current, subject: value }))}
+              />
+              <FilterInput
+                icon={<BookOpen size={16} />}
+                placeholder="Class level"
+                value={filters.classLevel}
+                onChange={(value) => setFilters((current) => ({ ...current, classLevel: value }))}
+              />
+              <FilterInput
+                icon={<MapPin size={16} />}
+                placeholder="Location"
+                value={filters.location}
+                onChange={(value) => setFilters((current) => ({ ...current, location: value }))}
+              />
+              <FilterSelect
+                value={filters.teachingMode}
+                onChange={(value) => setFilters((current) => ({ ...current, teachingMode: value as TeachingMode | "" }))}
+              >
+                <option value="">Teaching mode</option>
+                <option value="ONLINE">Online</option>
+                <option value="OFFLINE">In-person</option>
+                <option value="BOTH">Hybrid</option>
+              </FilterSelect>
+              <FilterSelect
+                value={filters.jobType}
+                onChange={(value) => setFilters((current) => ({ ...current, jobType: value as JobType | "" }))}
+              >
+                <option value="">Job type</option>
+                <option value="FULL_TIME">Full time</option>
+                <option value="PART_TIME">Part time</option>
+                <option value="CONTRACT">Contract</option>
+                <option value="TEMPORARY">Temporary</option>
+              </FilterSelect>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="submit"
+                className="inline-flex min-h-11 items-center gap-2 rounded-[16px] bg-[#31465f] px-4 text-sm font-semibold text-white transition hover:bg-[#25384f]"
+              >
+                <Filter size={16} />
+                Apply filters
+              </button>
+              <button
+                type="button"
+                onClick={() => void handleReset()}
+                className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-slate-200 bg-[#fbfdff] px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-50"
+              >
+                <RefreshCcw size={16} />
+                Reset
+              </button>
+            </div>
+          </form>
+        ) : null}
+      </section>
+
+      {errorMessage ? (
+        <div className="rounded-[22px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+          {errorMessage}
+        </div>
+      ) : null}
+
+      <section className="grid gap-3 xl:grid-cols-3">
+        <StatCard label="Current feed" value={isLoading ? "..." : jobs.length} description="Visible roles after the current filter set." />
+        <StatCard label="Hybrid / online" value={isLoading ? "..." : remoteFriendly} description="Roles that can be done partially or fully online." />
+        <StatCard label="Salary listed" value={isLoading ? "..." : salaryVisible} description="Opportunities with visible compensation ranges." />
+      </section>
+
+      <section className="space-y-4">
+        {isLoading ? (
+          <div className="rounded-[26px] border border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+            <Loader2 size={24} className="mx-auto animate-spin text-slate-400" />
+            <p className="mt-4 text-sm font-medium text-slate-500">Loading opportunities</p>
+          </div>
+        ) : jobs.length === 0 ? (
+          <EmptyState hasFilters={hasFilters} onReset={() => void handleReset()} />
+        ) : (
+          jobs.map((job) => <JobListCard key={job.id} job={job} />)
+        )}
+      </section>
+    </div>
+  );
+}
 
 export default function TeacherJobsPage() {
   return (
     <RoleProtectedPage role="TEACHER" loadingLabel="Loading teacher jobs...">
       {({ user, accessToken, logoutAction, isLoggingOut }) => (
         <DashboardLayout
-          navItems={[
-            { href: "/teacher/profile", label: "Edit Profile", icon: <span />, isActive: false },
-            { href: "/teacher/jobs", label: "Browse Jobs", icon: <span />, isActive: true },
-            { href: "/teacher/messages", label: "Messages", icon: <span /> },
-            { href: "/teacher/change-password", label: "Change Password", icon: <span /> },
-            { href: "/teacher/hire-requests", label: "Received Requests", icon: <span /> },
-          ]}
+          navItems={getTeacherNavItems("jobs")}
           userName={user.name}
           userEmail={user.email}
           userRole={user.role}
@@ -29,781 +444,5 @@ export default function TeacherJobsPage() {
         </DashboardLayout>
       )}
     </RoleProtectedPage>
-  );
-}
-
-/* ── helpers ── */
-function formatTeachingMode(m: string) {
-  return m === "ONLINE" ? "Online" : m === "OFFLINE" ? "In-Person" : m === "BOTH" ? "Hybrid" : m;
-}
-function formatJobType(t: string) {
-  return t.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-function formatSalary(min: number | null, max: number | null) {
-  if (min === null && max === null) return null;
-  const fmt = (n: number) => "$" + n.toLocaleString();
-  if (min !== null && max !== null) return `${fmt(min)} – ${fmt(max)}`;
-  if (min !== null) return `From ${fmt(min)}`;
-  return `Up to ${fmt(max!)}`;
-}
-
-/* ── icons ── */
-function Icon({ d, size = 14 }: { d: string; size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d={d} stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-const I = {
-  search: "M7 2a5 5 0 100 10A5 5 0 007 2zM14 14l-3-3",
-  filter: "M2 4h12M4 8h8M6 12h4",
-  reset: "M2 8a6 6 0 0110.47-4M14 8a6 6 0 01-10.47 4M2 4v4h4M14 12v-4h-4",
-  dashboard: "M2 9l6-6 6 6M4 7v6h3v-3h2v3h3V7",
-  building: "M3 14V5l5-3 5 3v9M6 14v-4h4v4",
-  book: "M2 3a1 1 0 011-1h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3zM5 6h6M5 9h4",
-  grade: "M8 2a6 6 0 100 12A6 6 0 008 2zM5.5 8l2 2L11 6",
-  pin: "M8 1.5A3.5 3.5 0 018 8.5c-2 0-3.5-2.5-3.5-2.5A3.5 3.5 0 018 1.5zM8 5a1 1 0 100 2 1 1 0 000-2zM8 8.5v6",
-  monitor: "M2 3h12a1 1 0 011 1v7a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1zM5 13h6M8 11v2",
-  clock: "M8 2a6 6 0 100 12A6 6 0 008 2zM8 5v3.5l2.5 1.5",
-  money: "M2 5h12a1 1 0 011 1v5a1 1 0 01-1 1H2a1 1 0 01-1-1V6a1 1 0 011-1zM5.5 8.5h5",
-  arrow: "M3 8h10M9 4l4 4-4 4",
-  jobs: "M3 5h10M3 8h7M3 11h5M13 10l-3 3-1.5-1.5",
-  empty: "M8 2a6 6 0 100 12A6 6 0 008 2zM8 6v4M8 11.5v.5",
-};
-
-/* ── mode badge ── */
-const modeBadge: Record<string, { bg: string; color: string }> = {
-  Online: { bg: "rgba(48,164,108,0.1)", color: "#1a7a4a" },
-  "In-Person": { bg: "rgba(7,95,117,0.1)", color: "#075f75" },
-  Hybrid: { bg: "rgba(245,168,36,0.1)", color: "#a16207" },
-};
-function ModeBadge({ mode }: { mode: string }) {
-  const s = modeBadge[mode] ?? { bg: "rgba(169,211,239,0.15)", color: "#052f44" };
-  return (
-    <span
-      style={{ fontSize: 10, fontWeight: 700, borderRadius: 999, padding: "2px 8px", background: s.bg, color: s.color }}
-    >
-      {mode}
-    </span>
-  );
-}
-
-/* ── styled input / select ── */
-function StyledInput({
-  placeholder,
-  value,
-  onChange,
-}: {
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <div style={{ position: "relative" }}>
-      <span
-        style={{
-          position: "absolute",
-          left: 11,
-          top: "50%",
-          transform: "translateY(-50%)",
-          color: focused ? "#075f75" : "#8eaab8",
-          display: "flex",
-          pointerEvents: "none",
-          transition: "color 150ms",
-        }}
-      >
-        <Icon d={I.search} size={13} />
-      </span>
-      <input
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        style={{
-          width: "100%",
-          height: "2.5rem",
-          paddingLeft: 34,
-          paddingRight: 12,
-          borderRadius: 10,
-          border: `1.5px solid ${focused ? "#075f75" : "#ccdde8"}`,
-          background: focused ? "#f4fbff" : "#fafcfe",
-          color: "#052f44",
-          fontSize: 13,
-          fontWeight: 500,
-          outline: "none",
-          fontFamily: "inherit",
-          boxShadow: focused ? "0 0 0 3px rgba(7,95,117,0.1)" : "none",
-          transition: "border-color 160ms, background 160ms, box-shadow 160ms",
-        }}
-      />
-    </div>
-  );
-}
-
-function StyledSelect({
-  value,
-  onChange,
-  children,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  children: React.ReactNode;
-}) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      style={{
-        width: "100%",
-        height: "2.5rem",
-        padding: "0 30px 0 12px",
-        borderRadius: 10,
-        border: `1.5px solid ${focused ? "#075f75" : "#ccdde8"}`,
-        background: focused ? "#f4fbff" : "#fafcfe",
-        color: "#052f44",
-        fontSize: 13,
-        fontWeight: 500,
-        outline: "none",
-        fontFamily: "inherit",
-        appearance: "none",
-        cursor: "pointer",
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238eaab8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "right 11px center",
-        boxShadow: focused ? "0 0 0 3px rgba(7,95,117,0.1)" : "none",
-        transition: "border-color 160ms, background 160ms, box-shadow 160ms",
-      }}
-    >
-      {children}
-    </select>
-  );
-}
-
-/* ── job card ── */
-function JobCard({ job }: { job: JobPost }) {
-  const salary = formatSalary(job.salaryMin ?? null, job.salaryMax ?? null);
-  const initials = job.institution.institutionName.slice(0, 2).toUpperCase();
-
-  return (
-    <article
-      style={{
-        background: "white",
-        borderRadius: 18,
-        border: "1px solid rgba(212,230,239,0.8)",
-        boxShadow: "0 4px 16px rgba(5,47,68,0.06)",
-        overflow: "hidden",
-        transition: "transform 180ms, box-shadow 180ms",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px rgba(5,47,68,0.11)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = "none";
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px rgba(5,47,68,0.06)";
-      }}
-    >
-      {/* Left accent bar */}
-      <div style={{ display: "flex" }}>
-        <div style={{ width: 4, flexShrink: 0, background: "linear-gradient(180deg,#052f44,#075f75)" }} />
-
-        <div style={{ flex: 1, padding: "16px 18px" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
-            {/* Left */}
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, flex: 1, minWidth: 0 }}>
-              {/* Avatar */}
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 11,
-                  flexShrink: 0,
-                  background: "linear-gradient(135deg,#052f44,#075f75)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 13,
-                  fontWeight: 800,
-                  color: "#a9d3ef",
-                  boxShadow: "0 4px 10px rgba(5,47,68,0.18)",
-                }}
-              >
-                {initials}
-              </div>
-
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 3 }}>
-                  <h2
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 800,
-                      color: "#052f44",
-                      letterSpacing: "-0.025em",
-                      margin: 0,
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    {job.title}
-                  </h2>
-                  <ModeBadge mode={formatTeachingMode(job.teachingMode)} />
-                </div>
-                <p style={{ fontSize: 11, color: "#5d7280", margin: "0 0 10px", fontWeight: 500 }}>
-                  {job.institution.institutionName}
-                </p>
-
-                {/* Chips */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                  {[
-                    { icon: I.book, label: job.subject },
-                    { icon: I.grade, label: job.classLevel },
-                    { icon: I.clock, label: formatJobType(job.jobType) },
-                    { icon: I.pin, label: job.location ?? "Remote" },
-                    ...(salary ? [{ icon: I.money, label: salary }] : []),
-                  ].map(({ icon, label }) => (
-                    <div
-                      key={label}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 4,
-                        background: "rgba(169,211,239,0.1)",
-                        border: "1px solid rgba(169,211,239,0.22)",
-                        borderRadius: 7,
-                        padding: "3px 8px",
-                      }}
-                    >
-                      <span style={{ color: "#075f75", display: "flex" }}>
-                        <Icon d={icon} size={11} />
-                      </span>
-                      <span style={{ fontSize: 11, fontWeight: 600, color: "#052f44" }}>{label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <Link
-              href={`/teacher/jobs/${job.id}`}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                flexShrink: 0,
-                background: "linear-gradient(135deg,#052f44,#075f75)",
-                color: "white",
-                borderRadius: 10,
-                padding: "8px 14px",
-                fontSize: 12,
-                fontWeight: 700,
-                textDecoration: "none",
-                boxShadow: "0 4px 14px rgba(5,47,68,0.22)",
-                transition: "transform 150ms, box-shadow 150ms",
-                alignSelf: "flex-start",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 20px rgba(5,47,68,0.3)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.transform = "none";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(5,47,68,0.22)";
-              }}
-            >
-              Details <Icon d={I.arrow} size={12} />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-/* ── skeleton ── */
-function SkeletonCard() {
-  return (
-    <div
-      style={{
-        background: "white",
-        borderRadius: 18,
-        border: "1px solid rgba(212,230,239,0.8)",
-        padding: "16px 18px",
-        display: "flex",
-        gap: 12,
-        boxShadow: "0 4px 16px rgba(5,47,68,0.05)",
-      }}
-    >
-      <div
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 11,
-          background: "#e8f2f8",
-          flexShrink: 0,
-          animation: "tj-pulse 1.4s ease-in-out infinite",
-        }}
-      />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-        <div
-          style={{
-            height: 14,
-            width: "50%",
-            borderRadius: 6,
-            background: "#e8f2f8",
-            animation: "tj-pulse 1.4s ease-in-out infinite",
-          }}
-        />
-        <div
-          style={{
-            height: 10,
-            width: "30%",
-            borderRadius: 6,
-            background: "#e8f2f8",
-            animation: "tj-pulse 1.4s ease-in-out 0.1s infinite",
-          }}
-        />
-        <div style={{ display: "flex", gap: 6 }}>
-          {[80, 70, 90].map((w, i) => (
-            <div
-              key={i}
-              style={{
-                height: 22,
-                width: w,
-                borderRadius: 7,
-                background: "#e8f2f8",
-                animation: `tj-pulse 1.4s ease-in-out ${i * 0.1}s infinite`,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── main content ── */
-function TeacherJobsContent({ accessToken }: { accessToken: string }) {
-  const [jobs, setJobs] = useState<JobPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [subject, setSubject] = useState("");
-  const [classLevel, setClassLevel] = useState("");
-  const [location, setLocation] = useState("");
-  const [teachingMode, setTeachingMode] = useState<TeachingMode | "">("");
-  const [jobType, setJobType] = useState<JobType | "">("");
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  useEffect(() => {
-    loadJobs(accessToken, {});
-  }, [accessToken]);
-
-  async function loadJobs(token: string, query: JobPostsQuery) {
-    setIsLoading(true);
-    try {
-      const result = await fetchActiveJobPosts(token, query);
-      setJobs(result);
-      setErrorMessage("");
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Failed to load jobs");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  function buildQuery(): JobPostsQuery {
-    return {
-      subject: subject.trim() || undefined,
-      classLevel: classLevel.trim() || undefined,
-      location: location.trim() || undefined,
-      teachingMode: teachingMode || undefined,
-      jobType: jobType || undefined,
-    };
-  }
-
-  async function handleFilter(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    await loadJobs(accessToken, buildQuery());
-  }
-
-  async function handleReset() {
-    setSubject("");
-    setClassLevel("");
-    setLocation("");
-    setTeachingMode("");
-    setJobType("");
-    await loadJobs(accessToken, {});
-  }
-
-  const hasFilters = !!(subject || classLevel || location || teachingMode || jobType);
-
-  return (
-    <>
-      <style>{`
-        @keyframes tj-fade-up { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes tj-pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
-        .tj-root { animation: tj-fade-up 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-        .tj-filter-toggle { transition: background 150ms; }
-        .tj-filter-toggle:hover { background: rgba(5,47,68,0.06) !important; }
-      `}</style>
-
-      <div className="tj-root" style={{ padding: "0 0 2rem" }}>
-        <div
-          style={{ width: "100%", maxWidth: 920, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }}
-        >
-          {/* ── Header ── */}
-          <div
-            style={{
-              background: "linear-gradient(135deg,#052f44 0%,#065770 55%,#076b82 100%)",
-              borderRadius: 22,
-              overflow: "hidden",
-              position: "relative",
-              boxShadow: "0 16px 48px rgba(5,47,68,0.22)",
-            }}
-          >
-            <svg
-              style={{ position: "absolute", top: -20, right: -10, opacity: 0.08, pointerEvents: "none" }}
-              width="200"
-              height="160"
-              viewBox="0 0 200 160"
-              fill="none"
-            >
-              <circle cx="180" cy="0" r="140" stroke="white" strokeWidth="1" />
-              <circle cx="180" cy="0" r="90" stroke="white" strokeWidth="0.7" />
-            </svg>
-            <div style={{ padding: "22px 24px 22px", position: "relative" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 12,
-                      background: "rgba(169,211,239,0.15)",
-                      border: "1px solid rgba(169,211,239,0.25)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#a9d3ef",
-                    }}
-                  >
-                    <Icon d={I.jobs} size={18} />
-                  </div>
-                  <div>
-                    <h1
-                      style={{
-                        fontSize: 18,
-                        fontWeight: 900,
-                        color: "white",
-                        letterSpacing: "-0.035em",
-                        margin: "0 0 2px",
-                      }}
-                    >
-                      Find Job Posts
-                    </h1>
-                    <p style={{ fontSize: 11, color: "rgba(169,211,239,0.7)", margin: 0 }}>
-                      Browse active institution opportunities
-                    </p>
-                  </div>
-                </div>
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  {/* Result count */}
-                  {!isLoading && (
-                    <div
-                      style={{
-                        background: "rgba(169,211,239,0.15)",
-                        border: "1px solid rgba(169,211,239,0.22)",
-                        borderRadius: 999,
-                        padding: "4px 12px",
-                      }}
-                    >
-                      <span style={{ fontSize: 11, fontWeight: 700, color: "#a9d3ef" }}>
-                        {jobs.length} {jobs.length === 1 ? "result" : "results"}
-                      </span>
-                    </div>
-                  )}
-                  <Link
-                    href="/teacher/dashboard"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 5,
-                      background: "rgba(255,255,255,0.08)",
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      borderRadius: 9,
-                      padding: "6px 12px",
-                      textDecoration: "none",
-                      color: "rgba(169,211,239,0.85)",
-                      fontSize: 11,
-                      fontWeight: 700,
-                    }}
-                  >
-                    <Icon d={I.dashboard} size={12} /> Dashboard
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Filter panel ── */}
-          <div
-            style={{
-              background: "white",
-              borderRadius: 18,
-              border: "1px solid rgba(212,230,239,0.8)",
-              boxShadow: "0 4px 16px rgba(5,47,68,0.06)",
-              overflow: "hidden",
-            }}
-          >
-            {/* Filter header toggle */}
-            <button
-              type="button"
-              className="tj-filter-toggle"
-              onClick={() => setFiltersOpen((o) => !o)}
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 10,
-                padding: "14px 20px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontFamily: "inherit",
-                borderBottom: filtersOpen ? "1px solid rgba(212,230,239,0.5)" : "none",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ color: "#075f75", display: "flex" }}>
-                  <Icon d={I.filter} size={14} />
-                </span>
-                <span style={{ fontSize: 12, fontWeight: 800, color: "#052f44", letterSpacing: "0.03em" }}>
-                  Filter Jobs
-                </span>
-                {hasFilters && (
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      borderRadius: 999,
-                      padding: "2px 7px",
-                      background: "rgba(7,95,117,0.1)",
-                      color: "#075f75",
-                    }}
-                  >
-                    Active
-                  </span>
-                )}
-              </div>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                style={{
-                  transform: filtersOpen ? "rotate(180deg)" : "none",
-                  transition: "transform 200ms",
-                  color: "#8eaab8",
-                }}
-              >
-                <path
-                  d="M2 4l4 4 4-4"
-                  stroke="currentColor"
-                  strokeWidth="1.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-
-            {filtersOpen && (
-              <form onSubmit={handleFilter} style={{ padding: "16px 20px 20px" }}>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill,minmax(190px,1fr))",
-                    gap: 10,
-                    marginBottom: 14,
-                  }}
-                >
-                  <StyledInput placeholder="Subject" value={subject} onChange={setSubject} />
-                  <StyledInput placeholder="Class Level" value={classLevel} onChange={setClassLevel} />
-                  <StyledInput placeholder="Location" value={location} onChange={setLocation} />
-                  <StyledSelect value={teachingMode} onChange={(v) => setTeachingMode(v as TeachingMode | "")}>
-                    <option value="">Teaching Mode (All)</option>
-                    <option value="ONLINE">Online</option>
-                    <option value="OFFLINE">In-Person</option>
-                    <option value="BOTH">Hybrid</option>
-                  </StyledSelect>
-                  <StyledSelect value={jobType} onChange={(v) => setJobType(v as JobType | "")}>
-                    <option value="">Job Type (All)</option>
-                    <option value="FULL_TIME">Full Time</option>
-                    <option value="PART_TIME">Part Time</option>
-                    <option value="CONTRACT">Contract</option>
-                    <option value="TEMPORARY">Temporary</option>
-                  </StyledSelect>
-                </div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  <button
-                    type="submit"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                      background: "linear-gradient(135deg,#052f44,#075f75)",
-                      color: "white",
-                      border: "none",
-                      borderRadius: 10,
-                      padding: "8px 18px",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      boxShadow: "0 4px 14px rgba(5,47,68,0.2)",
-                      transition: "transform 150ms, box-shadow 150ms",
-                    }}
-                  >
-                    <Icon d={I.search} size={13} /> Apply Filters
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                      background: "white",
-                      color: "#052f44",
-                      border: "1.5px solid rgba(212,230,239,0.9)",
-                      borderRadius: 10,
-                      padding: "8px 18px",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      transition: "background 150ms",
-                    }}
-                  >
-                    <Icon d={I.reset} size={13} /> Reset
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-
-          {/* ── Error ── */}
-          {errorMessage && (
-            <div
-              style={{
-                background: "rgba(229,72,77,0.08)",
-                border: "1px solid rgba(229,72,77,0.2)",
-                borderRadius: 12,
-                padding: "12px 16px",
-                fontSize: 13,
-                fontWeight: 600,
-                color: "#c11b1f",
-              }}
-            >
-              ⚠ {errorMessage}
-            </div>
-          )}
-
-          {/* ── Loading skeletons ── */}
-          {isLoading && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {[0, 1, 2, 3].map((i) => (
-                <SkeletonCard key={i} />
-              ))}
-            </div>
-          )}
-
-          {/* ── Empty state ── */}
-          {!isLoading && jobs.length === 0 && !errorMessage && (
-            <div
-              style={{
-                background: "white",
-                borderRadius: 20,
-                border: "1px dashed rgba(169,211,239,0.5)",
-                padding: "52px 24px",
-                textAlign: "center",
-                boxShadow: "0 4px 16px rgba(5,47,68,0.05)",
-              }}
-            >
-              <div
-                style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: 16,
-                  margin: "0 auto 16px",
-                  background: "rgba(169,211,239,0.12)",
-                  border: "1px solid rgba(169,211,239,0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#075f75",
-                }}
-              >
-                <Icon d={I.jobs} size={22} />
-              </div>
-              <p
-                style={{ fontSize: 15, fontWeight: 800, color: "#052f44", margin: "0 0 6px", letterSpacing: "-0.02em" }}
-              >
-                No active job posts found
-              </p>
-              <p style={{ fontSize: 12, color: "#5d7280", margin: "0 0 20px", lineHeight: 1.6 }}>
-                {hasFilters
-                  ? "Try adjusting your filters to find more opportunities."
-                  : "New opportunities will appear here as institutions post them."}
-              </p>
-              {hasFilters && (
-                <button
-                  onClick={handleReset}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    background: "linear-gradient(135deg,#052f44,#075f75)",
-                    color: "white",
-                    border: "none",
-                    borderRadius: 10,
-                    padding: "8px 18px",
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                    boxShadow: "0 4px 14px rgba(5,47,68,0.2)",
-                  }}
-                >
-                  <Icon d={I.reset} size={13} /> Clear Filters
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* ── Job cards ── */}
-          {!isLoading && jobs.length > 0 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {jobs.map((job) => (
-                <JobCard key={job.id} job={job} />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </>
   );
 }
