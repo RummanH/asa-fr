@@ -148,14 +148,14 @@ export function DashboardLayout({
                 <div className="flex h-14 w-full items-center gap-3 rounded-[20px] border border-brand-sky/35 bg-brand-light px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
                   <span className="text-sm font-medium text-brand-navy/45">Teacher workspace</span>
                   <div className="h-1.5 w-1.5 rounded-full bg-brand-teal" />
-                  <span className="truncate text-sm text-brand-navy/60">Teacher hiring workflow aligned with the landing brand system</span>
+                  <span className="truncate text-sm text-brand-navy/60">Jobs, messages, and hiring activity</span>
                 </div>
               </div>
 
               <div className="ml-auto flex items-center gap-2 sm:gap-3">
                 <div className="hidden items-center gap-2 rounded-full border border-brand-sky/35 bg-white px-3 py-2 text-xs font-medium text-brand-navy/60 shadow-sm sm:flex">
                   <Bell size={14} className="text-brand-teal" />
-                  Workspace ready
+                  Active
                 </div>
                 <div className="flex items-center gap-3 rounded-full border border-slate-200 bg-white py-1.5 pl-1.5 pr-3 shadow-sm">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#0b8f88_0%,#102033_100%)] text-sm font-semibold text-white">

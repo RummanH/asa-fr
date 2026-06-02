@@ -100,9 +100,7 @@ function ChangePasswordFormContent({ accessToken, dashboardPath }: ChangePasswor
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.5rem]">
               Change Password
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72">
-              Update your password inside the same workspace shell so account security stays consistent with the rest of the product.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-white/72">Update your password.</p>
           </div>
 
           <Link
@@ -129,9 +127,7 @@ function ChangePasswordFormContent({ accessToken, dashboardPath }: ChangePasswor
               </div>
               <div>
                 <p className="text-sm font-semibold text-brand-navy">Keep your account secure</p>
-                <p className="mt-1 text-xs leading-6 text-brand-navy/65">
-                  Use a stronger password with at least 8 characters, including uppercase letters, numbers, and ideally a symbol.
-                </p>
+                <p className="mt-1 text-xs leading-6 text-brand-navy/65">Use a strong password.</p>
               </div>
             </div>
           </div>

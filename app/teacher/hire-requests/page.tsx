@@ -240,10 +240,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               Received Hire Requests
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
-              Review incoming institution interest, accept the strongest opportunities quickly, and keep the teacher
-              workflow under one consistent interface.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">Review and respond to incoming requests.</p>
           </div>
 
           <div className="grid w-full gap-3 sm:grid-cols-3">
@@ -270,10 +267,10 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
       </section>
 
       <section className="grid gap-3 xl:grid-cols-4">
-        <StatCard label="Total requests" value={isLoading ? "..." : counts.ALL} description="Every institution request currently on your account." />
-        <StatCard label="Pending" value={isLoading ? "..." : counts.PENDING} description="Requests waiting for your review and decision." />
-        <StatCard label="Accepted" value={isLoading ? "..." : counts.ACCEPTED} description="Requests you already moved forward." />
-        <StatCard label="Rejected" value={isLoading ? "..." : counts.REJECTED} description="Requests you chose not to pursue." />
+        <StatCard label="Total requests" value={isLoading ? "..." : counts.ALL} description="All requests" />
+        <StatCard label="Pending" value={isLoading ? "..." : counts.PENDING} description="Waiting for review" />
+        <StatCard label="Accepted" value={isLoading ? "..." : counts.ACCEPTED} description="Moved forward" />
+        <StatCard label="Rejected" value={isLoading ? "..." : counts.REJECTED} description="Closed" />
       </section>
 
       {!isLoading && requests.length > 0 ? (
@@ -317,9 +314,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
               {activeFilter === "ALL" ? "No hire requests yet" : `No ${activeFilter.toLowerCase()} requests`}
             </h3>
             <p className="mx-auto mt-3 text-sm leading-7 text-slate-500">
-              {activeFilter === "ALL"
-                ? "Requests from institutions will appear here as they reach out through your profile."
-                : "Try switching to another filter to review the rest of your request history."}
+              {activeFilter === "ALL" ? "Requests will appear here." : "Try another filter."}
             </p>
           </div>
         ) : (
@@ -341,10 +336,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
           <h3 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
             Best next move
           </h3>
-          <p className="mt-4 text-sm leading-7 text-slate-500">
-            Review pending requests first, then move accepted conversations into active message threads while intent is
-            still fresh. That keeps your teacher pipeline responsive without creating clutter.
-          </p>
+          <p className="mt-4 text-sm leading-7 text-slate-500">Review pending requests first.</p>
         </div>
 
         <div className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">

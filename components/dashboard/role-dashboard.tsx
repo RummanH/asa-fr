@@ -423,10 +423,7 @@ function TeacherDashboardView({
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               {title}
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
-              A calmer teacher workspace with clearer hierarchy, stronger spacing, and better action grouping. Your
-              data and routes stay the same, but the dashboard now reads like a proper product surface.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">Track roles, messages, requests, and profile status.</p>
             <div className="mt-4 flex flex-wrap gap-2.5">
               <Link
                 href={jobsPath}
@@ -480,7 +477,7 @@ function TeacherDashboardView({
           label="Open opportunities"
           value={jobCount}
           loading={dashboardLoading}
-          detail="Roles visible in your current job feed"
+          detail="Visible roles"
           icon={<BriefcaseBusiness size={20} strokeWidth={2} />}
           accent="bg-[#31465f]"
         />
@@ -488,7 +485,7 @@ function TeacherDashboardView({
           label="Conversations"
           value={messageCount}
           loading={dashboardLoading}
-          detail="Message threads that need attention"
+          detail="Active threads"
           icon={<Mail size={20} strokeWidth={2} />}
           accent="bg-[#57c5eb]"
         />
@@ -496,7 +493,7 @@ function TeacherDashboardView({
           label="Hire requests"
           value={requestCount}
           loading={dashboardLoading}
-          detail="Requests currently waiting on you"
+          detail="Waiting for review"
           icon={<Users size={20} strokeWidth={2} />}
           accent="bg-[#efbf59]"
         />
@@ -504,7 +501,7 @@ function TeacherDashboardView({
           label="Profile status"
           value={isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Action"}
           loading={false}
-          detail={isProfileComplete ? "Your profile can support applications now" : "Complete your profile to strengthen matching"}
+          detail={isProfileComplete ? "Ready to apply" : "Needs attention"}
           icon={<CheckCircle2 size={20} strokeWidth={2} />}
           accent={isProfileComplete ? "bg-emerald-500" : "bg-rose-500"}
         />
@@ -572,10 +569,7 @@ function TeacherDashboardView({
                   </div>
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${profileTone}`}>{profileLabel}</span>
                 </div>
-                <p className="mt-3 text-sm leading-7 text-slate-500">
-                  Keep your profile sharp, answer messages quickly, and review requests while they are still warm. That
-                  sequence gives the strongest return for teachers on this platform.
-                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-500">Keep profile, messages, and requests current.</p>
               </div>
 
               <div className="mt-4 rounded-[20px] border border-slate-200 bg-white px-5 py-4">
@@ -595,7 +589,7 @@ function TeacherDashboardView({
                     <p className="mt-2 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
                       {dashboardLoading ? "..." : messageCount}
                     </p>
-                    <p className="mt-1 text-sm leading-6 text-slate-500">Reply speed matters most when interest is fresh.</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-500">Reply quickly.</p>
                   </div>
 
                   <div className="rounded-[18px] bg-[linear-gradient(135deg,#fffaf0_0%,#fff5dc_100%)] px-4 py-4">
@@ -603,7 +597,7 @@ function TeacherDashboardView({
                     <p className="mt-2 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#31455f]">
                       {dashboardLoading ? "..." : requestCount}
                     </p>
-                    <p className="mt-1 text-sm leading-6 text-slate-500">Review active requests before they go cold.</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-500">Review early.</p>
                   </div>
                 </div>
               </div>
@@ -639,9 +633,7 @@ function TeacherDashboardView({
                       {isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Needs work"}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-500">
-                      {isProfileComplete
-                        ? "Your profile is in a usable state for job discovery and direct institution interest."
-                        : "Finish the profile fields that help institutions evaluate your fit quickly."}
+                      {isProfileComplete ? "Your profile is ready." : "Complete the missing fields."}
                     </p>
                   </div>
                   <Link
@@ -700,11 +692,7 @@ function TeacherDashboardView({
               </div>
               <div className="rounded-[20px] border border-dashed border-slate-200 p-4">
                 <p className="text-sm text-slate-500">
-                  {dashboardLoading
-                    ? "Refreshing current metrics."
-                    : dashboardError
-                      ? "Some dashboard data could not be refreshed."
-                      : "All teacher dashboard metrics are available."}
+                  {dashboardLoading ? "Refreshing metrics." : dashboardError ? "Some metrics are unavailable." : "All metrics available."}
                 </p>
               </div>
             </div>
@@ -720,9 +708,7 @@ function TeacherDashboardView({
               <p className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-[#31455f]">
                 {dashboardLoading ? "..." : messageCount}
               </p>
-              <p className="mt-2 text-sm leading-6 text-slate-500">
-                Conversations move quickly when replies are short, clear, and sent before the thread cools down.
-              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">Keep conversations moving.</p>
             </div>
             <Link
               href={messagesPath}
@@ -741,9 +727,7 @@ function TeacherDashboardView({
               <p className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-[#31455f]">
                 {dashboardLoading ? "..." : requestCount}
               </p>
-              <p className="mt-2 text-sm leading-6 text-slate-500">
-                Review active requests early. Fast decisions keep you responsive without cluttering the queue.
-              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">Review and decide early.</p>
             </div>
             <Link
               href={hireRequestsPath}
@@ -799,10 +783,7 @@ function InstitutionDashboardFallback({
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Institution dashboard</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#31455f]">{title}</h1>
-            <p className="mt-3 text-sm leading-7 text-slate-500">
-              The teacher dashboard is now the first modernized screen. This institution view keeps the current
-              workflow intact while sharing the upgraded shell.
-            </p>
+            <p className="mt-3 text-sm leading-7 text-slate-500">Manage posts, messages, requests, and profile status.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link
@@ -832,7 +813,7 @@ function InstitutionDashboardFallback({
           label="Published posts"
           value={jobCount}
           loading={dashboardLoading}
-          detail="Current job posts visible from your workspace"
+          detail="Current job posts"
           icon={<BriefcaseBusiness size={20} strokeWidth={2} />}
           accent="bg-[#31465f]"
         />
@@ -840,7 +821,7 @@ function InstitutionDashboardFallback({
           label="Conversations"
           value={messageCount}
           loading={dashboardLoading}
-          detail="Teacher conversations across your hiring flow"
+          detail="Active conversations"
           icon={<Mail size={20} strokeWidth={2} />}
           accent="bg-[#57c5eb]"
         />
@@ -848,7 +829,7 @@ function InstitutionDashboardFallback({
           label="Sent requests"
           value={requestCount}
           loading={dashboardLoading}
-          detail="Requests currently active in the pipeline"
+          detail="Active requests"
           icon={<Users size={20} strokeWidth={2} />}
           accent="bg-[#efbf59]"
         />
@@ -856,7 +837,7 @@ function InstitutionDashboardFallback({
           label="Profile"
           value={isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Action"}
           loading={false}
-          detail="Institution profile status"
+          detail="Profile status"
           icon={<CheckCircle2 size={20} strokeWidth={2} />}
           accent={isProfileComplete ? "bg-emerald-500" : "bg-rose-500"}
         />
@@ -873,10 +854,7 @@ function InstitutionDashboardFallback({
         </DashboardMiniPanel>
 
         <DashboardMiniPanel title="Workspace note" eyebrow="Status">
-          <p className="text-sm leading-7 text-slate-500">
-            The teacher dashboard has the first full modernization pass. The institution dashboard can be brought to the
-            same visual standard next without changing the existing business logic.
-          </p>
+          <p className="text-sm leading-7 text-slate-500">Core institution routes in one place.</p>
         </DashboardMiniPanel>
 
         <DashboardMiniPanel title="Attention" eyebrow="Operational">

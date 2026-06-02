@@ -173,9 +173,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               {partnerName}
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
-              Continue the conversation in the same teacher workspace without switching to a separate messaging surface.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">Continue the conversation.</p>
           </div>
 
           <Link
@@ -225,7 +223,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
               <p className="font-[family:var(--font-display)] text-[1.6rem] font-semibold tracking-tight text-[#31455f]">
                 No messages yet
               </p>
-              <p className="mt-3 text-sm leading-7 text-slate-500">Send the first message below to start the conversation.</p>
+              <p className="mt-3 text-sm leading-7 text-slate-500">Send the first message.</p>
             </div>
           ) : (
             <div className="h-full overflow-y-auto pr-1">

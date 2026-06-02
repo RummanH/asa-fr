@@ -117,10 +117,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               Messages
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
-              Keep active institution conversations organized, searchable, and easy to continue without leaving the
-              teacher workspace.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">Search and continue conversations.</p>
           </div>
 
           <div className="grid w-full gap-3 sm:grid-cols-2">
@@ -191,7 +188,7 @@ export function ChatInboxPage({ role, accessToken }: ChatInboxPageProps) {
               No conversations yet
             </h3>
             <p className="mx-auto mt-3 text-sm leading-7 text-slate-500">
-              Start a conversation from a job post or institution profile and it will appear here.
+              New conversations will appear here.
             </p>
           </div>
         ) : filtered.length === 0 ? (

@@ -279,10 +279,7 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
             <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-white sm:text-[2.7rem]">
               Browse Jobs
             </h1>
-            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">
-              Review active teaching opportunities, narrow the list with filters, and move into details or conversation
-              without switching visual systems.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-white/72 sm:text-[14px]">Filter and review active opportunities.</p>
           </div>
 
           <div className="grid w-full gap-3 sm:grid-cols-3">
@@ -406,9 +403,9 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
       ) : null}
 
       <section className="grid gap-3 xl:grid-cols-3">
-        <StatCard label="Current feed" value={isLoading ? "..." : jobs.length} description="Visible roles after the current filter set." />
-        <StatCard label="Hybrid / online" value={isLoading ? "..." : remoteFriendly} description="Roles that can be done partially or fully online." />
-        <StatCard label="Salary listed" value={isLoading ? "..." : salaryVisible} description="Opportunities with visible compensation ranges." />
+        <StatCard label="Current feed" value={isLoading ? "..." : jobs.length} description="Visible roles" />
+        <StatCard label="Hybrid / online" value={isLoading ? "..." : remoteFriendly} description="Remote-friendly roles" />
+        <StatCard label="Salary listed" value={isLoading ? "..." : salaryVisible} description="Visible compensation" />
       </section>
 
       <section className="space-y-4">
