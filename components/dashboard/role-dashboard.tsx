@@ -384,8 +384,8 @@ function TeacherDashboardView({
     {
       label: "Messages",
       value: messageCount,
-      valueClass: "text-[#d6f3ff]",
-      cardClass: "bg-[#5fc8ec]/14 border-[#8fdcf5]/20",
+      valueClass: "text-brand-sky",
+      cardClass: "bg-brand-sky/12 border-brand-sky/22",
     },
     {
       label: "Requests",
@@ -407,7 +407,7 @@ function TeacherDashboardView({
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-[#344b66] bg-[radial-gradient(circle_at_top_left,_rgba(100,202,239,0.28),_transparent_28%),linear-gradient(135deg,#31465f_0%,#41566f_58%,#4a6079_100%)] px-5 py-4 text-white shadow-[0_28px_64px_rgba(34,53,77,0.26)] sm:px-6 sm:py-5">
+      <section className="overflow-hidden rounded-[28px] border border-brand-navy/50 bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.24),_transparent_28%),linear-gradient(135deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] px-5 py-4 text-white shadow-[0_28px_64px_rgba(16,32,51,0.26)] sm:px-6 sm:py-5">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -430,7 +430,7 @@ function TeacherDashboardView({
             <div className="mt-4 flex flex-wrap gap-2.5">
               <Link
                 href={jobsPath}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[16px] bg-white px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-100"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[16px] bg-white px-4 text-sm font-semibold text-brand-navy transition hover:bg-brand-light"
               >
                 {jobsLabel}
                 <ArrowRight size={16} />

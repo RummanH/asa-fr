@@ -158,7 +158,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-[#344b66] bg-[radial-gradient(circle_at_top_left,_rgba(100,202,239,0.28),_transparent_28%),linear-gradient(135deg,#31465f_0%,#41566f_58%,#4a6079_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(34,53,77,0.26)] sm:px-6">
+      <section className="overflow-hidden rounded-[28px] border border-brand-navy/50 bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.24),_transparent_28%),linear-gradient(135deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(16,32,51,0.26)] sm:px-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -250,8 +250,8 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                               <div
                                 className={`rounded-[22px] px-4 py-3 text-sm leading-7 ${
                                   isMine
-                                    ? "rounded-br-md bg-[#31465f] text-white"
-                                    : "rounded-bl-md border border-slate-200 bg-[#fbfdff] text-slate-700"
+                                    ? "rounded-br-md bg-brand-navy text-white"
+                                    : "rounded-bl-md border border-brand-sky/35 bg-brand-light text-slate-700"
                                 }`}
                               >
                                 {message.message}
@@ -288,7 +288,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
             <button
               type="submit"
               disabled={isSending || !inputMessage.trim()}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#31465f] text-white transition hover:bg-[#25384f] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-[16px] bg-brand-navy text-white transition hover:bg-brand-teal disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
             </button>

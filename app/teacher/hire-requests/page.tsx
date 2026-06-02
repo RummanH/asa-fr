@@ -112,7 +112,7 @@ function RequestCard({
           ) : null}
           <Link
             href="/teacher/messages"
-            className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-slate-200 bg-[#fbfdff] px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-50"
+            className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-brand-sky/35 bg-brand-light px-4 text-sm font-semibold text-brand-navy transition hover:bg-white"
           >
             <Mail size={16} />
             Messages
@@ -225,7 +225,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-[#344b66] bg-[radial-gradient(circle_at_top_left,_rgba(100,202,239,0.28),_transparent_28%),linear-gradient(135deg,#31465f_0%,#41566f_58%,#4a6079_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(34,53,77,0.26)] sm:px-6">
+      <section className="overflow-hidden rounded-[28px] border border-brand-navy/50 bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.24),_transparent_28%),linear-gradient(135deg,#07111f_0%,#0b3d47_52%,#0b8f88_100%)] px-5 py-5 text-white shadow-[0_28px_64px_rgba(16,32,51,0.26)] sm:px-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -285,14 +285,14 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
               onClick={() => setActiveFilter(filter)}
               className={`inline-flex min-h-11 items-center gap-2 rounded-[16px] px-4 text-sm font-semibold transition ${
                 activeFilter === filter
-                  ? "bg-[#31465f] text-white"
-                  : "border border-slate-200 bg-white text-[#31455f] hover:bg-slate-50"
+                  ? "bg-brand-navy text-white"
+                  : "border border-brand-sky/35 bg-white text-brand-navy hover:bg-brand-light"
               }`}
             >
               {filter === "ALL" ? "All" : filter.charAt(0) + filter.slice(1).toLowerCase()}
               <span
                 className={`rounded-full px-2 py-0.5 text-xs ${
-                  activeFilter === filter ? "bg-white/14 text-white" : "bg-[#eef5fb] text-brand-teal"
+                  activeFilter === filter ? "bg-white/14 text-white" : "bg-brand-light text-brand-teal"
                 }`}
               >
                 {counts[filter]}
@@ -353,11 +353,11 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
             Related routes
           </h3>
           <div className="mt-5 grid gap-3">
-            <Link href="/teacher/messages" className="flex min-h-11 items-center justify-between rounded-[16px] border border-slate-200 bg-[#fbfdff] px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-50">
+            <Link href="/teacher/messages" className="flex min-h-11 items-center justify-between rounded-[16px] border border-brand-sky/35 bg-brand-light px-4 text-sm font-semibold text-brand-navy transition hover:bg-white">
               Messages
               <Mail size={16} />
             </Link>
-            <Link href="/teacher/jobs" className="flex min-h-11 items-center justify-between rounded-[16px] border border-slate-200 bg-[#fbfdff] px-4 text-sm font-semibold text-[#31455f] transition hover:bg-slate-50">
+            <Link href="/teacher/jobs" className="flex min-h-11 items-center justify-between rounded-[16px] border border-brand-sky/35 bg-brand-light px-4 text-sm font-semibold text-brand-navy transition hover:bg-white">
               Browse Jobs
               <UserRoundCheck size={16} />
             </Link>
