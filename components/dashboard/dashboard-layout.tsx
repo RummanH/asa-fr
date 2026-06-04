@@ -144,7 +144,7 @@ export function DashboardLayout({
           <div className="border-b border-white/10 px-5 pb-5 pt-6">
             <Link href="/" className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/12">
-                <Image src="/redesign/logo-mark.png" alt="Teacher Hiring Platform" width={28} height={28} priority />
+                <Image src="/landing-logo-mark-v2.png" alt="Teacher Hiring Platform" width={28} height={28} priority />
               </div>
               <div className="min-w-0">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/55">Teacher Hiring</p>
