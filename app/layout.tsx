@@ -38,10 +38,6 @@ export const metadata: Metadata = {
     title: "Teacher Hiring Platform",
     description: "A premium education hiring marketplace for teachers and institutions.",
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
   manifest: "/manifest.json",
 };
 
