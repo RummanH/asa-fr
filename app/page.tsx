@@ -1,102 +1,119 @@
-"use client";
+import type { Metadata } from "next";
+import { HomePage } from "@/components/landing/HomePage";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { CTASection } from "@/components/landing/CTASection";
-import { ContactSection } from "@/components/landing/ContactSection";
-import { FAQSection } from "@/components/landing/FAQSection";
-import { FloatingSocialLinks } from "@/components/landing/FloatingSocialLinks";
-import { Footer } from "@/components/landing/Footer";
-import { HeroSection } from "@/components/landing/HeroSection";
-import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
-import { LearningFlexibilitySection } from "@/components/landing/LearningFlexibilitySection";
-import { LandingLanguageProvider } from "@/components/landing/landing-language";
-import { GallerySection } from "@/components/landing/GallerySection";
-import { PlatformBenefitsSection } from "@/components/landing/PlatformBenefitsSection";
-import { PopularOpportunitiesSection } from "@/components/landing/PopularOpportunitiesSection";
-import { StatsSection } from "@/components/landing/StatsSection";
-import { TeacherInstitutionSection } from "@/components/landing/TeacherInstitutionSection";
-import { TestimonialsSection } from "@/components/landing/TestimonialsSection";
-import { fetchMe } from "@/lib/api";
-import { clearSession, getAccessToken, resolveDashboardPath } from "@/lib/auth";
+const homeTitle = "Teacher Hiring Platform | Hire Qualified Teachers Faster";
+const homeDescription =
+  "Teacher Hiring Platform helps schools, coaching centers, and institutions discover qualified teachers, review education profiles, chat directly, and move to hiring faster.";
+const homeKeywords = [
+  "teacher hiring platform",
+  "hire teachers",
+  "teacher recruitment platform",
+  "education jobs marketplace",
+  "school teacher hiring",
+  "online tutor hiring",
+  "teacher job portal",
+  "institution hiring teachers",
+];
+const homeUrl = "https://teacherhiring.app/";
+const ogImage = "https://teacherhiring.app/landing-hero-main-v2.png";
 
-export default function Home() {
-  const router = useRouter();
-  const [isRedirecting, setIsRedirecting] = useState(false);
+export const metadata: Metadata = {
+  title: {
+    absolute: homeTitle,
+  },
+  description: homeDescription,
+  keywords: homeKeywords,
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/",
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    title: homeTitle,
+    description: homeDescription,
+    url: homeUrl,
+    images: [
+      {
+        url: ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Teacher Hiring Platform landing page preview",
+      },
+    ],
+  },
+  twitter: {
+    title: homeTitle,
+    description: homeDescription,
+    images: [ogImage],
+  },
+};
 
-  useEffect(() => {
-    const token = getAccessToken();
-    if (!token) return;
-    let isActive = true;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${homeUrl}#website`,
+      url: homeUrl,
+      name: "Teacher Hiring Platform",
+      description: homeDescription,
+      inLanguage: "en-US",
+      publisher: {
+        "@id": `${homeUrl}#organization`,
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${homeUrl}#organization`,
+      name: "Teacher Hiring Platform",
+      url: homeUrl,
+      logo: "https://teacherhiring.app/icon.png",
+    },
+    {
+      "@type": "Service",
+      "@id": `${homeUrl}#service`,
+      serviceType: "Education hiring marketplace",
+      name: "Teacher Hiring Platform",
+      description: homeDescription,
+      provider: {
+        "@id": `${homeUrl}#organization`,
+      },
+      areaServed: "Worldwide",
+      audience: [
+        {
+          "@type": "Audience",
+          audienceType: "Teachers",
+        },
+        {
+          "@type": "Audience",
+          audienceType: "Schools and educational institutions",
+        },
+      ],
+    },
+  ],
+};
 
-    void Promise.resolve().then(async () => {
-      if (!isActive) return;
-
-      setIsRedirecting(true);
-      try {
-        const user = await fetchMe(token);
-        if (isActive) {
-          router.replace(resolveDashboardPath(user.role));
-        }
-      } catch {
-        clearSession();
-        if (isActive) {
-          setIsRedirecting(false);
-        }
-      }
-    });
-
-    return () => {
-      isActive = false;
-    };
-  }, [router]);
-
-  if (isRedirecting) {
-    return (
-      <main
-        className="flex min-h-screen items-center justify-center"
-        style={{
-          background: "linear-gradient(135deg, #07111f 0%, #0b3d47 50%, #0b8f88 100%)",
-        }}
-      >
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative h-12 w-12">
-            <div className="absolute inset-0 border-2 border-white/10" />
-            <div
-              className="absolute inset-0 border-2 border-transparent"
-              style={{
-                borderTopColor: "#b9e7fb",
-                borderRightColor: "rgba(185,231,251,0.3)",
-                animation: "spin 0.9s cubic-bezier(0.5,0,0.5,1) infinite",
-              }}
-            />
-            <div className="absolute inset-[14px] bg-brand-sky/70" />
-          </div>
-          <p className="text-sm font-semibold uppercase tracking-widest text-brand-sky">Redirecting...</p>
-        </div>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </main>
-    );
-  }
-
+export default function Page() {
   return (
-    <main className="min-h-screen bg-brand-light">
-      <LandingLanguageProvider>
-        <FloatingSocialLinks />
-        <HeroSection />
-        <StatsSection />
-        <LearningFlexibilitySection />
-        <PopularOpportunitiesSection />
-        <HowItWorksSection />
-        <PlatformBenefitsSection />
-        <TeacherInstitutionSection />
-        <TestimonialsSection />
-        <GallerySection />
-        <CTASection />
-        <ContactSection />
-        <FAQSection />
-        <Footer />
-      </LandingLanguageProvider>
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <HomePage />
+    </>
   );
 }
