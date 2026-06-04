@@ -22,6 +22,8 @@ const steps = [
   },
 ];
 
+const processIntroVideo = "/landing-process-intro.mp4";
+
 export function HowItWorksSection() {
   const prefersReducedMotion = useReducedMotion();
   const { copy } = useLandingLanguage();
@@ -56,6 +58,7 @@ export function HowItWorksSection() {
                 {copy.process.flow[2]}
               </div>
             </motion.div>
+
           </motion.div>
 
           <motion.div
@@ -65,6 +68,40 @@ export function HowItWorksSection() {
             viewport={{ once: true, amount: 0.2 }}
             whileInView="visible"
           >
+            <motion.div
+              className="landing-radius overflow-hidden border border-brand-navy/10 bg-brand-navy shadow-[0_24px_60px_rgba(7,17,31,0.16)]"
+              variants={scaleIn(prefersReducedMotion)}
+            >
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 text-white/84">
+                <div>
+                  <p className="text-[0.68rem] font-black uppercase tracking-[0.08em] text-brand-sky">Platform intro</p>
+                  <p className="mt-1 text-sm font-bold text-white">See the hiring workflow in motion</p>
+                </div>
+                <span className="landing-radius border border-white/12 bg-white/8 px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.08em] text-white/72">
+                  Demo loop
+                </span>
+              </div>
+
+              <div className="relative bg-[radial-gradient(circle_at_top,rgba(185,231,251,0.16),transparent_42%),linear-gradient(180deg,#102033_0%,#0a1727_100%)] p-3 sm:p-4">
+                <video
+                  aria-label="Teacher hiring platform process demo"
+                  autoPlay
+                  className="block aspect-[16/9] w-full rounded-[0.9rem] bg-brand-ink object-contain"
+                  controls={false}
+                  loop
+                  muted
+                  playsInline
+                  poster={redesignImages.stepTwo}
+                  preload="metadata"
+                >
+                  <source src={processIntroVideo} type="video/mp4" />
+                </video>
+                <div className="pointer-events-none absolute inset-x-3 bottom-3 rounded-b-[0.9rem] bg-[linear-gradient(180deg,rgba(7,17,31,0)_0%,rgba(7,17,31,0.08)_52%,rgba(7,17,31,0.68)_100%)] p-4 sm:inset-x-4 sm:bottom-4">
+                  <p className="text-sm font-black text-white">Profiles, discovery, chat, and requests in one flow</p>
+                </div>
+              </div>
+            </motion.div>
+
             {copy.process.steps.map((stepCopy, index) => {
               const step = steps[index] ?? steps[0];
               return (
