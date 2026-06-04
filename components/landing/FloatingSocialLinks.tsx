@@ -47,7 +47,7 @@ function YouTubeIcon(props: BrandIconProps) {
 }
 
 const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/", color: "#1877f2", Icon: FacebookIcon },
+  { label: "Facebook", href: "https://www.facebook.com/share/18kpseLRBV/", color: "#1877f2", Icon: FacebookIcon },
   { label: "Instagram", href: "https://www.instagram.com/", color: "#e4405f", Icon: InstagramIcon },
   { label: "LinkedIn", href: "https://www.linkedin.com/", color: "#0a66c2", Icon: LinkedInIcon },
   { label: "YouTube", href: "https://www.youtube.com/", color: "#ff0000", Icon: YouTubeIcon },
