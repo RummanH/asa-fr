@@ -30,15 +30,15 @@ export function HeroSection() {
     >
       <Image
         alt="Teacher leading students in a modern classroom"
-        className="object-cover object-[62%_center] sm:object-[60%_center] lg:object-[68%_center]"
+        className="hidden object-cover object-[52%_center] md:block lg:object-[68%_center]"
         fill
         priority
         sizes="100vw"
         src={redesignImages.heroMain}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,31,0.94)_0%,rgba(7,17,31,0.84)_30%,rgba(7,17,31,0.46)_54%,rgba(7,17,31,0.16)_76%,rgba(7,17,31,0.06)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.06)_0%,rgba(7,17,31,0.14)_56%,rgba(7,17,31,0.78)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.05)_18%,transparent_42%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.18)_0%,rgba(7,17,31,0.5)_42%,rgba(7,17,31,0.88)_100%)] md:bg-[linear-gradient(90deg,rgba(7,17,31,0.94)_0%,rgba(7,17,31,0.84)_30%,rgba(7,17,31,0.46)_54%,rgba(7,17,31,0.16)_76%,rgba(7,17,31,0.06)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(169,211,239,0.18)_0%,rgba(169,211,239,0.08)_20%,transparent_56%)] md:bg-[linear-gradient(180deg,rgba(7,17,31,0.06)_0%,rgba(7,17,31,0.14)_56%,rgba(7,17,31,0.78)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.04)_18%,transparent_42%)]" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-brand-light via-brand-light/82 to-transparent" />
 
       <Navbar />
@@ -81,6 +81,27 @@ export function HeroSection() {
               {copy.hero.secondary}
               <ArrowRight size={17} strokeWidth={2.4} />
             </Link>
+          </motion.div>
+
+          <motion.div className="md:hidden" variants={fadeUp(prefersReducedMotion, 18)}>
+            <div className="landing-radius relative mt-10 aspect-[5/6] max-w-sm overflow-hidden border border-white/14 bg-white/8 shadow-[0_24px_64px_rgba(7,17,31,0.28)]">
+              <Image
+                alt="Teacher leading students in a modern classroom"
+                className="object-cover object-[56%_center]"
+                fill
+                priority
+                sizes="(max-width: 767px) 88vw, 0px"
+                src={redesignImages.heroMain}
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.02)_0%,rgba(7,17,31,0.18)_52%,rgba(7,17,31,0.58)_100%)]" />
+              <div className="absolute inset-x-0 bottom-0 p-5">
+                <p className="text-sm font-black uppercase tracking-[0.08em] text-white/76">{copy.hero.badge}</p>
+                <p className="mt-2 text-2xl font-black leading-none text-white">{copy.hero.proofPoints[0]?.metric}</p>
+                <p className="mt-2 max-w-[18ch] text-sm font-semibold leading-5 text-white/80">
+                  {copy.hero.proofPoints[0]?.label}
+                </p>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
