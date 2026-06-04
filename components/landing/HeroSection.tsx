@@ -30,14 +30,15 @@ export function HeroSection() {
     >
       <Image
         alt="Teacher leading students in a modern classroom"
-        className="object-cover object-[64%_center]"
+        className="object-cover object-[62%_center] sm:object-[60%_center] lg:object-[68%_center]"
         fill
         priority
         sizes="100vw"
         src={redesignImages.heroMain}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,31,0.98)_0%,rgba(7,17,31,0.9)_36%,rgba(7,17,31,0.52)_70%,rgba(7,17,31,0.28)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.08)_0%,rgba(7,17,31,0.18)_58%,rgba(7,17,31,0.82)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,31,0.94)_0%,rgba(7,17,31,0.84)_30%,rgba(7,17,31,0.46)_54%,rgba(7,17,31,0.16)_76%,rgba(7,17,31,0.06)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,31,0.06)_0%,rgba(7,17,31,0.14)_56%,rgba(7,17,31,0.78)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.05)_18%,transparent_42%)]" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-brand-light via-brand-light/82 to-transparent" />
 
       <Navbar />
