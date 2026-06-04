@@ -360,7 +360,7 @@ body {
 /* Main reusable brand utilities */
 
 .brand-container {
-  width: min(100% - 1.25rem, 1180px);
+  width: min(100% - 0.75rem, 1380px);
   margin-inline: auto;
 }
 
@@ -650,7 +650,7 @@ body {
 
 @media (min-width: 768px) {
   .brand-container {
-    width: min(100% - 3rem, 1180px);
+    width: min(100% - 2rem, 1380px);
   }
 
   .heading-xl {
