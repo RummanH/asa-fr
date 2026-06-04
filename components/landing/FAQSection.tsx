@@ -30,12 +30,15 @@ export function FAQSection() {
             <motion.p className="landing-kicker mt-5 max-w-xl" variants={fadeUp(prefersReducedMotion, 12)}>
               {copy.faq.description}
             </motion.p>
-            <motion.div className="landing-image relative mt-8 h-64 shadow-[0_18px_48px_rgba(7,17,31,0.1)]" variants={scaleIn(prefersReducedMotion)}>
+            <motion.div
+              className="landing-image relative mt-8 aspect-square max-w-md bg-[linear-gradient(180deg,#f7fbfd_0%,#edf6fa_100%)] shadow-[0_18px_48px_rgba(7,17,31,0.1)] lg:max-w-none"
+              variants={scaleIn(prefersReducedMotion)}
+            >
               <Image
                 alt="Teacher hiring questions"
-                className="object-cover"
+                className="object-contain object-center p-4 lg:p-6"
                 fill
-                sizes="(max-width: 1024px) 100vw, 380px"
+                sizes="(max-width: 1024px) min(100vw, 28rem), 32vw"
                 src={redesignImages.faqCover}
               />
             </motion.div>
