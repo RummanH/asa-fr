@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, Loader2, Send, Wifi, WifiOff } from "lucide-react";
+import { ArrowLeft, Loader2, MoreHorizontal, Send, Wifi, WifiOff } from "lucide-react";
 import { type Socket } from "socket.io-client";
 import {
   fetchConversationMessages,
@@ -33,6 +33,15 @@ function formatDate(dateStr: string) {
   yesterday.setDate(today.getDate() - 1);
   if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
   return date.toLocaleDateString([], { month: "short", day: "numeric" });
+}
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
 }
 
 export function ChatConversationPage({ role, accessToken, currentUserId }: ChatConversationPageProps) {
@@ -155,64 +164,49 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
 
   const partnerName = messages.find((message) => message.senderId !== currentUserId)?.sender?.name ?? "Conversation";
   const partnerRole = messages.find((message) => message.senderId !== currentUserId)?.sender?.role ?? "INSTITUTION";
+  const partnerRoleLabel = partnerRole === "TEACHER" ? "Teacher" : "Institution";
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:px-6">
-        <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-sky/40 bg-brand-light px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-navy/70">
-                {isConnected ? <Wifi size={14} className="text-brand-teal" /> : <WifiOff size={14} className="text-brand-gold" />}
-                {isConnected ? "Live conversation" : "Connecting"}
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-sky/35 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-navy/65">
-                {partnerRole === "TEACHER" ? "Teacher chat" : "Institution chat"}
-              </span>
-            </div>
-            <h1 className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-brand-navy sm:text-[2.7rem]">
-              {partnerName}
-            </h1>
-            <p className="mt-2 text-sm leading-6 text-slate-500 sm:text-[14px]">Continue the conversation.</p>
-          </div>
-
+    <div className="mx-auto flex min-h-[calc(100dvh-7rem)] max-w-5xl flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_rgba(17,34,68,0.08)]">
+      <section className="border-b border-slate-100 bg-[linear-gradient(180deg,#fbfdff_0%,#f6fbff_100%)] px-4 py-3 sm:px-5">
+        <div className="flex items-center gap-3">
           <Link
             href={inboxPath}
-            className="inline-flex min-h-11 items-center gap-2 rounded-[16px] border border-brand-sky/35 bg-brand-light px-4 text-sm font-semibold text-brand-navy transition hover:bg-white"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-navy transition hover:bg-brand-light"
           >
-            <ArrowLeft size={16} />
-            Back to inbox
+            <ArrowLeft size={18} />
           </Link>
+
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1f3650,#365b78)] text-sm font-bold text-white shadow-sm">
+            {getInitials(partnerName)}
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[15px] font-semibold text-brand-navy sm:text-base">{partnerName}</p>
+            <div className="mt-0.5 flex items-center gap-2 text-xs text-slate-500">
+              {isConnected ? <Wifi size={13} className="text-brand-teal" /> : <WifiOff size={13} className="text-brand-gold" />}
+              <span>{isConnected ? `${partnerRoleLabel} is active` : `${partnerRoleLabel} chat`}</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition hover:bg-brand-light hover:text-brand-navy"
+            aria-label="Conversation options"
+          >
+            <MoreHorizontal size={18} />
+          </button>
         </div>
       </section>
 
       {errorMessage ? (
-        <div className="rounded-[22px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <div className="mx-4 mt-4 rounded-[18px] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
           {errorMessage}
         </div>
       ) : null}
 
-      <section className="flex min-h-[460px] flex-col rounded-[26px] border border-slate-200 bg-white shadow-[0_16px_38px_rgba(17,34,68,0.06)] sm:min-h-[560px] lg:h-[calc(100vh-18rem)] lg:max-h-[960px]">
-        <div className="border-b border-slate-200 px-5 py-4">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Conversation</p>
-              <h2 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
-                Message thread
-              </h2>
-            </div>
-            <span
-              className={`inline-flex min-h-8 items-center gap-2 rounded-full px-3 text-xs font-semibold ${
-                isConnected ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
-              }`}
-            >
-              <span className={`h-2 w-2 rounded-full ${isConnected ? "bg-emerald-500" : "bg-amber-500"}`} />
-              {isConnected ? "Connected" : "Waiting"}
-            </span>
-          </div>
-        </div>
-
-        <div className="min-h-0 flex-1 px-5 py-5">
+      <section className="flex min-h-0 flex-1 flex-col bg-[#f4f7fb]">
+        <div className="min-h-0 flex-1 px-3 py-4 sm:px-5 sm:py-5">
           {isLoading ? (
             <div className="py-12 text-center">
               <Loader2 size={24} className="mx-auto animate-spin text-slate-400" />
@@ -232,7 +226,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
                   <div key={date}>
                     <div className="mb-4 flex items-center gap-3">
                       <div className="h-px flex-1 bg-slate-200" />
-                      <span className="rounded-full bg-[#f7faff] px-3 py-1 text-xs font-semibold text-slate-500">
+                      <span className="rounded-full border border-white/80 bg-white/90 px-3 py-1 text-xs font-semibold text-slate-500 shadow-sm">
                         {date}
                       </span>
                       <div className="h-px flex-1 bg-slate-200" />
@@ -244,12 +238,12 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
 
                         return (
                           <div key={message.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
-                            <div className={`max-w-[82%] ${isMine ? "items-end" : "items-start"} flex flex-col`}>
+                            <div className={`max-w-[85%] ${isMine ? "items-end" : "items-start"} flex flex-col sm:max-w-[78%]`}>
                               <div
-                                className={`rounded-[22px] px-4 py-3 text-sm leading-7 ${
+                                className={`rounded-[24px] px-4 py-3 text-sm leading-7 shadow-sm ${
                                   isMine
-                                    ? "rounded-br-md bg-brand-navy text-white"
-                                    : "rounded-bl-md border border-brand-sky/35 bg-brand-light text-slate-700"
+                                    ? "rounded-br-[8px] bg-[linear-gradient(135deg,#102033_0%,#0b8f88_100%)] text-white"
+                                    : "rounded-bl-[8px] border border-slate-200 bg-white text-slate-700"
                                 }`}
                               >
                                 {message.message}
@@ -275,18 +269,20 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
           )}
         </div>
 
-        <form onSubmit={handleSendMessage} className="border-t border-slate-200 px-5 py-4">
-          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-end">
-            <input
-              value={inputMessage}
-              onChange={(event) => setInputMessage(event.target.value)}
-              placeholder="Type a message"
-              className="h-11 flex-1 rounded-[16px] border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-brand-teal focus:ring-4 focus:ring-brand-sky/25"
-            />
+        <form onSubmit={handleSendMessage} className="border-t border-slate-200 bg-white/92 px-3 py-3 backdrop-blur sm:px-5 sm:py-4">
+          <div className="flex items-end gap-2 sm:gap-3">
+            <div className="flex min-w-0 flex-1 items-end rounded-[24px] border border-slate-200 bg-[#f8fbfe] px-3 py-2 focus-within:border-brand-teal focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-sky/20">
+              <input
+                value={inputMessage}
+                onChange={(event) => setInputMessage(event.target.value)}
+                placeholder="Type a message"
+                className="min-h-10 w-full bg-transparent px-1 text-sm text-slate-700 outline-none placeholder:text-slate-400"
+              />
+            </div>
             <button
               type="submit"
               disabled={isSending || !inputMessage.trim()}
-              className="inline-flex h-11 w-full items-center justify-center rounded-[16px] bg-brand-navy text-white transition hover:bg-brand-teal disabled:cursor-not-allowed disabled:opacity-50 sm:w-11"
+              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#102033_0%,#0b8f88_100%)] text-white shadow-[0_12px_24px_rgba(11,143,136,0.26)] transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
             </button>

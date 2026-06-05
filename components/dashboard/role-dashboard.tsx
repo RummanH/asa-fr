@@ -412,7 +412,7 @@ function TeacherDashboardView({
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:px-6">
+      <section className="overflow-hidden rounded-[22px] border border-slate-200/80 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-4 py-4 shadow-[0_12px_30px_rgba(17,34,68,0.06)] sm:rounded-[28px] sm:px-6 sm:py-5 sm:shadow-[0_18px_44px_rgba(17,34,68,0.08)]">
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(360px,0.9fr)] xl:items-start">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -453,8 +453,8 @@ function TeacherDashboardView({
             </div>
           </div>
 
-          <div className="rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_12px_32px_rgba(17,34,68,0.06)]">
-            <div className="grid w-full gap-3 sm:grid-cols-2">
+          <div className="rounded-[20px] border border-slate-200/80 bg-white p-3 shadow-[0_10px_24px_rgba(17,34,68,0.05)] sm:rounded-[24px] sm:shadow-[0_12px_32px_rgba(17,34,68,0.06)]">
+            <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-2">
             {dashboardSummary.map((item) => (
               <div
                 key={item.label}
@@ -502,7 +502,7 @@ function TeacherDashboardView({
       </section>
 
       <section className="grid items-start gap-4 xl:grid-cols-[1.55fr_0.9fr]">
-        <div className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:p-5.5">
+        <div className="rounded-[22px] border border-slate-200/80 bg-white p-4 shadow-[0_12px_30px_rgba(17,34,68,0.06)] sm:rounded-[26px] sm:p-5.5 sm:shadow-[0_18px_44px_rgba(17,34,68,0.08)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Activity snapshot</p>
