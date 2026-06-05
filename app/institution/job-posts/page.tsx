@@ -207,7 +207,7 @@ function InstitutionJobPostsContent({ accessToken }: { accessToken: string }) {
 
         {/* Stats */}
         {!isLoading && posts.length > 0 && (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[
               { label: "Total Posts", value: statCounts.total, bg: "bg-brand-light", color: "text-brand-teal" },
               { label: "Active", value: statCounts.active, bg: "bg-emerald-50", color: "text-emerald-600" },
@@ -346,7 +346,7 @@ function InstitutionJobPostsContent({ accessToken }: { accessToken: string }) {
                   </div>
                 ))}
 
-                <div className="flex gap-2 sm:col-span-2 md:col-span-3">
+                <div className="flex flex-col gap-2 sm:col-span-2 sm:flex-row md:col-span-3">
                   <button type="submit" className="app-btn-primary gap-1.5 text-xs">
                     <svg
                       width="12"
@@ -453,7 +453,7 @@ function InstitutionJobPostsContent({ accessToken }: { accessToken: string }) {
                 const sc = statusConfig[post.status] ?? statusConfig.CLOSED;
                 return (
                   <article key={post.id} className="group p-4 transition-colors hover:bg-brand-light/40 sm:p-5">
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex min-w-0 items-start gap-3.5">
                         {/* Icon */}
                         <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-light text-brand-teal">
@@ -540,7 +540,7 @@ function InstitutionJobPostsContent({ accessToken }: { accessToken: string }) {
                       </div>
 
                       {/* Actions */}
-                      <div className="flex shrink-0 items-center gap-1.5">
+                      <div className="flex shrink-0 flex-wrap items-center gap-1.5 sm:justify-end">
                         <Link
                           href={`/institution/job-posts/${post.id}/edit`}
                           className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-white text-brand-navy/40 transition hover:border-brand-sky hover:bg-brand-light hover:text-brand-teal"

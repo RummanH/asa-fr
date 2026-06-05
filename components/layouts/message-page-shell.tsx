@@ -35,7 +35,7 @@ export function MessagePageShell({
       subtitle={`Manage your conversations with ${role === "TEACHER" ? "institutions" : "teachers"}`}
       maxWidth="full"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-[600px]">
+      <div className="grid min-h-[520px] grid-cols-1 gap-6 lg:min-h-[600px] lg:grid-cols-4">
         {/* Conversations list */}
         <motion.div
           className="lg:col-span-1 bg-white rounded-xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col"
@@ -90,7 +90,7 @@ export function MessagePageShell({
 
         {/* Chat area */}
         <motion.div
-          className="lg:col-span-3 bg-white rounded-xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col"
+          className="lg:col-span-3 min-h-[420px] bg-white rounded-xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col"
           initial={{ opacity: 0, x: 8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}

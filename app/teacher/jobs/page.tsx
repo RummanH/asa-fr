@@ -264,26 +264,26 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
           </div>
 
           <div className="rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_12px_32px_rgba(17,34,68,0.06)]">
-          <div className="grid w-full gap-3 sm:grid-cols-3">
-            <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-3.5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Open roles</p>
-              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-navy">
-                {isLoading ? "..." : openRoles}
-              </p>
+            <div className="grid w-full gap-3 sm:grid-cols-3">
+              <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-3.5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Open roles</p>
+                <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-navy">
+                  {isLoading ? "..." : openRoles}
+                </p>
+              </div>
+              <div className="rounded-[20px] border border-brand-sky/20 bg-brand-light px-4 py-3.5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Remote friendly</p>
+                <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-sky">
+                  {isLoading ? "..." : remoteFriendly}
+                </p>
+              </div>
+              <div className="rounded-[20px] border border-brand-gold/25 bg-brand-cream px-4 py-3.5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Salary shown</p>
+                <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#c58a14]">
+                  {isLoading ? "..." : salaryVisible}
+                </p>
+              </div>
             </div>
-            <div className="rounded-[20px] border border-brand-sky/20 bg-brand-light px-4 py-3.5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Remote friendly</p>
-              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-sky">
-                {isLoading ? "..." : remoteFriendly}
-              </p>
-            </div>
-            <div className="rounded-[20px] border border-brand-gold/25 bg-brand-cream px-4 py-3.5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Salary shown</p>
-              <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#c58a14]">
-                {isLoading ? "..." : salaryVisible}
-              </p>
-            </div>
-          </div>
           </div>
         </div>
       </section>

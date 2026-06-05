@@ -28,7 +28,7 @@ export function PageLayout({
   className = "",
 }: PageLayoutProps) {
   return (
-    <main className="w-full h-screen flex flex-col bg-background overflow-hidden">
+    <main className="flex min-h-[100dvh] w-full flex-col overflow-x-clip bg-background lg:h-[100dvh] lg:overflow-hidden">
       {/* Title header */}
       {title && (
         <motion.div
@@ -47,7 +47,7 @@ export function PageLayout({
       )}
 
       {/* Content area */}
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="min-h-0 flex-1 overflow-visible lg:overflow-y-auto">
         <div className={`px-4 py-6 sm:px-6 md:px-8 ${className}`}>
           <motion.div
             className={`mx-auto ${maxWidthClasses[maxWidth]}`}

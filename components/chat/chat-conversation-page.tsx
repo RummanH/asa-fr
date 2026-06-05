@@ -192,7 +192,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
         </div>
       ) : null}
 
-      <section className="flex min-h-[560px] flex-col rounded-[26px] border border-slate-200 bg-white shadow-[0_16px_38px_rgba(17,34,68,0.06)] lg:h-[calc(100vh-18rem)] lg:max-h-[960px]">
+      <section className="flex min-h-[460px] flex-col rounded-[26px] border border-slate-200 bg-white shadow-[0_16px_38px_rgba(17,34,68,0.06)] sm:min-h-[560px] lg:h-[calc(100vh-18rem)] lg:max-h-[960px]">
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -276,7 +276,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
         </div>
 
         <form onSubmit={handleSendMessage} className="border-t border-slate-200 px-5 py-4">
-          <div className="flex items-end gap-3">
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-end">
             <input
               value={inputMessage}
               onChange={(event) => setInputMessage(event.target.value)}
@@ -286,7 +286,7 @@ export function ChatConversationPage({ role, accessToken, currentUserId }: ChatC
             <button
               type="submit"
               disabled={isSending || !inputMessage.trim()}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-[16px] bg-brand-navy text-white transition hover:bg-brand-teal disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 w-full items-center justify-center rounded-[16px] bg-brand-navy text-white transition hover:bg-brand-teal disabled:cursor-not-allowed disabled:opacity-50 sm:w-11"
             >
               {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
             </button>
