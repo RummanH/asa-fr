@@ -29,6 +29,15 @@ export const landingCopy = {
       { value: "Direct", label: "chat before decisions" },
       { value: "Fast", label: "shorter hiring workflow" },
     ],
+    goal: {
+      eyebrow: "Goal",
+      description:
+        "কুরআন শিক্ষা কার্যক্রমের সাথে সংশ্লিষ্ট সকল শিক্ষক এবং প্রতিষ্ঠান সমূহের জন্য কাজ করে মহান আল্লাহ তা'আলার সন্তুষ্টি অর্জন করা।",
+    },
+    objective: {
+      eyebrow: "Objective",
+      description: "কুরআনের শিক্ষক এবং প্রতিষ্ঠান সমূহের সাথে প্রফেশনাল হিফজ শিক্ষকতার ক্যারিয়ার গঠনে কাজ করা",
+    },
     flexible: {
       eyebrow: "Flexible recruitment",
       title: "Hiring that adapts to every classroom need.",
@@ -300,6 +309,15 @@ export const landingCopy = {
       { value: "সরাসরি", label: "সিদ্ধান্তের আগে আলোচনা" },
       { value: "দ্রুত", label: "সহজ নিয়োগ প্রক্রিয়া" },
     ],
+    goal: {
+      eyebrow: "লক্ষ্য",
+      description:
+        "কুরআন শিক্ষা কার্যক্রমের সাথে সংশ্লিষ্ট সকল শিক্ষক এবং প্রতিষ্ঠান সমূহের জন্য কাজ করে মহান আল্লাহ তা'আলার সন্তুষ্টি অর্জন করা।",
+    },
+    objective: {
+      eyebrow: "উদ্দেশ্য",
+      description: "কুরআনের শিক্ষক এবং প্রতিষ্ঠান সমূহের সাথে প্রফেশনাল হিফজ শিক্ষকতার ক্যারিয়ার গঠনে কাজ করা",
+    },
     flexible: {
       eyebrow: "মাদ্রাসাভিত্তিক নমনীয় নিয়োগ",
       title: "প্রতিটি মাদ্রাসার প্রয়োজন অনুযায়ী সঠিক শিক্ষক নির্বাচন।",
