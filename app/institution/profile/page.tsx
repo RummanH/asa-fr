@@ -12,6 +12,7 @@ import {
   updateInstitutionProfile,
   type InstitutionProfilePayload,
 } from "@/lib/api";
+import { getInstitutionProfileCompletion } from "@/lib/profile-completion";
 import { useToast } from "@/components/ui/toast-provider";
 import { redesignImages } from "@/components/landing/redesign-images";
 
@@ -128,6 +129,19 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
     );
   }
 
+  const profileCompletion = getInstitutionProfileCompletion({
+    id: "profile",
+    userId: "user",
+    institutionName,
+    phone: phone || null,
+    address: address || null,
+    website: website || null,
+    description: description || null,
+    logo: logo || null,
+    createdAt: "",
+    updatedAt: "",
+  });
+
   return (
     <>
       <style>{`
@@ -159,6 +173,10 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
               <div>
                 <h1 className="text-2xl font-semibold text-brand-navy">Institution Profile</h1>
                 <p className="mt-1 text-xs text-brand-navy/60">{profileExists ? "Update institution profile details." : "Create institution profile."}</p>
+                <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-brand-sky/35 bg-brand-light px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-teal">
+                  Profile complete
+                  <span className="text-brand-navy">{profileCompletion}%</span>
+                </div>
               </div>
             </div>
             <Link className="app-btn-secondary" href="/institution/dashboard">

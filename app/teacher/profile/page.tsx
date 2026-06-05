@@ -13,6 +13,7 @@ import {
   updateTeacherProfile,
   type TeacherProfilePayload,
 } from "@/lib/api";
+import { getTeacherProfileCompletion } from "@/lib/profile-completion";
 import { useToast } from "@/components/ui/toast-provider";
 import { redesignImages } from "@/components/landing/redesign-images";
 
@@ -645,6 +646,28 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
     return <DashboardContentLoader label="Loading teacher profile..." />;
   }
 
+  const profileCompletion = profileExists
+    ? getTeacherProfileCompletion({
+        id: "profile",
+        userId: "user",
+        phone: phone || null,
+        gender: gender || null,
+        dateOfBirth: dateOfBirth || null,
+        education: education || null,
+        experience: experience || null,
+        subjects: parseList(subjectsText),
+        classLevels: parseList(classLevelsText),
+        expectedSalary: expectedSalary ? Number(expectedSalary) : null,
+        location: location || null,
+        teachingMode: teachingMode || null,
+        isAvailable,
+        bio: bio || null,
+        profileImage: profileImage ?? null,
+        createdAt: "",
+        updatedAt: "",
+      })
+    : 0;
+
   const submitLabel = isSubmitting
     ? "Saving…"
     : isUploadingImage
@@ -848,6 +871,20 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                 >
                   <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(16,32,51,0.5)" }}>Photo</span>
                   <span style={{ fontSize: 12, fontWeight: 800, color: "#c58a14" }}>{profileImage ? "Added" : "Missing"}</span>
+                </span>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    borderRadius: 999,
+                    border: "1px solid rgba(11,143,136,0.22)",
+                    background: "rgba(11,143,136,0.08)",
+                    padding: "8px 12px",
+                  }}
+                >
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(16,32,51,0.5)" }}>Completion</span>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: "#0b8f88" }}>{profileCompletion}%</span>
                 </span>
               </div>
             </div>

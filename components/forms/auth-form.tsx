@@ -6,6 +6,7 @@ import { FormEvent, useState } from "react";
 import { ArrowRight, Eye, EyeOff, Lock, Mail, Shield, User } from "lucide-react";
 import { login, registerInstitution, registerTeacher } from "@/lib/api";
 import { resolveDashboardPath, saveSession, type UserRole } from "@/lib/auth";
+import { TermsAndConditionsContent } from "@/components/legal/terms-and-conditions-content";
 import { useToast } from "@/components/ui/toast-provider";
 
 type AuthFormMode = "login" | "register";
@@ -102,6 +103,8 @@ export function AuthForm({ mode, role }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isRegisterMode = mode === "register";
@@ -110,6 +113,12 @@ export function AuthForm({ mode, role }: AuthFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isRegisterMode && !acceptedTerms) {
+      showToast("You must accept the terms and conditions to continue.", "error");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -225,6 +234,29 @@ export function AuthForm({ mode, role }: AuthFormProps) {
               </div>
             ) : null}
 
+            {isRegisterMode ? (
+              <label className="flex items-start gap-3 rounded-[18px] border border-slate-200 bg-slate-50/75 px-4 py-3 text-sm text-brand-navy/75">
+                <input
+                  type="checkbox"
+                  checked={acceptedTerms}
+                  onChange={(event) => setAcceptedTerms(event.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-teal focus:ring-brand-teal"
+                  required
+                />
+                <span className="leading-6">
+                  I agree to the{" "}
+                  <button
+                    type="button"
+                    onClick={() => setShowTermsModal(true)}
+                    className="font-semibold text-brand-teal transition-colors hover:text-brand-navy"
+                  >
+                    Terms and Conditions
+                  </button>
+                  .
+                </span>
+              </label>
+            ) : null}
+
             <button
               type="submit"
               disabled={isSubmitting}
@@ -267,6 +299,43 @@ export function AuthForm({ mode, role }: AuthFormProps) {
           </div>
         </div>
       </div>
+
+      {showTermsModal ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 py-6 backdrop-blur-sm">
+          <div className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-[28px] bg-white shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
+            <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4 sm:px-6">
+              <div>
+                <h2 className="text-lg font-semibold text-brand-navy">Terms and Conditions</h2>
+                <p className="text-sm text-slate-500">Please review before creating your account.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowTermsModal(false)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-brand-navy"
+                aria-label="Close terms and conditions"
+              >
+                <EyeOff size={16} className="hidden" />
+                <span className="text-lg leading-none">x</span>
+              </button>
+            </div>
+            <div className="max-h-[calc(90vh-5.5rem)] overflow-y-auto px-5 py-5 sm:px-6">
+              <TermsAndConditionsContent compact />
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
+                <Link href="/terms-and-conditions" className="text-sm font-semibold text-brand-teal transition hover:text-brand-navy">
+                  Open full page
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="inline-flex min-h-11 items-center justify-center rounded-[16px] bg-brand-navy px-4 text-sm font-semibold text-white transition hover:bg-brand-teal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

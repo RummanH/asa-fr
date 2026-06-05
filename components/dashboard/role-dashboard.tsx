@@ -27,6 +27,7 @@ import {
   type TeacherProfile,
 } from "@/lib/api";
 import { type UserRole } from "@/lib/auth";
+import { getInstitutionProfileCompletion, getTeacherProfileCompletion } from "@/lib/profile-completion";
 import { RoleProtectedPage } from "@/components/auth/role-protected-page";
 import { DistributionChartCard, MetricChartCard } from "@/components/dashboard/dashboard-charts";
 import { DashboardLayout } from "./dashboard-layout";
@@ -60,6 +61,7 @@ function NavIcon({ icon }: { icon: React.ReactNode }) {
 function useDashboardData(accessToken: string, role: UserRole) {
   const [refreshTick, setRefreshTick] = useState(0);
   const [isProfileComplete, setIsProfileComplete] = useState(false);
+  const [profileCompletion, setProfileCompletion] = useState(0);
   const [isCheckingProfile, setIsCheckingProfile] = useState(true);
   const [profileError, setProfileError] = useState("");
   const [metrics, setMetrics] = useState<DashboardMetricState>({
@@ -74,10 +76,16 @@ function useDashboardData(accessToken: string, role: UserRole) {
     try {
       const profile =
         role === "TEACHER" ? await fetchTeacherProfile(accessToken) : await fetchInstitutionProfile(accessToken);
-      setIsProfileComplete(Boolean((profile as TeacherProfile | InstitutionProfile).id));
+      const completion =
+        role === "TEACHER"
+          ? getTeacherProfileCompletion(profile as TeacherProfile)
+          : getInstitutionProfileCompletion(profile as InstitutionProfile);
+      setProfileCompletion(completion);
+      setIsProfileComplete(completion === 100);
     } catch (error) {
       if (error instanceof ApiError && error.status === 404) {
         setIsProfileComplete(false);
+        setProfileCompletion(0);
       } else {
         setProfileError(error instanceof Error ? error.message : "Failed to load profile status");
       }
@@ -137,6 +145,7 @@ function useDashboardData(accessToken: string, role: UserRole) {
 
   return {
     isProfileComplete,
+    profileCompletion,
     isCheckingProfile,
     profileError,
     metrics,
@@ -162,7 +171,7 @@ export function RoleDashboard({ role, title }: RoleDashboardProps) {
 }
 
 function DashboardContent({ title, role, user, accessToken, logoutAction, isLoggingOut }: DashboardContentProps) {
-  const { isProfileComplete, isCheckingProfile, profileError, metrics, refresh } = useDashboardData(accessToken, role);
+  const { isProfileComplete, profileCompletion, isCheckingProfile, profileError, metrics, refresh } = useDashboardData(accessToken, role);
   const { jobCount, messageCount, requestCount, loading: dashboardLoading, error: dashboardError } = metrics;
 
   const profilePath = role === "TEACHER" ? "/teacher/profile" : "/institution/profile";
@@ -241,6 +250,7 @@ function DashboardContent({ title, role, user, accessToken, logoutAction, isLogg
           hireRequestsPath={hireRequestsPath}
           profilePath={profilePath}
           isProfileComplete={isProfileComplete}
+          profileCompletion={profileCompletion}
           isCheckingProfile={isCheckingProfile}
           profileError={profileError}
           dashboardLoading={dashboardLoading}
@@ -260,6 +270,7 @@ function DashboardContent({ title, role, user, accessToken, logoutAction, isLogg
           hireRequestsPath={hireRequestsPath}
           profilePath={profilePath}
           isProfileComplete={isProfileComplete}
+          profileCompletion={profileCompletion}
           isCheckingProfile={isCheckingProfile}
           dashboardLoading={dashboardLoading}
           dashboardError={dashboardError}
@@ -281,6 +292,7 @@ type TeacherDashboardViewProps = {
   hireRequestsPath: string;
   profilePath: string;
   isProfileComplete: boolean;
+  profileCompletion: number;
   isCheckingProfile: boolean;
   profileError: string;
   dashboardLoading: boolean;
@@ -300,6 +312,7 @@ function TeacherDashboardView({
   hireRequestsPath,
   profilePath,
   isProfileComplete,
+  profileCompletion,
   isCheckingProfile,
   profileError,
   dashboardLoading,
@@ -310,7 +323,7 @@ function TeacherDashboardView({
   refresh,
   userName,
 }: TeacherDashboardViewProps) {
-  const profileLabel = isCheckingProfile ? "Checking profile" : isProfileComplete ? "Profile ready" : "Profile incomplete";
+  const profileLabel = isCheckingProfile ? "Checking profile" : `${profileCompletion}% complete`;
   const totalVisibleWork = Math.max(jobCount + messageCount + requestCount, 1);
   const profileTone = isCheckingProfile
     ? "bg-amber-50 text-amber-700"
@@ -399,7 +412,7 @@ function TeacherDashboardView({
     },
     {
       label: "Profile",
-      value: isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Action",
+      value: isCheckingProfile ? "..." : `${profileCompletion}%`,
       valueClass: isCheckingProfile ? "text-[#ffd57d]" : isProfileComplete ? "text-[#8df0bf]" : "text-[#ffb4b4]",
       cardClass: isCheckingProfile
         ? "border-brand-gold/30 bg-brand-cream"
@@ -624,7 +637,7 @@ function TeacherDashboardView({
                   <div className="rounded-[22px] bg-[linear-gradient(135deg,#f5fbfd_0%,#eef6ff_100%)] p-5">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Current status</p>
                     <p className="mt-3 font-[family:var(--font-display)] text-[2rem] font-semibold tracking-tight text-[#31455f]">
-                      {isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Needs work"}
+                      {isCheckingProfile ? "..." : `${profileCompletion}% complete`}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-slate-500">
                       {isProfileComplete ? "Your profile is ready." : "Complete the missing fields."}
@@ -648,7 +661,7 @@ function TeacherDashboardView({
             <div className="space-y-3">
               <PriorityRow
                 label={isProfileComplete ? "Profile is live" : "Profile setup needed"}
-                value={isProfileComplete ? "Ready" : "Pending"}
+                value={isCheckingProfile ? "..." : `${profileCompletion}%`}
                 tone={isProfileComplete ? "emerald" : "rose"}
               />
               <PriorityRow
@@ -745,6 +758,7 @@ type InstitutionDashboardFallbackProps = {
   hireRequestsPath: string;
   profilePath: string;
   isProfileComplete: boolean;
+  profileCompletion: number;
   isCheckingProfile: boolean;
   dashboardLoading: boolean;
   dashboardError: string;
@@ -762,6 +776,7 @@ function InstitutionDashboardFallback({
   hireRequestsPath,
   profilePath,
   isProfileComplete,
+  profileCompletion,
   isCheckingProfile,
   dashboardLoading,
   dashboardError,
@@ -829,7 +844,7 @@ function InstitutionDashboardFallback({
         />
         <MetricCard
           label="Profile"
-          value={isCheckingProfile ? "..." : isProfileComplete ? "Ready" : "Action"}
+          value={isCheckingProfile ? "..." : `${profileCompletion}%`}
           loading={false}
           detail="Profile status"
           icon={<CheckCircle2 size={20} strokeWidth={2} />}
