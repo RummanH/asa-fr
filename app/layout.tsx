@@ -1,5 +1,6 @@
 import { Inter, Manrope } from "next/font/google";
 import type { Metadata, Viewport } from "next";
+import { AppLanguageProvider } from "@/components/app/app-language";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import "./globals.css";
 
@@ -61,7 +62,9 @@ export default function RootLayout({
           WebkitTapHighlightColor: "transparent",
         }}
       >
-        <ToastProvider>{children}</ToastProvider>
+        <AppLanguageProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </AppLanguageProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { ArrowRight, Eye, EyeOff, Lock, Mail, Shield, User } from "lucide-react";
+import { useAppLanguage } from "@/components/app/app-language";
 import { login, registerInstitution, registerTeacher } from "@/lib/api";
 import { resolveDashboardPath, saveSession, type UserRole } from "@/lib/auth";
 import { TermsAndConditionsContent } from "@/components/legal/terms-and-conditions-content";
@@ -99,6 +100,7 @@ function Field({
 export function AuthForm({ mode, role }: AuthFormProps) {
   const router = useRouter();
   const { showToast } = useToast();
+  const { copy } = useAppLanguage();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -115,7 +117,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
     event.preventDefault();
 
     if (isRegisterMode && !acceptedTerms) {
-      showToast("You must accept the terms and conditions to continue.", "error");
+      showToast(copy.auth.mustAcceptTerms, "error");
       return;
     }
 
@@ -175,7 +177,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
               <Shield size={19} />
             </div>
             <div className="inline-flex rounded-full border border-brand-sky/35 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-navy/55">
-              {isLogin ? "Secure sign in" : role === "INSTITUTION" ? "Institution access" : "Teacher access"}
+              {isLogin ? copy.auth.secureSignIn : role === "INSTITUTION" ? copy.auth.institutionAccess : copy.auth.teacherAccess}
             </div>
           </div>
 
@@ -183,7 +185,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
             {isRegisterMode ? (
               <Field
                 id="name"
-                label="Full name"
+                label={copy.auth.fullName}
                 value={name}
                 onChange={setName}
                 minLength={2}
@@ -195,7 +197,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
 
             <Field
               id="email"
-              label="Email address"
+              label={copy.auth.email}
               type="email"
               value={email}
               onChange={setEmail}
@@ -206,7 +208,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
 
             <Field
               id="password"
-              label="Password"
+              label={copy.auth.password}
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={setPassword}
@@ -229,7 +231,7 @@ export function AuthForm({ mode, role }: AuthFormProps) {
             {isLogin ? (
               <div className="flex justify-end">
                 <Link href="/forgot-password" className="text-xs font-semibold text-brand-teal transition-colors hover:text-brand-navy">
-                  Forgot password?
+                  {copy.auth.forgotPassword}
                 </Link>
               </div>
             ) : null}
@@ -244,15 +246,14 @@ export function AuthForm({ mode, role }: AuthFormProps) {
                   required
                 />
                 <span className="leading-6">
-                  I agree to the{" "}
+                  {copy.auth.acceptTerms.replace("Terms and Conditions.", "").trim()}{" "}
                   <button
                     type="button"
                     onClick={() => setShowTermsModal(true)}
                     className="font-semibold text-brand-teal transition-colors hover:text-brand-navy"
                   >
-                    Terms and Conditions
+                    {copy.auth.termsTitle}
                   </button>
-                  .
                 </span>
               </label>
             ) : null}
@@ -268,11 +269,11 @@ export function AuthForm({ mode, role }: AuthFormProps) {
             >
               {isSubmitting ? (
                 <>
-                  <IconSpinner /> Please wait...
+                  <IconSpinner /> {copy.auth.pleaseWait}
                 </>
               ) : (
                 <>
-                  {isLogin ? "Sign in" : "Create account"} <ArrowRight size={16} />
+                  {isLogin ? copy.auth.signIn : copy.auth.createAccount} <ArrowRight size={16} />
                 </>
               )}
             </button>
@@ -282,16 +283,16 @@ export function AuthForm({ mode, role }: AuthFormProps) {
             <p className="text-sm text-brand-navy/55">
               {isLogin ? (
                 <>
-                  No account yet?{" "}
+                  {copy.auth.noAccount}{" "}
                   <Link href="/register" className="font-semibold text-brand-teal transition-colors hover:text-brand-navy">
-                    Register free
+                    {copy.auth.registerFree}
                   </Link>
                 </>
               ) : (
                 <>
-                  Already have an account?{" "}
+                  {copy.auth.alreadyAccount}{" "}
                   <Link href="/login" className="font-semibold text-brand-teal transition-colors hover:text-brand-navy">
-                    Sign in
+                    {copy.auth.signIn}
                   </Link>
                 </>
               )}
@@ -305,8 +306,8 @@ export function AuthForm({ mode, role }: AuthFormProps) {
           <div className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-[28px] bg-white shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
             <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-semibold text-brand-navy">Terms and Conditions</h2>
-                <p className="text-sm text-slate-500">Please review before creating your account.</p>
+                <h2 className="text-lg font-semibold text-brand-navy">{copy.auth.termsTitle}</h2>
+                <p className="text-sm text-slate-500">{copy.auth.termsHint}</p>
               </div>
               <button
                 type="button"
@@ -322,14 +323,14 @@ export function AuthForm({ mode, role }: AuthFormProps) {
               <TermsAndConditionsContent compact />
               <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
                 <Link href="/terms-and-conditions" className="text-sm font-semibold text-brand-teal transition hover:text-brand-navy">
-                  Open full page
+                  {copy.auth.openFullPage}
                 </Link>
                 <button
                   type="button"
                   onClick={() => setShowTermsModal(false)}
                   className="inline-flex min-h-11 items-center justify-center rounded-[16px] bg-brand-navy px-4 text-sm font-semibold text-white transition hover:bg-brand-teal"
                 >
-                  Close
+                  {copy.common.close}
                 </button>
               </div>
             </div>

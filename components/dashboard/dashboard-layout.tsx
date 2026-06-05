@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { LanguageToggle } from "@/components/app/language-toggle";
+import { useAppLanguage } from "@/components/app/app-language";
 import { Bell, LogOut, Menu, Settings, X } from "lucide-react";
 
 interface DashboardLayoutProps {
@@ -116,9 +118,10 @@ export function DashboardLayout({
   isLoggingOut = false,
 }: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { copy } = useAppLanguage();
 
   const initials = useMemo(() => getInitials(userName), [userName]);
-  const roleLabel = userRole === "TEACHER" ? "Teacher" : "Institution";
+  const roleLabel = userRole === "TEACHER" ? copy.common.teacher : copy.common.institution;
 
   return (
     <div className="min-h-[100dvh] overflow-x-clip bg-[radial-gradient(circle_at_top_left,_rgba(185,231,251,0.36),_transparent_22%),linear-gradient(180deg,_#f5fbfd_0%,_#eaf4f8_100%)] lg:h-[100dvh] lg:overflow-hidden">
@@ -135,7 +138,7 @@ export function DashboardLayout({
               </div>
               <div className="min-w-0">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/55">Al Asatizah</p>
-                <p className="truncate text-lg font-semibold text-white">Workspace</p>
+                <p className="truncate text-lg font-semibold text-white">{copy.common.workspace}</p>
               </div>
             </Link>
           </div>
@@ -185,7 +188,7 @@ export function DashboardLayout({
                 <span className="flex h-9 w-9 items-center justify-center rounded-[14px] bg-white/6">
                   <Settings size={18} />
                 </span>
-                Settings
+                {copy.common.settings}
               </Link>
               {onLogout ? (
                 <button
@@ -196,7 +199,7 @@ export function DashboardLayout({
                   <span className="flex h-9 w-9 items-center justify-center rounded-[14px] bg-white/6">
                     <LogOut size={18} />
                   </span>
-                  {isLoggingOut ? "Logging out..." : "Logout"}
+                  {isLoggingOut ? `${copy.common.logout}...` : copy.common.logout}
                 </button>
               ) : null}
             </div>
@@ -216,16 +219,19 @@ export function DashboardLayout({
 
               <div className="hidden min-w-0 flex-1 items-center md:flex">
                 <div className="flex h-14 w-full items-center gap-3 rounded-[20px] border border-brand-sky/35 bg-brand-light px-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
-                  <span className="text-sm font-medium text-brand-navy/45">Teacher workspace</span>
+                  <span className="text-sm font-medium text-brand-navy/45">{userRole === "TEACHER" ? copy.dashboard.teacherWorkspace : copy.dashboard.institutionWorkspace}</span>
                   <div className="h-1.5 w-1.5 rounded-full bg-brand-teal" />
-                  <span className="truncate text-sm text-brand-navy/60">Jobs, messages, and hiring activity</span>
+                  <span className="truncate text-sm text-brand-navy/60">{userRole === "TEACHER" ? copy.dashboard.jobsMessagesHiring : copy.dashboard.postsMessagesHiring}</span>
                 </div>
               </div>
 
               <div className="ml-auto flex items-center gap-2 sm:gap-3">
+                <div className="hidden sm:block">
+                  <LanguageToggle />
+                </div>
                 <div className="hidden items-center gap-2 rounded-full border border-brand-sky/35 bg-white px-3 py-2 text-xs font-medium text-brand-navy/60 shadow-sm sm:flex">
                   <Bell size={14} className="text-brand-teal" />
-                  Active
+                  {copy.common.active}
                 </div>
                 <div className="flex items-center gap-3 rounded-full border border-slate-200/70 bg-white/92 py-1.5 pl-1.5 pr-3 shadow-none lg:shadow-sm">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#0b8f88_0%,#102033_100%)] text-sm font-semibold text-white">

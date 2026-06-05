@@ -1,66 +1,56 @@
+"use client";
+
 import Link from "next/link";
+import { useAppLanguage } from "@/components/app/app-language";
 
 type TermsAndConditionsContentProps = {
   compact?: boolean;
 };
 
 export function TermsAndConditionsContent({ compact = false }: TermsAndConditionsContentProps) {
+  const { copy } = useAppLanguage();
+
   return (
     <div className={`space-y-5 text-sm leading-7 text-slate-600 ${compact ? "" : "max-w-3xl"}`}>
       <section className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-brand-navy sm:text-3xl">Terms and Conditions</h1>
-        <p>
-          These terms govern the use of Al Asatizah as a platform for institutions and teachers to connect, create
-          profiles, communicate, and manage hiring activity.
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight text-brand-navy sm:text-3xl">{copy.terms.title}</h1>
+        <p>{copy.terms.intro}</p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-base font-semibold text-brand-navy">1. Account responsibility</h2>
-        <p>Users must provide accurate registration information and are responsible for activity performed through their account.</p>
+        <h2 className="text-base font-semibold text-brand-navy">{copy.terms.accountTitle}</h2>
+        <p>{copy.terms.accountBody}</p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-base font-semibold text-brand-navy">2. Profile and content accuracy</h2>
-        <p>
-          Teachers and institutions should keep profile information, job details, messages, and requests truthful,
-          relevant, and up to date.
-        </p>
+        <h2 className="text-base font-semibold text-brand-navy">{copy.terms.contentTitle}</h2>
+        <p>{copy.terms.contentBody}</p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-base font-semibold text-brand-navy">3. Respectful use</h2>
-        <p>
-          Users must not misuse the platform, send harmful or misleading content, impersonate others, or use the
-          service for unlawful activity.
-        </p>
+        <h2 className="text-base font-semibold text-brand-navy">{copy.terms.useTitle}</h2>
+        <p>{copy.terms.useBody}</p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-base font-semibold text-brand-navy">4. Hiring and communication</h2>
-        <p>
-          Al Asatizah facilitates connection and communication, but hiring decisions, verification, and agreements
-          remain the responsibility of the teacher and institution involved.
-        </p>
+        <h2 className="text-base font-semibold text-brand-navy">{copy.terms.hiringTitle}</h2>
+        <p>{copy.terms.hiringBody}</p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-base font-semibold text-brand-navy">5. Platform rights</h2>
-        <p>
-          We may update platform features, moderate inappropriate content, and suspend accounts that violate these
-          terms or harm the platform community.
-        </p>
+        <h2 className="text-base font-semibold text-brand-navy">{copy.terms.rightsTitle}</h2>
+        <p>{copy.terms.rightsBody}</p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="text-base font-semibold text-brand-navy">6. Acceptance</h2>
-        <p>By registering, you confirm that you have read and accepted these terms and conditions.</p>
+        <h2 className="text-base font-semibold text-brand-navy">{copy.terms.acceptanceTitle}</h2>
+        <p>{copy.terms.acceptanceBody}</p>
       </section>
 
       {!compact ? (
         <div className="border-t border-slate-200 pt-4">
           <Link href="/register" className="text-sm font-semibold text-brand-teal transition hover:text-brand-navy">
-            Back to registration
+            {copy.terms.backToRegister}
           </Link>
         </div>
       ) : null}

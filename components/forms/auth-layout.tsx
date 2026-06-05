@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ReactNode } from "react";
+import { LanguageToggle } from "@/components/app/language-toggle";
+import { useAppLanguage } from "@/components/app/app-language";
 import { ArrowLeft, BriefcaseBusiness, Building2, MessageSquareMore, ShieldCheck } from "lucide-react";
 import { redesignImages } from "@/components/landing/redesign-images";
 
@@ -14,6 +16,8 @@ interface AuthLayoutProps {
 }
 
 export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
+  const { copy } = useAppLanguage();
+
   return (
     <div className="w-full bg-transparent">
       <motion.div
@@ -34,18 +38,21 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
                   </span>
                   <span className="truncate text-sm font-black text-brand-navy">Al Asatizah</span>
                 </Link>
-                <Link
-                  href="/"
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-teal hover:text-brand-teal"
-                >
-                  <ArrowLeft size={16} />
-                  Back
-                </Link>
+                <div className="flex items-center gap-2">
+                  <LanguageToggle />
+                  <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand-teal hover:text-brand-teal"
+                  >
+                    <ArrowLeft size={16} />
+                    {copy.common.back}
+                  </Link>
+                </div>
               </div>
 
               <div className="space-y-4">
                 <p className="inline-flex rounded-full border border-brand-sky/30 bg-brand-sky/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-teal">
-                  Account access
+                  {copy.auth.accountAccess}
                 </p>
                 {title ? <h1 className="text-3xl font-semibold tracking-tight text-brand-navy sm:text-4xl">{title}</h1> : null}
                 {subtitle ? <p className="max-w-xl text-base leading-7 text-slate-600">{subtitle}</p> : null}

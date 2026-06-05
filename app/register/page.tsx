@@ -1,12 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, BriefcaseBusiness, Building2 } from "lucide-react";
+import { useAppLanguage } from "@/components/app/app-language";
 import AuthPageShell from "@/components/forms/auth-page-shell";
 import { AuthLayout } from "@/components/forms/auth-layout";
 
 export default function RegisterPage() {
+  const { copy } = useAppLanguage();
+
   return (
     <AuthPageShell>
-      <AuthLayout title="Create your account" subtitle="Choose your workspace and continue.">
+      <AuthLayout title={copy.auth.createAccountTitle} subtitle={copy.auth.createAccountSubtitle}>
         <div className="grid gap-5 sm:grid-cols-2">
           <Link
             href="/register/teacher"
@@ -16,13 +21,13 @@ export default function RegisterPage() {
               <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-[20px] bg-brand-teal/12 text-brand-teal">
                 <BriefcaseBusiness size={22} />
               </div>
-              <h3 className="text-xl font-semibold text-brand-navy">Teacher account</h3>
+              <h3 className="text-xl font-semibold text-brand-navy">{copy.auth.teacherAccount}</h3>
               <p className="mt-3 text-sm leading-6 text-slate-600">
-                Create your profile, manage requests, and connect with institutions.
+                {copy.auth.teacherAccountDescription}
               </p>
             </div>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-teal transition group-hover:text-brand-navy">
-              Start as Teacher
+              {copy.auth.startAsTeacher}
               <ArrowRight size={16} />
             </span>
           </Link>
@@ -35,13 +40,13 @@ export default function RegisterPage() {
               <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-[20px] bg-brand-gold/16 text-brand-gold">
                 <Building2 size={22} />
               </div>
-              <h3 className="text-xl font-semibold text-brand-navy">Institution account</h3>
+              <h3 className="text-xl font-semibold text-brand-navy">{copy.auth.institutionAccount}</h3>
               <p className="mt-3 text-sm leading-6 text-slate-600">
-                Set up your hiring workspace, post jobs, and manage teacher outreach.
+                {copy.auth.institutionAccountDescription}
               </p>
             </div>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-gold transition group-hover:text-brand-navy">
-              Start as Institution
+              {copy.auth.startAsInstitution}
               <ArrowRight size={16} />
             </span>
           </Link>
