@@ -17,26 +17,26 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Teacher Hiring Platform",
-    template: "%s - Teacher Hiring Platform",
+    default: "Al Asatizah",
+    template: "%s - Al Asatizah",
   },
-  description: "A premium education hiring marketplace for teachers and institutions.",
-  applicationName: "Teacher Hiring Platform",
+  description: "A platform for institutions to find teachers and for teachers to find khidmah opportunities.",
+  applicationName: "Al Asatizah",
   keywords: ["teacher", "hiring", "institution", "jobs", "education", "marketplace"],
-  authors: [{ name: "Teacher Hiring Platform" }],
-  creator: "Teacher Hiring Platform",
+  authors: [{ name: "Al Asatizah" }],
+  creator: "Al Asatizah",
   metadataBase: new URL("https://teacherhiring.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Teacher Hiring Platform",
-    description: "A premium education hiring marketplace for teachers and institutions.",
-    siteName: "Teacher Hiring Platform",
+    title: "Al Asatizah",
+    description: "A platform for institutions to find teachers and for teachers to find khidmah opportunities.",
+    siteName: "Al Asatizah",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Teacher Hiring Platform",
-    description: "A premium education hiring marketplace for teachers and institutions.",
+    title: "Al Asatizah",
+    description: "A platform for institutions to find teachers and for teachers to find khidmah opportunities.",
   },
   manifest: "/manifest.json",
 };

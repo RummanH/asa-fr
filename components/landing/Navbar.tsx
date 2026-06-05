@@ -43,7 +43,7 @@ export function Navbar() {
           <Link className="inline-flex min-w-0 items-center gap-3" href="/">
             <span className="landing-radius relative inline-flex h-10 w-10 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
               <Image
-                alt="Teacher Hiring Platform"
+                alt="Al Asatizah"
                 className="object-cover"
                 fill
                 sizes="40px"
@@ -51,7 +51,7 @@ export function Navbar() {
               />
             </span>
             <span className="truncate text-sm font-black text-brand-navy sm:text-base">
-              Teacher Hiring Platform
+              Al Asatizah
             </span>
           </Link>
 

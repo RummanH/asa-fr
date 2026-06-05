@@ -15,7 +15,7 @@ export function CTASection() {
   return (
     <section className="relative overflow-hidden bg-brand-navy py-16 text-white md:py-24">
       <Image
-        alt="Teacher hiring platform call to action"
+        alt="Al Asatizah call to action"
         className="object-cover opacity-[0.24]"
         fill
         sizes="100vw"

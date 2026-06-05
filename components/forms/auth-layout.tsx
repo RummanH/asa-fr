@@ -31,9 +31,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
                 <div className="mb-10 flex items-center justify-between gap-4">
                   <Link href="/" className="inline-flex items-center gap-3 text-sm font-semibold text-brand-navy transition hover:text-brand-teal">
                     <span className="landing-radius relative inline-flex h-12 w-12 shrink-0 overflow-hidden border border-brand-navy/10 bg-brand-light">
-                      <Image alt="Teacher Hiring Platform" className="object-contain" fill sizes="48px" src={redesignImages.logoMark} />
+                      <Image alt="Al Asatizah" className="object-contain" fill sizes="48px" src={redesignImages.logoMark} />
                     </span>
-                    <span className="truncate text-sm font-black text-brand-navy">Teacher Hiring Platform</span>
+                    <span className="truncate text-sm font-black text-brand-navy">Al Asatizah</span>
                   </Link>
                   <Link
                     href="/"
@@ -60,7 +60,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
                   <div className="absolute inset-0 rounded-[1.75rem] bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,_rgba(255,255,255,0.08),transparent_40%)]" />
                   <div className="relative space-y-8">
                     <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white/85">
-                      Teacher hiring platform
+                      Al Asatizah
                     </div>
                     <h2 className="text-3xl font-semibold leading-tight">Simple access for teachers and institutions.</h2>
                     <p className="text-sm leading-7 text-sky-100/90">

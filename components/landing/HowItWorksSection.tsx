@@ -84,7 +84,7 @@ export function HowItWorksSection() {
 
               <div className="relative bg-[radial-gradient(circle_at_top,rgba(185,231,251,0.16),transparent_42%),linear-gradient(180deg,#102033_0%,#0a1727_100%)] p-3 sm:p-4">
                 <video
-                  aria-label="Teacher hiring platform process demo"
+                  aria-label="Al Asatizah process demo"
                   autoPlay
                   className="block aspect-[16/9] w-full rounded-[0.9rem] bg-brand-ink object-contain"
                   controls={false}

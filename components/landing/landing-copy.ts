@@ -11,10 +11,10 @@ export const landingCopy = {
     },
     hero: {
       badge: "Education hiring, redesigned",
-      title: "Teacher Hiring Platform",
+      title: "Al Asatizah",
       description:
-        "A premium marketplace where institutions discover qualified teachers, teachers find better opportunities, and both sides move from profile to chat to hiring request with less friction.",
-      primary: "Hire Teachers",
+        "A platform for institutions to find teachers and for teachers to find khidmah opportunities.",
+      primary: "Find Teachers",
       secondary: "Join As Teacher",
       trustSignals: ["Verified education profiles", "Role-ready search", "Teacher and institution paths"],
       proofPoints: [
@@ -159,7 +159,7 @@ export const landingCopy = {
           title: "For Institutions",
           description:
             "Post requirements, review teacher profiles, start conversations, and send hiring requests from one place.",
-          cta: "Hire teachers",
+          cta: "Find teachers",
         },
       ],
     },
@@ -208,7 +208,7 @@ export const landingCopy = {
       title: "Bring your next teacher hiring decision into one clear workflow.",
       description:
         "Join as an institution to publish requirements, or create a teacher profile and start discovering roles.",
-      primary: "Hire teachers",
+      primary: "Find teachers",
       secondary: "Join as teacher",
     },
     contact: {
@@ -231,7 +231,7 @@ export const landingCopy = {
       message: "Message",
       messagePlaceholder: "Tell us what you need help with",
       submit: "Send message",
-      mailSubjectPrefix: "Teacher Hiring Platform inquiry from",
+      mailSubjectPrefix: "Al Asatizah inquiry from",
       websiteVisitor: "website visitor",
     },
     faq: {
@@ -267,7 +267,7 @@ export const landingCopy = {
       ],
     },
     footer: {
-      description: "A focused marketplace for qualified teachers and trusted educational institutions.",
+      description: "A platform for institutions to find teachers and for teachers to find khidmah opportunities.",
       createAccount: "Create account",
       explore: "Explore",
       accounts: "Accounts",
@@ -276,7 +276,7 @@ export const landingCopy = {
       institutionRegistration: "Institution registration",
       login: "Login",
       address: "Address",
-      rights: "Teacher Hiring Platform. All rights reserved.",
+      rights: "Al Asatizah. All rights reserved.",
     },
   },
   bn: {
@@ -291,10 +291,10 @@ export const landingCopy = {
     },
     hero: {
       badge: "মাদ্রাসা শিক্ষক নিয়োগের আধুনিক সমাধান",
-      title: "মাদ্রাসার জন্য উস্তাদ/শিক্ষক নিয়োগ প্ল্যাটফর্ম",
+      title: "Al Asatizah",
       description:
-        "একটি বিশ্বস্ত প্ল্যাটফর্ম যেখানে মাদ্রাসা ও দ্বীনি শিক্ষা প্রতিষ্ঠান যোগ্য উস্তাদ/শিক্ষক খুঁজে পায়, আর শিক্ষকরা হিফজ, নূরানি, কিতাব, আরবি ও সাধারণ বিষয়ভিত্তিক উপযুক্ত সুযোগ খুঁজে পান। প্রোফাইল দেখা, আলোচনা এবং নিয়োগ অনুরোধ—সবকিছু হয় সহজ ও সুন্দরভাবে।",
-      primary: "শিক্ষক নিয়োগ করুন",
+        "প্রতিষ্ঠানের জন্য শিক্ষক এবং শিক্ষকদের জন্য খেদমত খোঁজার প্ল্যাটফর্ম",
+      primary: "শিক্ষক খুঁজুন",
       secondary: "শিক্ষক হিসেবে যোগ দিন",
       trustSignals: ["যাচাইকৃত শিক্ষক প্রোফাইল", "বিষয় ও বিভাগভিত্তিক খোঁজ", "মাদ্রাসা ও শিক্ষকের আলাদা পথ"],
       proofPoints: [
@@ -325,13 +325,13 @@ export const landingCopy = {
         "হিফজ বিভাগ, নূরানি/নাযেরা, কিতাব বিভাগ, আরবি, বাংলা, ইংরেজি, গণিত বা সাধারণ বিষয়—মাদ্রাসা সহজেই প্রয়োজন অনুযায়ী যোগ্য শিক্ষক খুঁজে পাবে।",
       features: [
         {
-          title: "নির্ভুল শিক্ষক খোঁজ",
+          title: "শিক্ষক খোঁজ",
           description:
             "বিষয়, বিভাগ, শ্রেণি, লোকেশন, অভিজ্ঞতা, সময়, প্রত্যাশিত বেতন এবং পড়ানোর ধরন অনুযায়ী শিক্ষক খুঁজুন।",
           details: ["বিষয় ও বিভাগ ফিল্টার", "লোকেশনভিত্তিক খোঁজ", "অনলাইন ও অফলাইন পড়ানো"],
         },
         {
-          title: "নমনীয় নিয়োগ সুযোগ",
+          title: "বিভিন্ন ধরনের শিক্ষক খোঁজ",
           description:
             "ফুল-টাইম, পার্ট-টাইম, খণ্ডকালীন, অস্থায়ী, হিফজ শিক্ষক, কিতাব শিক্ষক এবং অনলাইন শিক্ষক নিয়োগের সুবিধা।",
           details: ["সময় অনুযায়ী নিয়োগ", "মাদ্রাসার প্রয়োজন পোস্ট", "শিক্ষকের জন্য সুযোগ দেখা"],
@@ -444,7 +444,7 @@ export const landingCopy = {
           title: "মাদ্রাসার জন্য",
           description:
             "শিক্ষক প্রয়োজন পোস্ট করুন, প্রোফাইল দেখুন, সরাসরি আলোচনা করুন এবং এক জায়গা থেকে নিয়োগ অনুরোধ পাঠান।",
-          cta: "শিক্ষক নিয়োগ করুন",
+          cta: "শিক্ষক খুঁজুন",
         },
       ],
     },
@@ -491,7 +491,7 @@ export const landingCopy = {
       title: "আপনার মাদ্রাসার পরবর্তী শিক্ষক নিয়োগ আরও সহজ করুন।",
       description:
         "মাদ্রাসা হিসেবে শিক্ষক প্রয়োজন প্রকাশ করুন, অথবা শিক্ষক হিসেবে প্রোফাইল তৈরি করে উপযুক্ত সুযোগ খোঁজা শুরু করুন।",
-      primary: "শিক্ষক নিয়োগ করুন",
+      primary: "শিক্ষক খুঁজুন",
       secondary: "শিক্ষক হিসেবে যোগ দিন",
     },
     contact: {
@@ -514,7 +514,7 @@ export const landingCopy = {
       message: "মেসেজ",
       messagePlaceholder: "আপনি কী বিষয়ে জানতে চান লিখুন",
       submit: "মেসেজ পাঠান",
-      mailSubjectPrefix: "মাদ্রাসা শিক্ষক নিয়োগ বিষয়ে বার্তা পাঠিয়েছেন",
+      mailSubjectPrefix: "Al Asatizah বিষয়ে বার্তা পাঠিয়েছেন",
       websiteVisitor: "ওয়েবসাইট ভিজিটর",
     },
     faq: {
@@ -549,7 +549,7 @@ export const landingCopy = {
     },
     footer: {
       description:
-        "যোগ্য শিক্ষক এবং বিশ্বস্ত মাদ্রাসা/দ্বীনি শিক্ষা প্রতিষ্ঠানের জন্য একটি বিশেষায়িত নিয়োগ প্ল্যাটফর্ম।",
+        "প্রতিষ্ঠানের জন্য শিক্ষক এবং শিক্ষকদের জন্য খেদমত খোঁজার প্ল্যাটফর্ম",
       createAccount: "অ্যাকাউন্ট তৈরি করুন",
       explore: "এক্সপ্লোর",
       accounts: "অ্যাকাউন্ট",
@@ -558,7 +558,7 @@ export const landingCopy = {
       institutionRegistration: "মাদ্রাসা রেজিস্ট্রেশন",
       login: "লগইন",
       address: "ঠিকানা",
-      rights: "মাদ্রাসা শিক্ষক নিয়োগ প্ল্যাটফর্ম। সর্বস্বত্ব সংরক্ষিত।",
+      rights: "Al Asatizah. সর্বস্বত্ব সংরক্ষিত।",
     },
   },
 } as const;

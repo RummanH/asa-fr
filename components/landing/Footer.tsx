@@ -45,9 +45,9 @@ export function Footer() {
           <motion.div variants={fadeUp(prefersReducedMotion, 12)}>
             <Link className="inline-flex items-center gap-3" href="/">
               <span className="landing-radius relative inline-flex h-11 w-11 overflow-hidden border border-white/10 bg-white/10">
-                <Image alt="Teacher Hiring Platform" className="object-cover" fill sizes="44px" src={redesignImages.logoMark} />
+                <Image alt="Al Asatizah" className="object-cover" fill sizes="44px" src={redesignImages.logoMark} />
               </span>
-              <span className="text-lg font-black text-white md:text-xl">Teacher Hiring Platform</span>
+              <span className="text-lg font-black text-white md:text-xl">Al Asatizah</span>
             </Link>
             <p className="mt-4 max-w-md text-sm leading-7 text-white/68">
               {copy.footer.description}

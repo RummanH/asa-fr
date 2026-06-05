@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { HomePage } from "@/components/landing/HomePage";
 
-const homeTitle = "Teacher Hiring Platform | Hire Qualified Teachers Faster";
+const homeTitle = "Al Asatizah | Find Qualified Teachers Faster";
 const homeDescription =
-  "Teacher Hiring Platform helps schools, coaching centers, and institutions discover qualified teachers, review education profiles, chat directly, and move to hiring faster.";
+  "Al Asatizah helps institutions find teachers and helps teachers find khidmah opportunities.";
 const homeKeywords = [
   "teacher hiring platform",
   "hire teachers",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Teacher Hiring Platform landing page preview",
+        alt: "Al Asatizah landing page preview",
       },
     ],
   },
@@ -68,7 +68,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": `${homeUrl}#website`,
       url: homeUrl,
-      name: "Teacher Hiring Platform",
+      name: "Al Asatizah",
       description: homeDescription,
       inLanguage: "en-US",
       publisher: {
@@ -78,7 +78,7 @@ const structuredData = {
     {
       "@type": "Organization",
       "@id": `${homeUrl}#organization`,
-      name: "Teacher Hiring Platform",
+      name: "Al Asatizah",
       url: homeUrl,
       logo: "https://teacherhiring.app/icon.png",
     },
@@ -86,7 +86,7 @@ const structuredData = {
       "@type": "Service",
       "@id": `${homeUrl}#service`,
       serviceType: "Education hiring marketplace",
-      name: "Teacher Hiring Platform",
+      name: "Al Asatizah",
       description: homeDescription,
       provider: {
         "@id": `${homeUrl}#organization`,
