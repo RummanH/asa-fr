@@ -34,11 +34,11 @@ export function JobListingPageShell({
       subtitle={subtitle || "Explore available opportunities"}
       maxWidth="xl"
     >
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Search and filters */}
         {showFilters && (
           <motion.div
-            className="bg-white rounded-xl border border-slate-200/60 shadow-sm p-6 space-y-4"
+            className="rounded-[20px] bg-white/88 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-2xl md:border md:border-slate-200/60 md:bg-white md:p-6 md:shadow-sm md:ring-0 space-y-4"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}

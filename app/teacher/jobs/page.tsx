@@ -116,7 +116,7 @@ function FilterSelect({
 
 function JobListCard({ job }: { job: JobPost }) {
   return (
-    <article className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(17,34,68,0.08)]">
+    <article className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm transition md:rounded-[24px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0 md:hover:-translate-y-0.5 md:hover:shadow-[0_22px_42px_rgba(17,34,68,0.08)]">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -142,26 +142,26 @@ function JobListCard({ job }: { job: JobPost }) {
         </Link>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+      <div className="mt-5 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Subject</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{job.subject}</p>
         </div>
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Class level</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{job.classLevel}</p>
         </div>
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Location</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{job.location || "Remote / flexible"}</p>
         </div>
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Compensation</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{formatSalary(job.salaryMin, job.salaryMax)}</p>
         </div>
       </div>
 
-      <div className="mt-5 rounded-[20px] border border-slate-200 bg-white px-4 py-4">
+      <div className="mt-4 rounded-[16px] bg-[#f8fbfd] px-3.5 py-3.5 md:mt-5 md:rounded-[20px] md:border md:border-slate-200 md:bg-white md:px-4 md:py-4">
         <p className="line-clamp-3 text-sm leading-7 text-slate-500">{job.description}</p>
       </div>
     </article>
@@ -170,7 +170,7 @@ function JobListCard({ job }: { job: JobPost }) {
 
 function EmptyState({ hasFilters, onReset }: { hasFilters: boolean; onReset: () => void }) {
   return (
-    <div className="rounded-[26px] border border-dashed border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+    <div className="rounded-[20px] bg-white/72 px-5 py-10 text-center shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-dashed md:border-slate-200 md:bg-white md:px-6 md:py-12 md:shadow-[0_16px_38px_rgba(17,34,68,0.05)] md:ring-0">
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#eef5fb] text-brand-teal">
         <BriefcaseBusiness size={24} />
       </div>
@@ -245,7 +245,7 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:px-6">
+      <section className="overflow-hidden rounded-[20px] bg-transparent px-0 py-1 shadow-none sm:px-0 md:rounded-[28px] md:border md:border-slate-200 md:bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] md:px-5 md:py-5 md:shadow-[0_18px_44px_rgba(17,34,68,0.08)] md:sm:px-6">
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(420px,0.9fr)] xl:items-start">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -263,21 +263,21 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
             <p className="mt-2 text-sm leading-6 text-slate-500 sm:text-[14px]">Filter and review active opportunities.</p>
           </div>
 
-          <div className="rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_12px_32px_rgba(17,34,68,0.06)]">
+          <div className="rounded-[18px] bg-white/82 p-2.5 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[24px] md:border md:border-slate-200 md:bg-white md:p-3 md:shadow-[0_12px_32px_rgba(17,34,68,0.06)] md:ring-0">
             <div className="grid w-full gap-3 sm:grid-cols-3">
-              <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-3.5">
+              <div className="rounded-[16px] bg-white px-3.5 py-3 md:rounded-[20px] md:border md:border-slate-200 md:px-4 md:py-3.5">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Open roles</p>
                 <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-navy">
                   {isLoading ? "..." : openRoles}
                 </p>
               </div>
-              <div className="rounded-[20px] border border-brand-sky/20 bg-brand-light px-4 py-3.5">
+              <div className="rounded-[16px] bg-brand-light px-3.5 py-3 md:rounded-[20px] md:border md:border-brand-sky/20 md:px-4 md:py-3.5">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Remote friendly</p>
                 <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-sky">
                   {isLoading ? "..." : remoteFriendly}
                 </p>
               </div>
-              <div className="rounded-[20px] border border-brand-gold/25 bg-brand-cream px-4 py-3.5">
+              <div className="rounded-[16px] bg-brand-cream px-3.5 py-3 md:rounded-[20px] md:border md:border-brand-gold/25 md:px-4 md:py-3.5">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Salary shown</p>
                 <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#c58a14]">
                   {isLoading ? "..." : salaryVisible}
@@ -288,7 +288,7 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
         </div>
       </section>
 
-      <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+      <section className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Filters</p>
@@ -404,7 +404,7 @@ function TeacherJobsContent({ accessToken }: { accessToken: string }) {
 
       <section className="space-y-4">
         {isLoading ? (
-          <div className="rounded-[26px] border border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+          <div className="rounded-[20px] bg-white/72 px-5 py-10 text-center shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:px-6 md:py-12 md:shadow-[0_16px_38px_rgba(17,34,68,0.05)] md:ring-0">
             <Loader2 size={24} className="mx-auto animate-spin text-slate-400" />
             <p className="mt-4 text-sm font-medium text-slate-500">Loading opportunities</p>
           </div>

@@ -129,9 +129,28 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
   }
 
   return (
-    <main className="app-shell px-4 py-6 sm:px-6 sm:py-8">
-      <div className="app-container space-y-5">
-        <section className="app-panel p-6 sm:p-8">
+    <>
+      <style>{`
+        @media (max-width: 640px) {
+          .ip-root {
+            margin: 0 -0.45rem;
+            padding: 0 0 1.5rem !important;
+          }
+          .ip-shell {
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+          }
+          .ip-shell {
+            padding: 1rem 0.95rem 1.5rem !important;
+          }
+        }
+      `}</style>
+
+      <main className="ip-root app-shell px-4 py-6 sm:px-6 sm:py-8">
+      <div className="app-container">
+        <section className="ip-shell app-panel p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="inline-flex items-center gap-3">
               <span className="relative inline-flex h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-brand-navy/10 bg-brand-light">
@@ -146,11 +165,7 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
               Back to Dashboard
             </Link>
           </div>
-          
-        </section>
-
-        <section className="app-panel p-6 sm:p-8">
-          <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit}>
+          <form className="mt-6 grid gap-4 md:grid-cols-2" onSubmit={handleSubmit}>
             <Field label="Institution Name">
               <input
                 className={inputClassName}
@@ -233,6 +248,7 @@ function InstitutionProfileForm({ accessToken }: InstitutionProfileFormProps) {
         </section>
       </div>
     </main>
+    </>
   );
 }
 

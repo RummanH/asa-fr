@@ -661,22 +661,46 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
         .tpf-root { animation: tpf-fade-up 0.4s cubic-bezier(0.22,1,0.36,1) both; }
         .tpf-submit { transition: transform 160ms, box-shadow 160ms; }
         .tpf-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 20px 44px rgba(5,47,68,0.28) !important; }
+        @media (max-width: 640px) {
+          .tpf-root {
+            margin: -0.75rem;
+            padding: 0 0 1.5rem !important;
+          }
+          .tpf-shell {
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+          }
+          .tpf-header {
+            padding: 0.9rem 0.95rem 0.75rem !important;
+          }
+          .tpf-form {
+            padding: 0.2rem 0.95rem 1.5rem !important;
+          }
+        }
+        @media (min-width: 641px) {
+          .tpf-root {
+            padding: 1rem 0 2.5rem !important;
+          }
+        }
       `}</style>
 
-      <main className="tpf-root app-shell" style={{ padding: "1.5rem 1rem 3rem" }}>
-        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
+      <main className="tpf-root app-shell">
+        <div
+          className="tpf-shell"
+          style={{
+            width: "100%",
+            background: "linear-gradient(180deg,#ffffff 0%,#f7fbff 100%)",
+            borderRadius: 28,
+            overflow: "hidden",
+            position: "relative",
+            border: "1px solid rgba(212,230,239,0.8)",
+            boxShadow: "0 18px 44px rgba(17,34,68,0.08)",
+          }}
+        >
           {/* ── Header ── */}
-          <div
-            style={{
-              background: "linear-gradient(180deg,#ffffff 0%,#f7fbff 100%)",
-              borderRadius: 28,
-              overflow: "hidden",
-              position: "relative",
-              border: "1px solid rgba(212,230,239,0.8)",
-              boxShadow: "0 18px 44px rgba(17,34,68,0.08)",
-            }}
-          >
-            <svg
+          <svg
               style={{ position: "absolute", top: -20, right: -10, opacity: 0.08, pointerEvents: "none" }}
               width="200"
               height="160"
@@ -685,8 +709,8 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
             >
               <circle cx="180" cy="0" r="140" stroke="white" strokeWidth="1" />
               <circle cx="180" cy="0" r="90" stroke="white" strokeWidth="0.7" />
-            </svg>
-            <div style={{ padding: "24px 26px", position: "relative" }}>
+          </svg>
+          <div className="tpf-header" style={{ padding: "24px 26px 18px", position: "relative" }}>
               <div
                 style={{
                   display: "flex",
@@ -780,74 +804,56 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                 )}
               </div>
 
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                  gap: 12,
-                  marginTop: 18,
-                }}
-              >
-                <div
+              <div style={{ display: "flex", gap: 10, marginTop: 18, flexWrap: "wrap" }}>
+                <span
                   style={{
-                    borderRadius: 18,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    borderRadius: 999,
                     border: "1px solid rgba(212,230,239,0.8)",
                     background: "#ffffff",
-                    padding: "14px 16px",
+                    padding: "8px 12px",
                   }}
                 >
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(16,32,51,0.42)", margin: 0 }}>
-                    Profile
-                  </p>
-                  <p style={{ fontSize: 28, fontWeight: 800, color: "#102033", margin: "8px 0 0" }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(16,32,51,0.5)" }}>Profile</span>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: "#102033" }}>
                     {profileExists ? "Ready" : "Draft"}
-                  </p>
-                </div>
-                <div
+                  </span>
+                </span>
+                <span
                   style={{
-                    borderRadius: 18,
-                    border: "1px solid rgba(185,231,251,0.18)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    borderRadius: 999,
+                    border: "1px solid rgba(185,231,251,0.45)",
                     background: "#f5fbfd",
-                    padding: "14px 16px",
+                    padding: "8px 12px",
                   }}
                 >
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(16,32,51,0.42)", margin: 0 }}>
-                    Visibility
-                  </p>
-                  <p style={{ fontSize: 28, fontWeight: 800, color: "#0b8f88", margin: "8px 0 0" }}>
-                    {isAvailable ? "Live" : "Hidden"}
-                  </p>
-                </div>
-                <div
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(16,32,51,0.5)" }}>Visibility</span>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: "#0b8f88" }}>{isAvailable ? "Live" : "Hidden"}</span>
+                </span>
+                <span
                   style={{
-                    borderRadius: 18,
-                    border: "1px solid rgba(243,179,61,0.18)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    borderRadius: 999,
+                    border: "1px solid rgba(243,179,61,0.32)",
                     background: "#fff8ed",
-                    padding: "14px 16px",
+                    padding: "8px 12px",
                   }}
                 >
-                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(16,32,51,0.42)", margin: 0 }}>
-                    Photo
-                  </p>
-                  <p style={{ fontSize: 28, fontWeight: 800, color: "#c58a14", margin: "8px 0 0" }}>
-                    {profileImage ? "Added" : "Missing"}
-                  </p>
-                </div>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(16,32,51,0.5)" }}>Photo</span>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: "#c58a14" }}>{profileImage ? "Added" : "Missing"}</span>
+                </span>
               </div>
             </div>
-          </div>
 
           {/* ── Form card ── */}
-          <div
-            style={{
-              background: "white",
-              borderRadius: 26,
-              border: "1px solid rgba(212,230,239,0.8)",
-              boxShadow: "0 14px 38px rgba(5,47,68,0.08)",
-              overflow: "hidden",
-            }}
-          >
-            <form onSubmit={handleSubmit} style={{ padding: "28px 28px 32px" }}>
+          <form className="tpf-form" onSubmit={handleSubmit} style={{ padding: "10px 26px 32px", position: "relative" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px 22px" }}>
                 {/* Section 1 – Personal */}
                 <SectionHeader icon={I.user} title="Personal Info" step={1} total={4} />
@@ -1022,8 +1028,7 @@ function TeacherProfileForm({ accessToken }: { accessToken: string }) {
                   </button>
                 </div>
               </div>
-            </form>
-          </div>
+          </form>
         </div>
       </main>
     </>

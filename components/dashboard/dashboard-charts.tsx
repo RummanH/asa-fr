@@ -76,7 +76,7 @@ export function MetricChartCard({
   };
 
   return (
-    <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+    <section className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0">
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{title}</p>
@@ -141,7 +141,7 @@ export function DistributionChartCard({
   };
 
   return (
-    <section className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+    <section className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0">
       <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">{title}</p>
       <div className="mt-4 h-64">
         <Doughnut data={data} options={options} />

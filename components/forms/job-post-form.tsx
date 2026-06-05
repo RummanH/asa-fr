@@ -395,6 +395,25 @@ export function JobPostForm({ initialValues, submitLabel, onSubmit }: JobPostFor
         .jpf-submit { transition: transform 160ms, box-shadow 160ms, background 160ms; }
         .jpf-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 20px 44px rgba(5,47,68,0.3) !important; }
         .jpf-submit:active:not(:disabled) { transform: none; }
+        @media (max-width: 640px) {
+          .jpf-root {
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+          }
+          .jpf-header {
+            padding: 0.9rem 0 0.85rem !important;
+            border-radius: 0.9rem !important;
+          }
+          .jpf-form {
+            padding: 0.95rem 0 0 !important;
+          }
+          .jpf-grid {
+            grid-template-columns: 1fr !important;
+            gap: 14px !important;
+          }
+        }
       `}</style>
 
       <div
@@ -409,6 +428,7 @@ export function JobPostForm({ initialValues, submitLabel, onSubmit }: JobPostFor
       >
         {/* Card header */}
         <div
+          className="jpf-header"
           style={{
             background: "linear-gradient(135deg, #052f44 0%, #065770 55%, #076b82 100%)",
             padding: "22px 28px 20px",
@@ -458,8 +478,8 @@ export function JobPostForm({ initialValues, submitLabel, onSubmit }: JobPostFor
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} style={{ padding: "28px 28px 32px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px 20px" }}>
+        <form className="jpf-form" onSubmit={handleSubmit} style={{ padding: "28px 28px 32px" }}>
+          <div className="jpf-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px 20px" }}>
             {/* ── Section 1: Role ── */}
             <SectionHeader icon={<IconBriefcase />} title="Role Details" step={1} />
 

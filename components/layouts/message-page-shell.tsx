@@ -35,10 +35,10 @@ export function MessagePageShell({
       subtitle={`Manage your conversations with ${role === "TEACHER" ? "institutions" : "teachers"}`}
       maxWidth="full"
     >
-      <div className="grid min-h-[520px] grid-cols-1 gap-6 lg:min-h-[600px] lg:grid-cols-4">
+      <div className="grid min-h-[520px] grid-cols-1 gap-4 lg:min-h-[600px] lg:grid-cols-4 lg:gap-6">
         {/* Conversations list */}
         <motion.div
-          className="lg:col-span-1 bg-white rounded-xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col"
+          className="flex flex-col overflow-hidden rounded-[20px] bg-white/88 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm lg:col-span-1 lg:rounded-xl lg:border lg:border-slate-200/60 lg:bg-white lg:shadow-sm lg:ring-0"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
@@ -90,7 +90,7 @@ export function MessagePageShell({
 
         {/* Chat area */}
         <motion.div
-          className="lg:col-span-3 min-h-[420px] bg-white rounded-xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col"
+          className="flex min-h-[420px] flex-col overflow-hidden rounded-[20px] bg-white/88 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm lg:col-span-3 lg:rounded-xl lg:border lg:border-slate-200/60 lg:bg-white lg:shadow-sm lg:ring-0"
           initial={{ opacity: 0, x: 8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}

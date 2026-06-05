@@ -28,16 +28,16 @@ export function PageLayout({
   className = "",
 }: PageLayoutProps) {
   return (
-    <main className="flex min-h-[100dvh] w-full flex-col overflow-x-clip bg-background lg:h-[100dvh] lg:overflow-hidden">
+    <main className="flex min-h-[100dvh] w-full flex-col overflow-x-clip bg-transparent lg:h-[100dvh] lg:overflow-hidden">
       {/* Title header */}
       {title && (
         <motion.div
-          className="border-b border-border bg-card flex-shrink-0 shadow-sm"
+          className="flex-shrink-0 border-b border-transparent bg-transparent shadow-none md:border-border/70 md:bg-card/70 md:shadow-sm"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="px-4 py-4 sm:px-6 md:px-8">
+          <div className="px-4 py-3 sm:px-6 md:px-8 md:py-4">
             <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{title}</h1>
             {subtitle && (
               <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
@@ -48,7 +48,7 @@ export function PageLayout({
 
       {/* Content area */}
       <div className="min-h-0 flex-1 overflow-visible lg:overflow-y-auto">
-        <div className={`px-4 py-6 sm:px-6 md:px-8 ${className}`}>
+        <div className={`px-3 py-4 sm:px-6 md:px-8 md:py-6 ${className}`}>
           <motion.div
             className={`mx-auto ${maxWidthClasses[maxWidth]}`}
             variants={{

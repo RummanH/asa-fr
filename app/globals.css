@@ -697,7 +697,7 @@ body {
 
 .app-panel {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(212, 230, 239, 0.78);
   border-radius: 1.5rem;
   box-shadow: 0 16px 42px rgba(5, 47, 68, 0.1);
 }
@@ -725,31 +725,6 @@ body {
   border-radius: 0.8rem;
   border: 1px solid #c8dde9;
   background: #fff;
-
-/* Mobile adjustments to reduce vertical space and input sizes */
-@media (max-width: 640px) {
-  .app-input {
-    height: 2.3rem;
-    padding: 0.45rem 0.7rem;
-    font-size: 0.85rem;
-  }
-
-  .app-btn-primary,
-  .app-btn-secondary,
-  .app-btn-danger {
-    padding: 0.42rem 0.8rem;
-    font-size: 0.85rem;
-  }
-
-  .app-panel {
-    border-radius: 1rem;
-  }
-
-  .auth-form-root {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-  }
-}
   color: var(--brand-navy);
   padding: 0.68rem 0.85rem;
   font-size: 0.9rem;
@@ -847,6 +822,55 @@ body {
 .app-btn-danger:hover {
   transform: translateY(-1px);
   background: #ffe7e5;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    background:
+      radial-gradient(circle at 12% 0%, rgba(169, 211, 239, 0.16), transparent 30%),
+      linear-gradient(180deg, #f8fcfe 0%, #f1f8fb 100%);
+  }
+
+  .app-container {
+    width: min(100% - 0.9rem, 1120px);
+  }
+
+  .app-panel {
+    border: 0;
+    border-radius: 1.05rem;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .app-panel-muted {
+    border: 0;
+    border-radius: 0.95rem;
+    background: rgba(255, 255, 255, 0.68);
+  }
+
+  .app-input {
+    height: 2.55rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .app-textarea {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .app-btn-primary,
+  .app-btn-secondary,
+  .app-btn-danger {
+    padding: 0.42rem 0.8rem;
+    font-size: 0.85rem;
+    box-shadow: none;
+  }
+
+  .auth-form-root {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
 }
 
 .app-chip {

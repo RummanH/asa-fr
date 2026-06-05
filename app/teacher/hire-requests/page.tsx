@@ -46,7 +46,7 @@ function RequestCard({
   const isPending = request.status === "PENDING";
 
   return (
-    <article className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+    <article className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[24px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
@@ -101,27 +101,27 @@ function RequestCard({
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+      <div className="mt-5 grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Subject</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{request.jobPost.subject}</p>
         </div>
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Class level</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{request.jobPost.classLevel}</p>
         </div>
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Job status</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{request.jobPost.status}</p>
         </div>
-        <div className="rounded-[18px] bg-[#f7fbff] px-4 py-3">
+        <div className="rounded-[16px] bg-[#f7fbff] px-3.5 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Institution</p>
           <p className="mt-2 text-sm font-semibold text-[#31455f]">{request.institution.user.email}</p>
         </div>
       </div>
 
       {request.message ? (
-        <div className="mt-5 rounded-[20px] border border-slate-200 bg-white px-4 py-4">
+        <div className="mt-4 rounded-[16px] bg-[#f8fbfd] px-3.5 py-3.5 md:mt-5 md:rounded-[20px] md:border md:border-slate-200 md:bg-white md:px-4 md:py-4">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Message</p>
           <p className="mt-3 text-sm leading-7 text-slate-500">{request.message}</p>
         </div>
@@ -206,7 +206,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
 
   return (
     <div className="space-y-4 lg:space-y-5">
-      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] px-5 py-5 shadow-[0_18px_44px_rgba(17,34,68,0.08)] sm:px-6">
+      <section className="overflow-hidden rounded-[20px] bg-transparent px-0 py-1 shadow-none sm:px-0 md:rounded-[28px] md:border md:border-slate-200 md:bg-[linear-gradient(180deg,#ffffff_0%,#f7fbff_100%)] md:px-5 md:py-5 md:shadow-[0_18px_44px_rgba(17,34,68,0.08)] md:sm:px-6">
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(420px,0.9fr)] xl:items-start">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -224,21 +224,21 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
             <p className="mt-2 text-sm leading-6 text-slate-500 sm:text-[14px]">Review and respond to incoming requests.</p>
           </div>
 
-          <div className="rounded-[24px] border border-slate-200 bg-white p-3 shadow-[0_12px_32px_rgba(17,34,68,0.06)]">
+          <div className="rounded-[18px] bg-white/82 p-2.5 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[24px] md:border md:border-slate-200 md:bg-white md:p-3 md:shadow-[0_12px_32px_rgba(17,34,68,0.06)] md:ring-0">
           <div className="grid w-full gap-3 sm:grid-cols-3">
-            <div className="rounded-[20px] border border-slate-200 bg-white px-4 py-3.5">
+            <div className="rounded-[16px] bg-white px-3.5 py-3 md:rounded-[20px] md:border md:border-slate-200 md:px-4 md:py-3.5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Total</p>
               <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-brand-navy">
                 {isLoading ? "..." : counts.ALL}
               </p>
             </div>
-            <div className="rounded-[20px] border border-brand-gold/25 bg-brand-cream px-4 py-3.5">
+            <div className="rounded-[16px] bg-brand-cream px-3.5 py-3 md:rounded-[20px] md:border md:border-brand-gold/25 md:px-4 md:py-3.5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Pending</p>
               <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-[#c58a14]">
                 {isLoading ? "..." : counts.PENDING}
               </p>
             </div>
-            <div className="rounded-[20px] border border-emerald-300/25 bg-emerald-50 px-4 py-3.5">
+            <div className="rounded-[16px] bg-emerald-50 px-3.5 py-3 md:rounded-[20px] md:border md:border-emerald-300/25 md:px-4 md:py-3.5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Accepted</p>
               <p className="mt-2.5 font-[family:var(--font-display)] text-[1.8rem] font-semibold tracking-tight text-emerald-600">
                 {isLoading ? "..." : counts.ACCEPTED}
@@ -294,12 +294,12 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
 
       <section className="space-y-4">
         {isLoading ? (
-          <div className="rounded-[26px] border border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+          <div className="rounded-[20px] bg-white/72 px-5 py-10 text-center shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:px-6 md:py-12 md:shadow-[0_16px_38px_rgba(17,34,68,0.05)] md:ring-0">
             <Loader2 size={24} className="mx-auto animate-spin text-slate-400" />
             <p className="mt-4 text-sm font-medium text-slate-500">Loading hire requests</p>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-[26px] border border-dashed border-slate-200 bg-white px-6 py-12 text-center shadow-[0_16px_38px_rgba(17,34,68,0.05)]">
+          <div className="rounded-[20px] bg-white/72 px-5 py-10 text-center shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-dashed md:border-slate-200 md:bg-white md:px-6 md:py-12 md:shadow-[0_16px_38px_rgba(17,34,68,0.05)] md:ring-0">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#eef5fb] text-brand-teal">
               <Clock3 size={24} />
             </div>
@@ -324,7 +324,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
       </section>
 
       <section className="grid items-start gap-3 xl:grid-cols-2">
-        <div className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+        <div className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Decision rhythm</p>
           <h3 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
             Best next move
@@ -332,7 +332,7 @@ function TeacherHireRequestsContent({ accessToken }: { accessToken: string }) {
           <p className="mt-4 text-sm leading-7 text-slate-500">Review pending requests first.</p>
         </div>
 
-        <div className="rounded-[26px] border border-slate-200 bg-white p-5 shadow-[0_16px_38px_rgba(17,34,68,0.06)]">
+        <div className="rounded-[20px] bg-white/78 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-[26px] md:border md:border-slate-200 md:bg-white md:p-5 md:shadow-[0_16px_38px_rgba(17,34,68,0.06)] md:ring-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Teacher workflow</p>
           <h3 className="mt-2 font-[family:var(--font-display)] text-[1.7rem] font-semibold tracking-tight text-[#31455f]">
             Related routes

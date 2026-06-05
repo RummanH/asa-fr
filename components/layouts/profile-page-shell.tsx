@@ -44,7 +44,7 @@ export function ProfilePageShell({
 
   return (
     <PageLayout title={title} subtitle={subtitle} maxWidth="lg">
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Back button */}
         <Link
           href={backHref}
@@ -82,7 +82,7 @@ export function ProfileSection({
 }: ProfileSectionProps) {
   return (
     <motion.div
-      className="bg-white rounded-xl border border-slate-200/60 shadow-sm p-6"
+      className="rounded-[20px] bg-white/88 p-4 shadow-none ring-1 ring-slate-200/55 backdrop-blur-sm md:rounded-xl md:border md:border-slate-200/60 md:bg-white md:p-6 md:shadow-sm md:ring-0"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
